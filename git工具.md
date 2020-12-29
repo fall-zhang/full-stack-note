@@ -62,7 +62,7 @@
 > - 删除分支：`git branch -D dev`
 > - 远程删除分支：`git push origin :dev`
 > - 退回到上一个版本：`git reset --hard head`
-> - 查看日志：`git log 或者 git reflog`
+> - 查看日志：`git log `或者` git reflog`
 > - 查看工作区和暂存区版本区别`git diff`
 > - 回退上一个版本`git reset --hard HEAD^` 每多一个`^`多回退一个版本
 > - 回退到指定版本`git reset --hard version` version为版本号
