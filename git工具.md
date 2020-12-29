@@ -50,11 +50,10 @@
 >
 > 打星号的是当前使用的分支
 >
-> 把login合并到当前分支`git merge login`
+> 把 login 合并到当前分支`git merge login`
 >
-> 将当前子分支推到一个新创建的login分之中`git push -u origin login`
+> 将当前子分支推到一个新创建的 login 分之中`git push -u origin login`
 >
-> -u origin 推送到该origin分支中
 
 ### 其他功能
 
