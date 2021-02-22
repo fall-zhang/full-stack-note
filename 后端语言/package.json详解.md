@@ -2,6 +2,8 @@
 
 package.json是一个项目清单，可以做很多互不相关的事情
 
+存储元数据：元数据就是描述数据信息的数据
+
 - 工具的配置中心
 - npm和yarn存储所有已经安装的包的名称和版本的地方。
 
@@ -19,7 +21,13 @@ package.json的文件当然要符合语法规范
 }
 ```
 
-### package.json的属性值
+> 快速创建 package.json 文件
+>
+> 通过 `npm init` 创建
+>
+>  `npm init -y` 或者`npm init -yes` 快速创建
+
+### 文件的属性值
 
 所有属性都可以通过 npm 或者其它工具使用
 
@@ -27,13 +35,13 @@ package.json的文件当然要符合语法规范
 | ------------ | ----------------------------------------------------- |
 | name         | 设置应用程序 / 软件包的名称                           |
 | version      | 表明当前的版本                                        |
+| main         | 设置应用程序需的入口点                                |
 | description  | 应用程序 / 软件包的简短描述                           |
 | private      | 私有，设置后可以防止应用程序 / 软件包被意外发布到 npm |
 | scripts      | 定义了一组可以运行的 node 脚本                        |
 | dependencies | 设置了作为依赖安装的 npm 安装包列表                   |
 | engines      | 设置了此软件包 / 应用，在哪个版本的 node 上运行       |
 | browerslist  | 告知支持哪些浏览器                                    |
-| main         | 设置应用程序需的入口点                                |
 
 > name必须小于214个字符，不能包含空格，只能包含小写字母、连字符(`-`)、下划线（`_`）
 
@@ -139,5 +147,7 @@ package.json的文件当然要符合语法规范
 ## package-lock-json
 
 和 package.json 文件一样，只不过， package-lock.json 会固化当前安装的每个软件包的版本，当运行 `npm install`时，`npm` 会使用这些确切的版本。
+
+没有`package-lock.json` 时，会通过包名查找位置，然后包的依赖，之后进行安装，有了 `package-lock.json` 后，可以直接从 package-lock.json 中直接查找地址进行下载，在 npm 5.0.0 之后的版本支持该特性。即，安装更快，更高效
 
 `package-lock.json` 文件需要被提交到 Git 仓库，以便被其他人获取（如果项目是公开的或有合作者，或者将 Git 作为部署源）。
