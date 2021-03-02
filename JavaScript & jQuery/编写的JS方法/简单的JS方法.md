@@ -1,25 +1,26 @@
 ## JS方法1
 
-### 1.查询文章单词个数
+### 查询文章单词总数
 
 ```javascript
-function count(str){
-    var n = 1;
-    for(var i = 0;i<str.length-1;i++){
-        if(notalp(str[i]) > notalp(str[i+1])){
-            n++;
-        }
-    }
-    return n
-}
+// 检测该数据是否为 字母 
 function notalp(alp){
     if((alp >= "a" && alp <= "z")||(alp>="A" && alp<="Z")){
-        // alert("测试")
         return 1;
     }
     else{
         return 0;
     }
+}
+function count(str){
+    var total = 1; // 默认第一个单词就是字母
+    for(var i = 0;i<str.length-1;i++){
+      // 当前者为字母，后者不是字母，则单词结束，加一
+        if(notalp(str[i]) > notalp(str[i+1])){
+            total ++;
+        }
+    }
+    return total
 }
 ```
 
@@ -68,21 +69,21 @@ function randomTest(num){
 }
 ```
 
-### 5.转化大小写
+### 大写字母加空格
 
 ``` javascript
 function trans(str){
-            var newstr = str.split("");
-            for(var i = 1;i < newstr.length;i++){
-                if(newstr[i]>="A" && newstr[i]<="Z"){
-                    newstr[i] =newstr[i].toLowerCase();
-                    newstr.splice(i,0," ");
-                }
-            }
-            alert(newstr)
-            return newstr.join("")
-        }
-        alert(trans("MostStrongMan"))
+  var newstr = str.split("");
+  for(var i = 1;i < newstr.length;i++){
+      if(newstr[i]>="A" && newstr[i]<="Z"){
+          newstr[i] =newstr[i].toLowerCase();
+          newstr.splice(i,0," ");
+      }
+  }
+  // alert(newstr)
+  return newstr.join("")
+}
+console.log(trans("MostStrongMan"))
 ```
 
 ### 6.字母检查工具

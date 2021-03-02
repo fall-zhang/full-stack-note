@@ -144,7 +144,7 @@ package.json的文件当然要符合语法规范
 > - `-`: 接受一定范围的版本。例如：`2.1.0 - 2.6.2`。
 > - `||`: 组合集合。例如 `< 2.1 || > 2.6`。
 
-## package-lock-json
+## package-lock.json
 
 和 package.json 文件一样，只不过， package-lock.json 会固化当前安装的每个软件包的版本，当运行 `npm install`时，`npm` 会使用这些确切的版本。
 

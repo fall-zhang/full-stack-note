@@ -56,11 +56,9 @@ false以及0、NaN、null、空字符串""和undefined都将转换成false。
   - `str.charAt(i)`  得到第 `i` 个字符下标
   - `str.charCodeAt(i)`  第 `i` 个字符的编码
 -  **截取多个字符**
-  - `str.slice(start,end)`  截取 `[start,end)` 间的数据，支持负数，此时为从后向前截取
+  - `str.slice(start,end)`  截取 `[start,end)` 间的数据，支持负数，此时为从后向前截取，不传`end` 则向后截取所有字符。
   - `str.substring(start,end)` 截取 `[start,end) `间的数据,不支持负数
   - `str.substr(start,i)` 从 start 开始截取 `i` 个数据
-
-
 
 ### 查找关键词出现位置
 

@@ -2,30 +2,24 @@
 
 ### 基础类型
 
-**布尔类型**
-
 ```ts
+// 布尔类型
 let flag:boolean = false
 ```
 
-**数字类型**
-
-和 js 相同，TS 里面所有数字都是浮点数，都是 number
+和 JS 相同，TS 里面所有数字都是浮点数，都是 number
 
 ```ts
+// 数字类型
 let a1:number = 10 //十进制
 let a2:number = 0b1010 //二进制
 let a3:number = 0o12 // 八进制
 let a4:number = 0xa // 十六进制
-```
-
-**字符串类型**
-
-```ts
+// 字符串类型
 let str:string = '卷起千堆雪'
 ```
 
-**undefined & null **
+undefined & null 
 
 undefined 和 null可以作为其他数据类型的子类型（其他类型的子集），可以把该类型赋值给其他类型。
 
@@ -40,7 +34,6 @@ let num2:number = undefined
 ```ts
 let arr1:number[] =[10,20,30,40] 
 let arr2:Array<number> = [100,200,300]
-
 ```
 
 **元组**
@@ -49,7 +42,7 @@ let arr2:Array<number> = [100,200,300]
 
 ```ts
 let arr3:[string,number,boolean,] = ['55',233,true]
-// 数组中每一个相应的类型都智能使用对应的方法
+// 数组中每一个相应的类型都只能使用对应的方法
 console.log(arr3[0].substring(1)) // OK
 console.log(arr3[1].substring(1)) // Error, 'number' 不存在 'substring' 方法
 ```
@@ -121,10 +114,10 @@ function toString2(x: number | string) : string {
 
 用接口来表明定义**对象**的类型，必须按照所有已定义的类型进行存储，且不能有任何多余。
 
-在实现接口时，使用 interface 进行定义对象的类型。
+在实现接口时，使用 `interface` 进行定义对象的类型。
 
 - 可以使用 `readonly` 限制接口，只读 
-- 也可以使用 `?` 进行更改接口的值，使接口既可以有，也可以没有。
+- 也可以使用 `?` 进行更改接口的值，使接口可以传值也可以不传。
 
 ```ts
 interface OnePerson{
@@ -184,10 +177,10 @@ jodge.hero()
 
 ```typescript
 interface OneHero{
-  hero()
+  hero() // OneHero 限制必须拥有 hero 方法
 }
 interface TheHero{
-  action()
+  action() // TheHero 限制必须拥有 action 方法
 }
 class Person implements OneHero,TheHero {
   hero(){
@@ -473,7 +466,7 @@ plusOrAdd("小天才","22")
 
 #### 函数的泛型
 
-泛型意思是，可以通过设置参数将所需要的类型传入，达到限制类型的目的
+泛型意思是，可以等到需要传入值的时候，这时候再限定参数将所需要的类型传入，达到限制类型的目的
 
 ```ts
 function anyType<C>(x:C,y:number):C[]{
