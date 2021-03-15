@@ -1,3 +1,13 @@
+## 快捷键
+
+VScode添加注释和删除注释的快捷键
+
+`ctrl + /` ：整行添加注释
+
+`shift + alt + a` ：为所选区域添加注释
+
+
+
 ## 使用的插件
 
 ### Chinese（simplified）

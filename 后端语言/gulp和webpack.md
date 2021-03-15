@@ -10,8 +10,8 @@
 >
 > **痛苦又耗时的任务**：
 >
-> - typescript编写的脚本文件需要编译成浏览器认识的javascript
-> - scss,less 编写的样式转化为css
+> - typescript 编写的脚本文件需要编译成浏览器认识的`javascript`
+> - sass,less 编写的样式转化为css
 > - 代码是否符合书写规范，单元测试和集成测试
 
 > **安装**

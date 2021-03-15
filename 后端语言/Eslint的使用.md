@@ -1,4 +1,36 @@
-eslint语法配置
+## Eslint
+
+官方网址：https://cn.eslint.org/docs/rules/
+
+作为一个语法检查工具，可以用来保证代码书写格式的绝对正确。任何错误都能被查找出来。
+
+一般作为配置项配置在 `.eslintrc.js` 中，或者可能配置在 `package.json` 中作为配置项。
+
+```js
+module.exports = {
+  root: true,  // 用来告诉 eslint 找当前配置文件
+  env: {  // 指定你想启用的环境，下面的配置指定为 node 环境
+    node: true
+  },
+  extends: ["plugin:vue/essential", "@vue/prettier"],  // 格式化代码插件
+  rules: {  // 语法规则
+    //  "规则名": [错误等级值, 规则配置],
+    "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
+    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off"
+  },
+  parserOptions: { //用来指定eslint解析器的
+    parser: "babel-eslint"
+  }
+};
+```
+
+错误等级分为三种
+
+- `off` 或者 `0` 表示关闭规则
+- `warn` 或者 `1` 打开规则，表示警告，打印黄色字体
+- `error` 或者 `2` 打开规则，并且作为错误，打印红色字体
+
+## Eslint 语法配置
 
 ```js
 "no-alert": 0,//禁止使用alert confirm prompt
