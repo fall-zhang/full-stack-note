@@ -178,6 +178,7 @@ v-if和v-show的区别，v-if是只在符合条件时显示，其它直接隐藏
 <div v-show="got" v-for="(item,i) in list">{{item}}</div>
 // 将对象传入数组，输出对应的对象的值
 <div v-show="got" v-for="(item,i) in list">{{item.age +"-------"+item.name}}</div>
+<!--一般来讲需要传入一个key进行动态绑定-->
 ```
 
 **遍历对象**(键值对)

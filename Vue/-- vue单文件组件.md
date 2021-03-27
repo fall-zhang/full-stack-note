@@ -1,0 +1,64 @@
+## Vue 单文件组件的用法
+
+### 使用
+
+```html
+<template>
+<!--里面存放页面的结构 -->
+</template>
+<script>
+// 里面存放脚本文件
+</script>
+<style>
+里面存放页面的样式
+</style>
+```
+
+### 配置
+
+安装 `vue-loader` `vue-template-compiler`( `vue-loader` 的内置依赖项) 
+
+`npm i vue-loader vue-template-compiler -D`
+
+在配置文件中更改如下配置
+
+```js
+// 引入
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+module.exports = {
+  module:{
+    rules:[
+      // 规则，其他规则
+      {test:/\.vue$/,loader:'vue-loader'}
+    ]
+  },
+  plugins:[
+    // 插件，其他插件
+    new VueLoaderPlugin()
+  ]
+}
+```
+
+在webpack项目中使用 vue
+
+- 运行 `npm i vue -S`
+- 在 `src -> index.js` 入口文件中引入
+- 创建 vue 实例对象，并且指定要控制的 el 区域
+- 通过 render 函数渲染 App 根组件
+
+```js
+// 导入 vue 构造函数
+import Vue from 'vue'
+// 导入 App根组件
+import App from 'components/App.vue'
+const vm = new Vue({
+  // 指定要控制的页面区域
+  el:'#app',
+  // 通过 render 函数，八只ing的组建渲染到 el 区域中
+  render:h =>(App)
+})
+```
+
+## Vue脚手架
+
+快速生成一个Vue项目结构，简化一个项目的创建流程
