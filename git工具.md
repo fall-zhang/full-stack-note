@@ -1,8 +1,8 @@
-> **下载：** 从淘宝镜像上下载git
+> **下载：** 从淘宝镜像上下载 git
 >
 > https://npm.taobao.org/mirrors/git-for-windows/
 
-**Git工作流程图**
+**Git工作流程图**（空间上的 git 操作）
 
 <img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015120901.png" alt="img" style="zoom:80%;" />
 
@@ -11,31 +11,22 @@
 > - Repository：仓库区（或本地仓库）
 > - Remote：远程仓库
 
+| 命令名称         | 作用                                       |
+| ---------------- | ------------------------------------------ |
+| clone（克隆）    | 从远程克隆仓库，将远程的代码下载到本地     |
+| commit（提交）   | commit 将修改提交到本地仓库，              |
+| push（推送）     | push 将本地仓库的内容提交到远程库          |
+| pull（拉取）     | 将远程最新的代码拉取到本地，自动合并 merge |
+| fetch（获取）    | 将远程最新的代码拉取到本地，不合并 merge   |
+| checkout（检出） | 创建分支，切换分支                         |
+
 ## git 工具
 
 ### git介绍
 
-**从远程克隆仓库 clone**
-
-将远程的代码下载到本地
-
-**提交 commit 和 push**
-
-commit 将修改提交到本地仓库，push将本地仓库的内容提交到远程库
-
-**拉取 pull 和 获取 fetch**
-
-pull 将远程最新的代码拉取到本地，自动合并 merge
-
-fetch 将远程最新的代码拉取到本地，不合并 merge
-
 **版本回退**
 
 reset 将代码回退到选定的版本
-
-**检出checkout**
-
-创建分支，切换分支
 
 **标签 tag**
 
@@ -43,7 +34,7 @@ tag 就是给版本打个标记，方便识别
 
 ### 配置文件
 
-`.gitignore` 是git 的配置文件，可以用在用户主目录之下（全局配置），也可以用在项目目录下（项目配置）,作用就是告诉Git哪些文件不需要添加到版本管理中。
+`.gitignore` 是 git 的配置文件，可以用在用户主目录之下（全局配置），也可以用在项目目录下（项目配置），作用就是告诉Git 哪些文件不需要添加到版本管理中。
 
 ```swift
 /mtk/ 过滤整个文件夹
@@ -86,7 +77,7 @@ c、规则：
 说明：忽略全部内容，但是不忽略 .gitignore 文件、根目录下的 /fw/bin/ 和 /fw/sf/ 目录
 ```
 
-**用Git Bash 创建文件夹**
+**用 Git Bash 创建文件夹**
 
 - 根目录下右键选择“Git Bash Here”进入bash命令窗口；
 - 输入`vim .gitignore`或`touch .gitignore`命令，打开文件（没有文件会自动创建）；
@@ -100,17 +91,28 @@ c、规则：
 
 ## git 的操作
 
-### 提交项目代码流程
+### 简单的提交代码流程
 
 > 连接克隆远程仓库 git clone https://https://e.coding.net/colorfree/P-weather.git
 >
-> 在项目的文件夹中打开`cmd命令行工具`（一般为含有readme的文件夹）
+> 在项目的文件夹中打开`cmd 命令行工具`（一般为含有 ReadMe 的文件夹）
 >
-> `git add . `   	将代码添加到版本里面（添加到暂存区）
+> `git add . `   将代码添加到版本里面（添加到暂存区）
 >
 > `git commit -m`	“放置你想添加的内容” 
 >
 > 最后使用 `git push` 将本地库里面的代码提交到网络共享库里面
+
+### 常用功能查找
+
+> - `git diff --shortstat "@{0 day ago}"` 看看自己一天写了多少代码
+> - 查看远程仓库`git remote -v`
+> - 显示有变更的文件`git status`
+> - 退回到上一个版本：`git reset --hard head`
+> - 查看日志：`git log `或者` git reflog`
+> - 查看工作区和暂存区版本区别`git diff`
+> - 回退上一个版本`git reset --hard HEAD^` 每多一个`^`多回退一个版本
+> - 回退到指定版本`git reset --hard version` version 为版本号
 
 ### 新建代码仓库
 
@@ -118,7 +120,7 @@ c、规则：
 - `git init [project-name]` 新建一个目录，作为代码仓库
 - `git clone [url]` 
 
-`.git` 文件夹存储当前项目的所有版本信息
+`.git` 文件夹存储当前项目的所有版本信息，这个文件夹通常会隐藏
 
 ### 暂存区控制
 
@@ -195,17 +197,6 @@ $ git push [remote] --all # 推送所有分支到远程仓库
 $ git push origin --delete [branch-name]  # 删除远程分支
 ```
 
-### 常用功能查找
-
-> - `git diff --shortstat "@{0 day ago}"` 看看自己一天写了多少代码
-> - 查看远程仓库`git remote -v`
-> - 显示有变更的文件`git status`
-> - 退回到上一个版本：`git reset --hard head`
-> - 查看日志：`git log `或者` git reflog`
-> - 查看工作区和暂存区版本区别`git diff`
-> - 回退上一个版本`git reset --hard HEAD^` 每多一个`^`多回退一个版本
-> - 回退到指定版本`git reset --hard version` version为版本号
-
 ### 撤销操作
 
 ```bash
@@ -273,6 +264,5 @@ $ git show [commit]:[filename] # 显示某次提交时，某个文件的内容
 
 $ git reflog # 显示当前分支的最近几次提交
 ```
-
 
 

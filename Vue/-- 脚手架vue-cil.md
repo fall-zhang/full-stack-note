@@ -8,7 +8,7 @@
 
 ### 简介
 
-`@vue/cli` 在安装时，会有三个主要的组件
+`@vue/cli` 有三个主要的组件
 
 **CLI** 
 
@@ -21,6 +21,14 @@
 **CLI 插件**
 
 向项目提供一些可选的功能的 `npm` 安装包，例如 `Babel/TypeScript` 、`ESLint` 集成，单元测试和 `end-to-end` 测试等，插件名称通常为 `@vue/cli-plugin-` （作为内建插件）`@vue-cli-plugin-`（社区插件）在项目中运行 `vue-cli-service` 会自动解析并加载所有列出的插件。
+
+## 快速生成一个项目
+
+**命令行创建**
+
+`vue create` 通过命令行工具的方式进行创建一个 vue 项目
+
+`vue ui` 使用图形化界面，可以创建一个 vue 项目
 
 ## CLI服务
 
@@ -60,3 +68,33 @@ vue-cli-service serve [options] [entry]
 #  --watch       监听文件变化
 ```
 
+## 脚手架的自定义配置
+
+如果想要让vue项目跑起来后自动打开，可以在 `package.json` 文件里面添加该配置
+
+```json
+{
+  "vue":{
+    "devServer":{
+    	"port":8888,// 端口号更改为 8888
+      "open":true // 编译完成后，自动打开浏览器
+    }
+  }
+}
+```
+
+当然，也可以通过单独的文件 `vue.config.js` 进行单独配置。
+
+```js
+// vue.config.js
+module.exports ={
+  devServer:{
+    open:true,
+    port:8899
+  }
+}
+```
+
+
+
+- [ ] 实现搭建一个 nuxt 页面
