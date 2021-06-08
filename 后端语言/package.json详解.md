@@ -1,19 +1,19 @@
 ## package.json
 
-package.json是一个项目清单，可以做很多互不相关的事情
+package.json 是一个项目清单，可以做很多互不相关的事情
 
 存储元数据：元数据就是描述数据信息的数据
 
 - 工具的配置中心
-- npm和yarn存储所有已经安装的包的名称和版本的地方。
+- npm 和 yarn 存储所有已经安装的包的名称和版本的地方。
 
-最简单的package.json文件：
+最简单的 package.json 文件：
 
 ```json
 {} // 真的很简单 ^_^
 ```
 
-package.json的文件当然要符合语法规范
+package.json 的文件当然要符合语法规范
 
 ```json
 {
@@ -21,11 +21,9 @@ package.json的文件当然要符合语法规范
 }
 ```
 
-> 快速创建 package.json 文件
+> 命令行工具快速创建 package.json ： `npm init` 初始化当前环境。
 >
-> 通过 `npm init` 创建
->
->  `npm init -y` 或者`npm init -yes` 快速创建
+> `npm init -y` 或者`npm init -yes` 快速创建
 
 ### 文件的属性值
 
@@ -43,13 +41,11 @@ package.json的文件当然要符合语法规范
 | engines      | 设置了此软件包 / 应用，在哪个版本的 node 上运行       |
 | browerslist  | 告知支持哪些浏览器                                    |
 
-> name必须小于214个字符，不能包含空格，只能包含小写字母、连字符(`-`)、下划线（`_`）
+> name 必须小于 214 个字符，不能包含空格，只能包含小写字母、连字符(`-`)、下划线（`_`）
 
-### **其它可选值：**
+### 其它可选值：
 
 **author**：列出软件包的作者名称
-
-> `"author":"Taly"`
 
 ```json
 {
@@ -62,9 +58,9 @@ package.json的文件当然要符合语法规范
 
 **contributors**：贡献者
 
-> `"contributors":["PresonA","PresonB"]`
-
 ```json
+// 写法1
+{"contributors":['personA','personB']}
 {
   "contributors":[
     {
@@ -146,8 +142,8 @@ package.json的文件当然要符合语法规范
 
 ## package-lock.json
 
-和 package.json 文件一样，只不过， package-lock.json 会固化当前安装的每个软件包的版本，当运行 `npm install`时，`npm` 会使用这些确切的版本。
+package-lock.json 和 package.json 文件一样，只不过， package-lock.json 会固化当前安装的每个软件包的版本，当运行 `npm install`时，`npm` 会使用这些确切的版本。如果不存在，就会自动生成该文件。
 
-没有`package-lock.json` 时，会通过包名查找位置，然后包的依赖，之后进行安装，有了 `package-lock.json` 后，可以直接从 package-lock.json 中直接查找地址进行下载，在 npm 5.0.0 之后的版本支持该特性。即，安装更快，更高效
-
-`package-lock.json` 文件需要被提交到 Git 仓库，以便被其他人获取（如果项目是公开的或有合作者，或者将 Git 作为部署源）。
+> 没有 `package-lock.json` 时，会通过包名查找位置，然后包的依赖，之后进行安装，有了`package-lock.json` 后，可以直接从 package-lock.json 中直接查找地址进行下载，在 npm 5.0.0 之后的版本支持该特性。即，安装时更快，更高效。
+>
+> `package-lock.json` 文件需要被提交到 Git 仓库，以便被其他人获取（如果项目是公开的或有合作者，或者将 Git 作为部署源）。

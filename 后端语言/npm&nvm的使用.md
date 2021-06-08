@@ -289,3 +289,11 @@ npx -p lolcatjs -p cowsay -c 'cowsay hello | lolcatjs' // 添加 -c 后将所有
 npm run env | grep npm_ // 可以用该命令查看提供当前项目的一些环境变量。
 npx -c 'echo "$npm_package_name"' // 该代码会输出当前项目的项目名
 ```
+
+### 执行远程代码
+
+npx可以指定直接执行git上面的代码，前提是远程代码必须是一个模块，必须包含package.json和入口脚本。
+
+live-server
+
+使用`npx http-server`
