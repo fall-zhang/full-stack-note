@@ -2,11 +2,9 @@
 
 Ajax、响应式设计、JavaScript 框架、ECMAScript Next、CSS Next、Houdini、Indexed DB、Device APIs、Web Bluetooth、Web Socket、Web Payment、[孵化](https://wicg.github.io/BackgroundSync/spec/)中的 [Background Sync API](https://huangxuan.me/2017/02/09/nextgen-web-pwa/developers.google.com/web/updates/2015/12/background-sync)、[Streams](https://streams.spec.whatwg.org/)、WebVR……开放 Web 世界 27 年来的发展以及未来的一切，都与 PWA 天作之合。
 
-[当然，无论与不与原生应用对比，PWA 让 web 应用变得体验更好这件事本身是毋庸置疑的。](https://cloudfour.com/thinks/progressive-web-apps-simply-make-sense/?utm_source=mobilewebweekly&utm_medium=email#fn-4857-1)
+当然，无论与不与原生应用对比，PWA 让 web 应用变得体验更好这件事本身是毋庸置疑的。
 
-[我们仍然还是需要根据自己产品与团队的情况来决定对应的技术选型与平台策略，只是 PWA 让 web 应用在面对选型考验时更加强势了而已。](https://medium.com/@owencm/the-surprising-tradeoff-at-the-center-of-question-whether-to-build-an-native-or-web-app-d2ad00c40fb2#.ym83ct2ax)
-
-
+我们仍然还是需要根据自己产品与团队的情况来决定对应的技术选型与平台策略，只是 PWA 让 web 应用在面对选型考验时更加强势了而已。
 
 ## 下一代应用模型PWA
 
@@ -72,7 +70,7 @@ Push API
 
 ## PWA实战总结
 
-当然，我这里面只收录我认为比较重要的笔记，如果有想看的，下方有链接。
+当然，我这里面只收录我认为比较重要的笔记，如果有想看的，最下方有全文的原链接。
 
 饿了吗项目不是 SPA，是 SSR，所以，在跳转页面时，会出现约一秒的白屏时间（因为浏览器会再次向服务器发起请求，哪怕被拦截，也会因为执行JS的代码，建立Vue虚拟的组件库的依赖，以及 UI 的建立上）。
 
@@ -82,13 +80,9 @@ Push API
 
 另一个缓存功能，进退缓存，就是说，上一页的内容会被浏览器保存，如果进行回退，会直接载入已经渲染好的内容，基本可以实现瞬间加载。但是，chrome因为内存开销，多进程架构的原因，现在并不支持。对于 Chromium 内核霸占的 Android 生态来说，这事更没法指望了。
 
-当然，不能解决问题，我们可以规避问题，使用骨架屏，进行占位。骨架屏，又不能每一个页面写一个骨架，
+当然，不能解决问题，我们可以规避问题，使用骨架屏，进行占位。骨架屏，又不能每一个页面写一个骨架。
 
-黄玄（饿了么的 PWA 升级实践）：https://huangxuan.me/2017/07/12/upgrading-eleme-to-pwa/
-
-## 前端的发展
-
-*****
+## PWA的优缺
 
 **优势特性**，直接部署服务器即可使用，不需要审核过程并且可以通过技术点的升级，逐步成为一个 app，用于描述 web 应用元数据（metadata）、让 web 应用能够像原生应用一样被添加到主屏、全屏执行的 Web App  Manifest；以及进一步提高 web 应用与操作系统集成能力，让 web 应用能在未被激活时发起推送通知的 Push API 与  Notification API 等等。
 
@@ -107,14 +101,17 @@ PWA 的出现，让鱼与熊掌兼得变成了可能 —— 它同时具备了 w
 
 > 出于安全考虑，注册 Service Worker 要求你的 web 应用部署于 HTTPS 协议下，以免利用 Service Worker 的中间人攻击。
 
-> 参考文章：
->
-> 黄玄：https://huangxuan.me/2017/02/09/nextgen-web-pwa/#service-worker
-
 奢望着本文能对推动 PWA 的国内环境有一定的贡献。不过无论如何，PWA 在国内的春天可能的确会来得稍微晚一点了。
 
-「[我们信仰 Web，不仅仅在于软件、软件平台与单纯的技术](https://huangxuan.me/pwa-qcon2016/#/99)，还在于[『任何人，在任何时间任何地点，都可以在万维网上发布任何信息，并被世界上的任何一个人所访问到。』而这才是 web 的最为革命之处，堪称我们人类，作为一个物种的一次进化。](http://phonegap.com/blog/2012/05/09/phonegap-beliefs-goals-and-philosophy/)」
+「[我们信仰 Web，不仅仅在于软件、软件平台与单纯的技术](https://huangxuan.me/pwa-qcon2016/#/99)，还在于『任何人，在任何时间任何地点，都可以在万维网上发布任何信息，并被世界上的任何一个人所访问到。』而这才是 web 的最为革命之处，堪称我们人类，作为一个物种的一次进化。
 
-请不要让 web 再[继续离我们远去](https://zhuanlan.zhihu.com/p/22561084)，浏览器厂商们已经重新走到了一起，而下一棒将是交到我们 web 应用开发者的手上。[乔布斯曾相信 web 应用才移动应用的未来](https://huangxuan.me/2017/02/09/nextgen-web-pwa/youtu.be/y1B2c3ZD9fk?t=1h14m48s)，那就让我们用代码证明给这个世界看吧。
+请不要让 web 再继续离我们远去，浏览器厂商们已经重新走到了一起，而下一棒将是交到我们 web 应用开发者的手上。[乔布斯曾相信 web 应用才移动应用的未来](https://huangxuan.me/2017/02/09/nextgen-web-pwa/youtu.be/y1B2c3ZD9fk?t=1h14m48s)，那就让我们用代码证明给这个世界看吧。
 
 **让我们的用户，也像我们这般热爱 web 吧。**
+
+参考文章：
+
+| 文章名称                                   | 文章地址                                                     |
+| ------------------------------------------ | ------------------------------------------------------------ |
+| 饿了么的 PWA 升级实践                      | https://huangxuan.me/2017/07/12/upgrading-eleme-to-pwa/      |
+| 下一代 Web 应用模型 —— Progressive Web App | https://huangxuan.me/2017/02/09/nextgen-web-pwa/#service-worker |
