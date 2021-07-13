@@ -122,14 +122,14 @@ Vue.directive('on').keyCodes.f2 = 113;
 <input type="text" v-model="name" @keyup.f2="add">
 ```
 
-## v-band
+## v-bind
 
 修改后面样式的值
 
 - 修改`url`的值
 
 ```vue
-<a v-band:href="url" >点击跳转</a>
+<a v-bind:href="url" >点击跳转</a>
 // 简写
 <a :href="url" >点击跳转</a>
 ```
