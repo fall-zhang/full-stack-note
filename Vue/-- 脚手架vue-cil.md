@@ -95,6 +95,4 @@ module.exports ={
 }
 ```
 
-
-
 - [ ] 实现搭建一个 nuxt 页面
