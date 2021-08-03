@@ -1,6 +1,6 @@
 ## DOM操作实例
 
-### 在标签里面添加新的标签
+### 在标签中添加标签
 
 ```javascript
 var oDiv = document.getElementById("oDiv");
@@ -17,6 +17,12 @@ Btn.onclick = function(){
 
 ### 鼠标在可视区域内拖拽元素
 
+html
+
+```html
+<div id="box1"></div>
+```
+
 css
 
 ```
@@ -27,50 +33,45 @@ css
 javascript
 
 ```javascript
+class MoveNode{}
 var boxL = null;//容器鼠标点击位置距离容器左上角的位置
 var boxT = null;
 var defe = false;
 var realL = null;// 盒子左距离document的左距离
 var realT = null;
 window.onload = function(){
-    var oDiv = document.getElementById('box1');
-	/* 拖动方块 */
-    function dragInLimit(node){
-         node.onmousedown = function(ev){
-             defe = true;
-             boxL = ev.clientX - node.offsetLeft;
-             boxT = ev.clientY - node.offsetTop;
-             document.onmousemove = function(ev){
-                 if(defe){
-                     realL = ev.clientX - boxL;
-                     realT = ev.clientY - boxT;
-                     if(realL<=0){
-                         realL = 0;
-                     };
-                     if(realT<=0){
-                         realT = 0;
-                     };
-                     if(node.offsetWidth+realL >=document.documentElement.clientWidth){
-                          realL = document.documentElement.clientWidth -node.offsetHeight;
-                     };
-                     if(node.offsetHeight+realT >=document.documentElement.clientHeight){
-                          realT = document.documentElement.clientHeight -node.offsetHeight;
-                     }
-                     node.style.top = (realT) +'px';
-                     node.style.left = (realL) + 'px';
-                 }
-             }
-     }
-      document.onmouseup = function(){
-           defe = false;
-     }
-}
-```
-
-html
-
-```html
-<div id="box1"></div>
+  var oDiv = document.getElementById('box1');
+  /* 拖动方块 */
+  function dragInLimit(node){
+    node.onmousedown = function(ev){
+      defe = true;
+      boxL = ev.clientX - node.offsetLeft;
+      boxT = ev.clientY - node.offsetTop;
+      document.onmousemove = function(ev){
+        if(defe){
+          realL = ev.clientX - boxL;
+          realT = ev.clientY - boxT;
+          if(realL<=0){
+            realL = 0;
+          };
+          if(realT<=0){
+            realT = 0;
+          };
+          if(node.offsetWidth+realL >=document.documentElement.clientWidth){
+            realL = document.documentElement.clientWidth -node.offsetHeight;
+          };
+          if(node.offsetHeight+realT >=document.documentElement.clientHeight){
+            realT = document.documentElement.clientHeight -node.offsetHeight;
+          }
+          node.style.top = (realT) +'px';
+          node.style.left = (realL) + 'px';
+        }
+      }
+    }
+    document.onmouseup = function(){
+      defe = false;
+    }
+  }
 ```
 
 ### 跟随鼠标移动效果

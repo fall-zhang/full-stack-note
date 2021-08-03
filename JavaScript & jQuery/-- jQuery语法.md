@@ -1,12 +1,13 @@
-# Jquery语法
+# jQuery
+
+## jQuery 基础语法
 
 ### 获取jQuery元素
 
 ```javascript
 $("path")
+// path 就是 CSS 选择器，例如：#title .image
 ```
-
-path: 就是CSS选择器
 
 ### 更改CSS样式
 
@@ -17,24 +18,24 @@ $("path").css("height","50px");
 示例：
 
 ```js
-$('.path').text(value);//控制内部文字
-$('.path').css('margin','20px');//控制宽度
-$('.path').attr('src',rate > 0 ? './1.png' : './2.png');//更改路径
-$('.path').hover();//控制鼠标移入时的操作
-$('.path').text(value);
+$('path').text(value);// 控制内部文字
+$('path').css('margin','20px');//控制宽度
+$('path').attr('src',rate > 0 ? './1.png' : './2.png');//更改路径
+$('path').hover();// 控制鼠标移入时的操作
+$('path').text(value);
 ```
 
 用对象填充多个数据
 
 ```javascript
 $('.path').css({
-    height:200,
+    height:200, // 好像是要 px 单位来着。。。
     width:200,
     backgroundColor:'red'
 })
 ```
 
-### 隐式迭代
+**隐式迭代**
 
 - 遍历DOM内部元素，的过程叫做隐式迭代
 - 对所有匹配到的元素内部进行遍历
