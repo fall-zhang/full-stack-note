@@ -187,7 +187,7 @@ module.exports = {
 > 其实`webpack`内部处理转译TypeScript语法也是使用的第三方插件实现的
 >
 > - `webpack `不是以取代 `gulp` 为目的的，而是为了给大型 SPA 提供更好的构建方案
-> - 对大量文件进行流式处理是`gulp`擅长的事
+> - 对大量文件进行流式处理是`gulp`擅长的事。
 > - `rollup` 官网也坦言如果你在构建一个库，`rollup `绝对是首选，但如果是构建一个应用，那么请选 `webpack`。
 
 |          | `Gulp`                                                       | `Webpack`                                                    |
