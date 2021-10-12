@@ -1,10 +1,13 @@
+> 创建时间：2020-12-29
+> 更新时间：2021-10-11
+
 ## shell能做什么
 
-shell和bash的区别
+shell 和 bash的区别
 
-bash和shell是linux下的不同程序，大体功能是一样的
+bash 和 shell 是 linux下的不同程序，大体功能是一样的
 
-### shell的功能
+### shell 的功能
 
 1.自动化批量部署系统初始化(update 软件安装 时区设置 时间对时 安全策略)
 2.自动化批量部署程序）（lamp lnmp tomcat lvs ngx）
