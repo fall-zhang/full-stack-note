@@ -1,3 +1,6 @@
+> Create by **fall** on 2020-08-15
+> Recently revised in 2021年10月13日17:45:23
+
 ## axios的使用
 
 基于Promise，用于浏览器和 node.js 的HTTP客户端(可以调用一个 http 的接口)，能拦截请求和响应，自动转化 json 数据。
@@ -71,12 +74,14 @@ axios.put('/data',{
 ### axios 的全局配置
 
 ```js
-axios.defaults.timeout = 3000 // 响应超时时间
+axios.defaults.timeout = 5000 // 响应超时时间
 axios.defaults.baseURL = 'http://localhost:3000' // 默认基准地址
 axios.defaults.headers['mytoken']= 'adacocizuzxoui322ucuzcoiu' // 设置响应头
 ```
 
 ### axios拦截器
+
+拦截器一般会用于用户的认证，认证通过后，需要在每个请求上都添加认证信息。或者是在服务器状态码为401时，自动跳转到登录界面。
 
 **请求拦截器**
 
@@ -85,7 +90,7 @@ axios.defaults.headers['mytoken']= 'adacocizuzxoui322ucuzcoiu' // 设置响应�
 ```js
 axios.interceptors.request.use(function(config){
   console.log(config.url)
-  config.headers.mytoken = 'hello' // 在header中添加了 mytoken : hello
+  config.headers.mytoken = 'hello' // 在请求头（header）中添加了 mytoken : hello
   return config
 },function(err){
   console.log(err)
@@ -100,6 +105,7 @@ axios.interceptors.request.use(function(config){
 axios.interreceptors.response.use(function(res){
   // 对返回的数据进行处理
   var data = res.data
+  
   return data
 },function(err){
   console.log('有错误信息'+err)
@@ -136,7 +142,6 @@ httpFetch.interreceptors.response.use(res=>{
   }
   // 其他操作
 })
-// 配置拦截响应
 ```
 
 解决跨域问题
@@ -149,8 +154,10 @@ httpFetch.interreceptors.response.use(res=>{
 
 ## 参考文章
 
-| 文章名称         | 文章地址                               |
-| ---------------- | -------------------------------------- |
-| 【vue学习】axios | https://www.jianshu.com/p/d771bbc61dab |
-|                  |                                        |
+| 作者             | 文章地址                                   |
+| ---------------- | ------------------------------------------ |
+| 【vue学习】axios | https://www.jianshu.com/p/d771bbc61dab     |
+| 阿宝哥           | https://juejin.cn/post/6885471967714115597 |
+|                  |                                            |
+|                  |                                            |
 

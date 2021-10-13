@@ -1,5 +1,5 @@
-> 创建时间：2020-11-18
-> 更新时间：2021-09-02
+> Create by **fall** on 2020-11-18
+> Recently revised in 2021-09-02
 
 ## HTML和CSS笔记
 
