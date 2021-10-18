@@ -150,6 +150,28 @@ httpFetch.interreceptors.response.use(res=>{
 
 跨域这个行为是**浏览器禁止**（浏览器不允许当前页面的所在的源去请求另一个源的数据）的，但是服务端并不禁止。
 
+## 源码解读
+
+### 适配器
+
+axios 是如何区分node 还是浏览器环境的
+
+```js
+function getDefaultAdapter() {
+  var adapter;
+  // 通过浏览器和 node 独有的 API 确定当前环境
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = require('./adapters/xhr');
+  } else if (typeof process !== 'undefined' && 
+    Object.prototype.toString.call(process) === '[object process]') {
+    // For node use HTTP adapter
+    adapter = require('./adapters/http');
+  }
+  return adapter;
+}
+```
+
 
 
 ## 参考文章
