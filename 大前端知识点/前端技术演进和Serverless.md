@@ -1,3 +1,6 @@
+> Create by **fall** on 2021-07-13
+> Recently revised in 2021年10月15日14:58:22
+
 ## 前端开发模式的演进
 
 | 发展阶段                | 技术栈                 |
