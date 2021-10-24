@@ -53,11 +53,13 @@
 
 - inherit 继承父元素的 position 属性，但需要注意的是 IE8 以及往前的版本都不支持 inherit 属性。
 
-- sticky 设置了 sticky 的元素，在屏幕范围（viewport）时该元素的位置并不受到定位影响（设置是 top、left 等属性无效），当该元素的位置将要移出偏移范围时，定位又会变成 fixed，根据设置的 left、top 等属性成固定位置的效果。 当元素在容器中被滚动超过指定的偏移值时，元素在容器内固定在指定位置。亦即如果你设置了 top: 50px，那么在 sticky 元素到达距离相对定位的元素顶部 50px 的位置时固定，不再向上移动（相当于此时 fixed 定位）。
+- sticky （在父节点内相对于视图固定）
+
+- 设置了 sticky 的元素，在屏幕范围（viewport）时该元素的位置并不受到定位影响（设置是 top、left 等属性无效），当该元素的位置将要移出偏移范围时，定位又会变成 fixed，根据设置的 left、top 等属性成固定位置的效果。 当元素在容器中被滚动超过指定的偏移值时，元素在容器内固定在指定位置。亦即如果你设置了 top: 50px，那么在 sticky 元素到达距离相对定位的元素顶部 50px 的位置时固定，不再向上移动（相当于此时 fixed 定位）。
 
   **使用场景**：跟随窗口
 
-#### 13 垂直水平居中实现方式
+#### 垂直水平居中实现方式
 
 这道题基本也是 css 经典题目 但是网上已经有太多千篇一律的答案了 如果大家想在这道题加分
 
@@ -65,472 +67,28 @@
 
 建议大家直接看 [面试官：你能实现多少种水平垂直居中的布局（定宽高和不定宽高）](https://juejin.cn/post/6844903982960214029)
 
-#### 14 vue 组件通讯方式有哪些方法
-
-- props 和$emit 父组件向子组件传递数据是通过 prop 传递的，子组件传递数据给父组件是通过$emit 触发事件来做到的
-- $parent,$children 获取当前组件的父组件和当前组件的子组件
-- $attrs 和$listeners A->B->C。Vue 2.4 开始提供了$attrs 和$listeners 来解决这个问题
-- 父组件中通过 provide 来提供变量，然后在子组件中通过 inject 来注入变量。(官方不推荐在实际业务中使用，但是写组件库时很常用)
-- $refs 获取组件实例
-- envetBus 兄弟组件数据传递 这种情况下可以使用事件总线的方式
-- vuex 状态管理
-
-#### 15 Vue 响应式原理
-
-整体思路是数据劫持+观察者模式
-
-对象内部通过 defineReactive 方法，使用 Object.defineProperty 将属性进行劫持（只会劫持已经存在的属性），数组则是通过重写数组方法来实现。当页面使用对应属性时，每个属性都拥有自己的 dep 属性，存放他所依赖的 watcher（依赖收集），当属性变化后会通知自己对应的 watcher 去更新(派发更新)。
-
-相关代码如下
-
-```javascript
-class Observer {
-  // 观测值
-  constructor(value) {
-    this.walk(value);
-  }
-  walk(data) {
-    // 对象上的所有属性依次进行观测
-    let keys = Object.keys(data);
-    for (let i = 0; i < keys.length; i++) {
-      let key = keys[i];
-      let value = data[key];
-      defineReactive(data, key, value);
-    }
-  }
-}
-// Object.defineProperty数据劫持核心 兼容性在ie9以及以上
-function defineReactive(data, key, value) {
-  observe(value); // 递归关键
-  // --如果value还是一个对象会继续走一遍odefineReactive 层层遍历一直到value不是对象才停止
-  //   思考？如果Vue数据嵌套层级过深 >>性能会受影响
-  Object.defineProperty(data, key, {
-    get() {
-      console.log("获取值");
-
-      //需要做依赖收集过程 这里代码没写出来
-      return value;
-    },
-    set(newValue) {
-      if (newValue === value) return;
-      console.log("设置值");
-      //需要做派发更新过程 这里代码没写出来
-      value = newValue;
-    },
-  });
-}
-export function observe(value) {
-  // 如果传过来的是对象或者数组 进行属性劫持
-  if (
-    Object.prototype.toString.call(value) === "[object Object]" ||
-    Array.isArray(value)
-  ) {
-    return new Observer(value);
-  }
-}
-复制代码
-```
-
-响应式数据原理详解 [传送门](https://juejin.cn/post/6935344605424517128)
-
-#### 16 Vue nextTick 原理
-
-nextTick 中的回调是在下次 DOM 更新循环结束之后执行的延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。主要思路就是采用微任务优先的方式调用异步方法去执行 nextTick 包装的方法
-
-相关代码如下
-
-```javascript
-let callbacks = [];
-let pending = false;
-function flushCallbacks() {
-  pending = false; //把标志还原为false
-  // 依次执行回调
-  for (let i = 0; i < callbacks.length; i++) {
-    callbacks[i]();
-  }
-}
-let timerFunc; //定义异步方法  采用优雅降级
-if (typeof Promise !== "undefined") {
-  // 如果支持promise
-  const p = Promise.resolve();
-  timerFunc = () => {
-    p.then(flushCallbacks);
-  };
-} else if (typeof MutationObserver !== "undefined") {
-  // MutationObserver 主要是监听dom变化 也是一个异步方法
-  let counter = 1;
-  const observer = new MutationObserver(flushCallbacks);
-  const textNode = document.createTextNode(String(counter));
-  observer.observe(textNode, {
-    characterData: true,
-  });
-  timerFunc = () => {
-    counter = (counter + 1) % 2;
-    textNode.data = String(counter);
-  };
-} else if (typeof setImmediate !== "undefined") {
-  // 如果前面都不支持 判断setImmediate
-  timerFunc = () => {
-    setImmediate(flushCallbacks);
-  };
-} else {
-  // 最后降级采用setTimeout
-  timerFunc = () => {
-    setTimeout(flushCallbacks, 0);
-  };
-}
-
-export function nextTick(cb) {
-  // 除了渲染watcher  还有用户自己手动调用的nextTick 一起被收集到数组
-  callbacks.push(cb);
-  if (!pending) {
-    // 如果多次调用nextTick  只会执行一次异步 等异步队列清空之后再把标志变为false
-    pending = true;
-    timerFunc();
-  }
-}
-复制代码
-```
-
-nextTick 原理详解 [传送门](https://juejin.cn/post/6939704519668432910#heading-4)
-
-#### 17 Vue diff 原理
-
-![diff算法.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9e3c68d1b0884d9ca0f8ffc5ee64a28e~tplv-k3u1fbpfcp-watermark.image)
-
-建议直接看 diff 算法详解 [传送门](https://juejin.cn/post/6953433215218483236)
-
-#### 18 路由原理 history 和 hash 两种路由方式的特点
+#### 路由原理 history 和 hash 两种路由方式的特点
 
 **hash 模式**
 
-1. location.hash 的值实际就是 URL 中#后面的东西 它的特点在于：hash 虽然出现 URL 中，但不会被包含在 HTTP 请求中，对后端完全没有影响，因此改变 hash 不会重新加载页面。
-2. 可以为 hash 的改变添加监听事件
+- location.hash 的值实际就是 URL 中#后面的东西 它的特点在于：hash 虽然出现 URL 中，但不会被包含在 HTTP 请求中，对后端完全没有影响，因此改变 hash 不会重新加载页面。
+- 可以为 hash 的改变添加监听事件
 
 ```javascript
-window.addEventListener("hashchange", funcRef, false);
-复制代码
+window.addEventListener("hashchange", funcRef, false)
 ```
 
-每一次改变 hash（window.location.hash），都会在浏览器的访问历史中增加一个记录利用 hash 的以上特点，就可以来实现前端路由“更新视图但不重新请求页面”的功能了
+每一次改变 hash（window.location.hash），都会在浏览器的访问历史中增加一个记录利用 hash 的以上特点，就可以实现前端路由更新视图但不重新请求页面
 
-> 特点：兼容性好但是不美观
+> 特点：兼容性好但是不美观（话说美观也不重要吧，手机端看不见URL）
 
 **history 模式**
 
-利用了 HTML5 History Interface 中新增的 pushState() 和 replaceState() 方法。
+利用了 HTML5 History Interface 中新增的 pushState() 和 replaceState() 方法，两个方法应用于浏览器的历史记录站。这两个方法修改浏览器历史记录栈后，虽然当前 URL 改变了，但浏览器不会刷新页面，以此实现更新视图但不重新请求页面，实现单页应用前端路由。
 
-这两个方法应用于浏览器的历史记录站，在当前已有的 back、forward、go 的基础之上，它们提供了对历史记录进行修改的功能。这两个方法有个共同的特点：当调用他们修改浏览器历史记录栈后，虽然当前 URL 改变了，但浏览器不会刷新页面，这就为单页应用前端路由“更新视图但不重新请求页面”提供了基础。
+当前已有的 back、forward、go 的基础之上，它们提供了对历史记录进行修改的功能。
 
 > 特点：虽然美观，但是刷新会出现 404 需要后端进行配置
-
-#### 19 手写 bind
-
-```js
-//bind实现要复杂一点  因为他考虑的情况比较多 还要涉及到参数合并(类似函数柯里化)
-Function.prototype.myBind = function (context, ...args) {
-  if (!context || context === null) {
-    context = window;
-  }
-  // 创造唯一的key值  作为我们构造的context内部方法名
-  let fn = Symbol();
-  context[fn] = this;
-  let _this = this;
-  //  bind情况要复杂一点
-  const result = function (...innerArgs) {
-    // 第一种情况 :若是将 bind 绑定之后的函数当作构造函数，通过 new 操作符使用，则不绑定传入的 this，而是将 this 指向实例化出来的对象
-    // 此时由于new操作符作用  this指向result实例对象  而result又继承自传入的_this 根据原型链知识可得出以下结论
-    // this.__proto__ === result.prototype   //this instanceof result =>true
-    // this.__proto__.__proto__ === result.prototype.__proto__ === _this.prototype; //this instanceof _this =>true
-    if (this instanceof _this === true) {
-      // 此时this指向指向result的实例  这时候不需要改变this指向
-      this[fn] = _this;
-      this[fn](...[...args, ...innerArgs]); //这里使用es6的方法让bind支持参数合并
-      delete this[fn];
-    } else {
-      // 如果只是作为普通函数调用  那就很简单了 直接改变this指向为传入的context
-      context[fn](...[...args, ...innerArgs]);
-      delete context[fn];
-    }
-  };
-  // 如果绑定的是构造函数 那么需要继承构造函数原型属性和方法
-  // 实现继承的方式: 使用Object.create
-  result.prototype = Object.create(this.prototype);
-  return result;
-};
-
-//用法如下
-
-// function Person(name, age) {
-//   console.log(name); //'我是参数传进来的name'
-//   console.log(age); //'我是参数传进来的age'
-//   console.log(this); //构造函数this指向实例对象
-// }
-// // 构造函数原型的方法
-// Person.prototype.say = function() {
-//   console.log(123);
-// }
-// let obj = {
-//   objName: '我是obj传进来的name',
-//   objAge: '我是obj传进来的age'
-// }
-// // 普通函数
-// function normalFun(name, age) {
-//   console.log(name);   //'我是参数传进来的name'
-//   console.log(age);   //'我是参数传进来的age'
-//   console.log(this); //普通函数this指向绑定bind的第一个参数 也就是例子中的obj
-//   console.log(this.objName); //'我是obj传进来的name'
-//   console.log(this.objAge); //'我是obj传进来的age'
-// }
-
-// 先测试作为构造函数调用
-// let bindFun = Person.myBind(obj, '我是参数传进来的name')
-// let a = new bindFun('我是参数传进来的age')
-// a.say() //123
-
-// 再测试作为普通函数调用
-// let bindFun = normalFun.myBind(obj, '我是参数传进来的name')
-//  bindFun('我是参数传进来的age')
-复制代码
-```
-
-#### 19 手写 promise.all 和 race（京东）
-
-```js
-  //静态方法
-  static all(promiseArr) {
-    let result = [];
-    //声明一个计数器 每一个promise返回就加一
-    let count = 0;
-    return new Mypromise((resolve, reject) => {
-      for (let i = 0; i < promiseArr.length; i++) {
-      //这里用 Promise.resolve包装一下 防止不是Promise类型传进来
-        Promise.resolve(promiseArr[i]).then(
-          (res) => {
-            //这里不能直接push数组  因为要控制顺序一一对应(感谢评论区指正)
-            result[i] = res;
-            count++;
-            //只有全部的promise执行成功之后才resolve出去
-            if (count === promiseArr.length) {
-              resolve(result);
-            }
-          },
-          (err) => {
-            reject(err);
-          }
-        );
-      }
-    });
-  }
-  //静态方法
-  static race(promiseArr) {
-    return new Mypromise((resolve, reject) => {
-      for (let i = 0; i < promiseArr.length; i++) {
-        Promise.resolve(promiseArr[i]).then(
-          (res) => {
-            //promise数组只要有任何一个promise 状态变更  就可以返回
-            resolve(res);
-          },
-          (err) => {
-            reject(err);
-          }
-        );
-      }
-    });
-  }
-}
-复制代码
-```
-
-#### 20 手写-实现一个寄生组合继承
-
-```js
-function Parent(name) {
-  this.name = name;
-  this.say = () => {
-    console.log(111);
-  };
-}
-Parent.prototype.play = () => {
-  console.log(222);
-};
-function Children(name) {
-  Parent.call(this);
-  this.name = name;
-}
-Children.prototype = Object.create(Parent.prototype);
-Children.prototype.constructor = Children;
-// let child = new Children("111");
-// // console.log(child.name);
-// // child.say();
-// // child.play();
-复制代码
-```
-
-#### 21 手写-new 操作符
-
-```js
-function myNew(fn, ...args) {
-  let obj = Object.create(fn.prototype);
-  let res = fn.call(obj, ...args);
-  if (res && (typeof res === "object" || typeof res === "function")) {
-    return res;
-  }
-  return obj;
-}
-用法如下：
-// // function Person(name, age) {
-// //   this.name = name;
-// //   this.age = age;
-// // }
-// // Person.prototype.say = function() {
-// //   console.log(this.age);
-// // };
-// // let p1 = myNew(Person, "lihua", 18);
-// // console.log(p1.name);
-// // console.log(p1);
-// // p1.say();
-
-复制代码
-```
-
-#### 22 手写-setTimeout 模拟实现 setInterval（阿里）
-
-```js
-function mySetInterval(fn, time = 1000) {
-  let timer = null,
-    isClear = false;
-  function interval() {
-    if (isClear) {
-      isClear = false;
-      clearTimeout(timer);
-      return;
-    }
-    fn();
-    timer = setTimeout(interval, time);
-  }
-  timer = setTimeout(interval, time);
-  return () => {
-    isClear = true;
-  };
-}
-
-// let a = mySettimeout(() => {
-//   console.log(111);
-// }, 1000)
-// let cancel = mySettimeout(() => {
-//   console.log(222)
-// }, 1000)
-// cancel()
-复制代码
-```
-
-#### 23 手写-发布订阅模式（字节）
-
-```js
-class EventEmitter {
-  constructor() {
-    this.events = {};
-  }
-  // 实现订阅
-  on(type, callBack) {
-    if (!this.events[type]) {
-      this.events[type] = [callBack];
-    } else {
-      this.events[type].push(callBack);
-    }
-  }
-  // 删除订阅
-  off(type, callBack) {
-    if (!this.events[type]) return;
-    this.events[type] = this.events[type].filter((item) => {
-      return item !== callBack;
-    });
-  }
-  // 只执行一次订阅事件
-  once(type, callBack) {
-    function fn() {
-      callBack();
-      this.off(type, fn);
-    }
-    this.on(type, fn);
-  }
-  // 触发事件
-  emit(type, ...rest) {
-    this.events[type] &&
-      this.events[type].forEach((fn) => fn.apply(this, rest));
-  }
-}
-// 使用如下
-// const event = new EventEmitter();
-
-// const handle = (...rest) => {
-//   console.log(rest);
-// };
-
-// event.on("click", handle);
-
-// event.emit("click", 1, 2, 3, 4);
-
-// event.off("click", handle);
-
-// event.emit("click", 1, 2);
-
-// event.once("dbClick", () => {
-//   console.log(123456);
-// });
-// event.emit("dbClick");
-// event.emit("dbClick");
-复制代码
-```
-
-#### 24 手写-防抖节流（京东）
-
-```js
-// 防抖
-function debounce(fn, delay = 300) {
-  //默认300毫秒
-  let timer;
-  return function () {
-    const args = arguments;
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      fn.apply(this, args); // 改变this指向为调用debounce所指的对象
-    }, delay);
-  };
-}
-
-window.addEventListener(
-  "scroll",
-  debounce(() => {
-    console.log(111);
-  }, 1000)
-);
-
-// 节流
-// 设置一个标志
-function throttle(fn, delay) {
-  let flag = true;
-  return () => {
-    if (!flag) return;
-    flag = false;
-    timer = setTimeout(() => {
-      fn();
-      flag = true;
-    }, delay);
-  };
-}
-
-window.addEventListener(
-  "scroll",
-  throttle(() => {
-    console.log(111);
-  }, 1000)
-);
-复制代码
-```
 
 #### 25 手写-将虚拟 Dom 转化为真实 Dom（类似的递归题-必考）
 
@@ -599,417 +157,9 @@ function _render(vnode) {
 复制代码
 ```
 
-#### 26 手写-实现一个对象的 flatten 方法（阿里）
+#### 中等
 
-题目描述
-
-```
-const obj = {
- a: {
-        b: 1,
-        c: 2,
-        d: {e: 5}
-    },
- b: [1, 3, {a: 2, b: 3}],
- c: 3
-}
-
-flatten(obj) 结果返回如下
-// {
-//  'a.b': 1,
-//  'a.c': 2,
-//  'a.d.e': 5,
-//  'b[0]': 1,
-//  'b[1]': 3,
-//  'b[2].a': 2,
-//  'b[2].b': 3
-//   c: 3
-// }
-
-复制代码
-```
-
-答案
-
-```js
-function isObject(val) {
-  return typeof val === "object" && val !== null;
-}
-
-function flatten(obj) {
-  if (!isObject(obj)) {
-    return;
-  }
-  let res = {};
-  const dfs = (cur, prefix) => {
-    if (isObject(cur)) {
-      if (Array.isArray(cur)) {
-        cur.forEach((item, index) => {
-          dfs(item, `${prefix}[${index}]`);
-        });
-      } else {
-        for (let k in cur) {
-          dfs(cur[k], `${prefix}${prefix ? "." : ""}${k}`);
-        }
-      }
-    } else {
-      res[prefix] = cur;
-    }
-  };
-  dfs(obj, "");
-
-  return res;
-}
-flatten();
-复制代码
-```
-
-#### 27 手写-判断括号字符串是否有效（小米）
-
-题目描述
-
-```js
-给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
-
-有效字符串需满足：
-
-    左括号必须用相同类型的右括号闭合。
-    左括号必须以正确的顺序闭合。
-
-示例 1：
-
-输入：s = "()"
-输出：true
-
-示例 2：
-
-输入：s = "()[]{}"
-输出：true
-
-示例 3：
-
-输入：s = "(]"
-输出：false
-复制代码
-```
-
-答案
-
-```js
-const isValid = function (s) {
-  if (s.length % 2 === 1) {
-    return false;
-  }
-  const regObj = {
-    "{": "}",
-    "(": ")",
-    "[": "]",
-  };
-  let stack = [];
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] === "{" || s[i] === "(" || s[i] === "[") {
-      stack.push(s[i]);
-    } else {
-      const cur = stack.pop();
-      if (s[i] !== regObj[cur]) {
-        return false;
-      }
-    }
-  }
-
-  if (stack.length) {
-    return false;
-  }
-
-  return true;
-};
-复制代码
-```
-
-#### 28 手写-查找数组公共前缀（美团）
-
-题目描述
-
-```js
-编写一个函数来查找字符串数组中的最长公共前缀。
-如果不存在公共前缀，返回空字符串 ""。
-
-示例 1：
-
-输入：strs = ["flower","flow","flight"]
-输出："fl"
-
-示例 2：
-
-输入：strs = ["dog","racecar","car"]
-输出：""
-解释：输入不存在公共前缀。
-复制代码
-```
-
-答案
-
-```js
-const longestCommonPrefix = function (strs) {
-  const str = strs[0];
-  let index = 0;
-  while (index < str.length) {
-    const strCur = str.slice(0, index + 1);
-    for (let i = 0; i < strs.length; i++) {
-      if (!strs[i] || !strs[i].startsWith(strCur)) {
-        return str.slice(0, index);
-      }
-    }
-    index++;
-  }
-  return str;
-};
-复制代码
-```
-
-#### 29 手写-字符串最长的不重复子串
-
-题目描述
-
-```js
-给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
-
-
-示例 1:
-
-输入: s = "abcabcbb"
-输出: 3
-解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
-
-示例 2:
-
-输入: s = "bbbbb"
-输出: 1
-解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
-
-示例 3:
-
-输入: s = "pwwkew"
-输出: 3
-解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
-     请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
-
-示例 4:
-
-输入: s = ""
-输出: 0
-复制代码
-```
-
-答案
-
-```js
-const lengthOfLongestSubstring = function (s) {
-  if (s.length === 0) {
-    return 0;
-  }
-
-  let left = 0;
-  let right = 1;
-  let max = 0;
-  while (right <= s.length) {
-    let lr = s.slice(left, right);
-    const index = lr.indexOf(s[right]);
-
-    if (index > -1) {
-      left = index + left + 1;
-    } else {
-      lr = s.slice(left, right + 1);
-      max = Math.max(max, lr.length);
-    }
-    right++;
-  }
-  return max;
-};
-复制代码
-```
-
-#### 30 手写-如何找到数组中第一个没出现的最小正整数 怎么优化（字节）
-
-```
-给你一个未排序的整数数组 nums ，请你找出其中没有出现的最小的正整数。
-请你实现时间复杂度为 O(n) 并且只使用常数级别额外空间的解决方案。
-
-示例 1：
-
-输入：nums = [1,2,0]
-输出：3
-
-示例 2：
-
-输入：nums = [3,4,-1,1]
-输出：2
-
-示例 3：
-
-输入：nums = [7,8,9,11,12]
-输出：1
-复制代码
-```
-
-这是一道字节的算法题 目的在于不断地去优化算法思路
-
-- 第一版 O(n^2) 的方法
-
-```js
-const firstMissingPositive = (nums) => {
-  let i = 0;
-  let res = 1;
-  while (i < nums.length) {
-    if (nums[i] == res) {
-      res++;
-      i = 0;
-    } else {
-      i++;
-    }
-  }
-  return res;
-};
-复制代码
-```
-
-- 第二版 时间空间均为 O(n)
-
-```js
-const firstMissingPositive = (nums) => {
-  const set = new Set();
-  for (let i = 0; i < nums.length; i++) {
-    set.add(nums[i]);
-  }
-  for (let i = 1; i <= nums.length + 1; i++) {
-    if (!set.has(i)) {
-      return i;
-    }
-  }
-};
-复制代码
-```
-
-- 最终版 时间复杂度为 O(n) 并且只使用常数级别空间
-
-```js
-const firstMissingPositive = (nums) => {
-  for (let i = 0; i < nums.length; i++) {
-    while (
-      nums[i] >= 1 &&
-      nums[i] <= nums.length && // 对1~nums.length范围内的元素进行安排
-      nums[nums[i] - 1] !== nums[i] // 已经出现在理想位置的，就不用交换
-    ) {
-      const temp = nums[nums[i] - 1]; // 交换
-      nums[nums[i] - 1] = nums[i];
-      nums[i] = temp;
-    }
-  }
-  // 现在期待的是 [1,2,3,...]，如果遍历到不是放着该放的元素
-  for (let i = 0; i < nums.length; i++) {
-    if (nums[i] != i + 1) {
-      return i + 1;
-    }
-  }
-  return nums.length + 1; // 发现元素 1~nums.length 占满了数组，一个没缺
-};
-复制代码
-```
-
-#### 31 手写-怎么在制定数据源里面生成一个长度为 n 的不重复随机数组 能有几种方法 时间复杂度多少（字节）
-
-- 第一版 时间复杂度为 O(n^2)
-
-```js
-function getTenNum(testArray, n) {
-  let result = [];
-  for (let i = 0; i < n; ++i) {
-    const random = Math.floor(Math.random() * testArray.length);
-    const cur = testArray[random];
-    if (result.includes(cur)) {
-      i--;
-      break;
-    }
-    result.push(cur);
-  }
-  return result;
-}
-const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-const resArr = getTenNum(testArray, 10);
-复制代码
-```
-
-- 第二版 标记法 / 自定义属性法 时间复杂度为 O(n)
-
-```js
-function getTenNum(testArray, n) {
-  let hash = {};
-  let result = [];
-  let ranNum = n;
-  while (ranNum > 0) {
-    const ran = Math.floor(Math.random() * testArray.length);
-    if (!hash[ran]) {
-      hash[ran] = true;
-      result.push(ran);
-      ranNum--;
-    }
-  }
-  return result;
-}
-const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-const resArr = getTenNum(testArray, 10);
-复制代码
-```
-
-- 第三版 交换法 时间复杂度为 O(n)
-
-```js
-function getTenNum(testArray, n) {
-  const cloneArr = [...testArray];
-  let result = [];
-  for (let i = 0; i < n; i++) {
-    debugger;
-    const ran = Math.floor(Math.random() * (cloneArr.length - i));
-    result.push(cloneArr[ran]);
-    cloneArr[ran] = cloneArr[cloneArr.length - i - 1];
-  }
-  return result;
-}
-const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-const resArr = getTenNum(testArray, 14);
-复制代码
-```
-
-> 值得一提的是操作数组的时候使用交换法 这种思路在算法里面很常见
-
-- 最终版 边遍历边删除 时间复杂度为 O(n)
-
-```js
-function getTenNum(testArray, n) {
-  const cloneArr = [...testArray];
-  let result = [];
-  for (let i = 0; i < n; ++i) {
-    const random = Math.floor(Math.random() * cloneArr.length);
-    const cur = cloneArr[random];
-    result.push(cur);
-    cloneArr.splice(random, 1);
-  }
-  return result;
-}
-const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-const resArr = getTenNum(testArray, 14);
-复制代码
-```
-
-### 中等
-
-#### 1 Webpack 有哪些优化手段
-
-随着项目越来越大，Webpack 构建速度可能会越来越慢，构建出来的 js 的体积也越来越大，此时就需要对 Webpack 的配置进行优化
-
-这个知识点可以单独开一篇文章 大家请看 [带你深度解锁 Webpack 系列(优化篇)](https://juejin.cn/post/6844904093463347208)
-
-#### 2 css 怎么开启硬件加速(GPU 加速)
+### css 怎么开启硬件加速(GPU 加速)
 
 浏览器在处理下面的 css 的时候，会使用 GPU 渲染
 
@@ -1022,53 +172,47 @@ const resArr = getTenNum(testArray, 14);
 采用 transform: translateZ(0)
 采用 transform: translate3d(0, 0, 0)
 使用 CSS 的 will-change属性。 will-change 可以设置为opacity、transform、top、left、bottom、right。
-复制代码
 ```
 
 > 注意！层爆炸，由于某些原因可能导致产生大量不在预期内的合成层，虽然有浏览器的层压缩机制，但是也有很多无法进行压缩的情况，这就可能出现层爆炸的现象（简单理解就是，很多不需要提升为合成层的元素因为某些不当操作成为了合成层）。解决层爆炸的问题，最佳方案是打破 overlap 的条件，也就是说让其他元素不要和合成层元素重叠。简单直接的方式：使用 3D 硬件加速提升动画性能时，最好给元素增加一个 z-index 属性，人为干扰合成的排序，可以有效减少创建不必要的合成层，提升渲染性能，移动端优化效果尤为明显。
 
-#### 3 常用设计模式有哪些并举例使用场景
+#### 常用设计模式有哪些并举例使用场景
 
-1.工厂模式 - 传入参数即可创建实例
+- 工厂模式 - 传入参数即可创建实例
 
 虚拟 DOM 根据参数的不同返回基础标签的 Vnode 和组件 Vnode
 
-2.单例模式 - 整个程序有且仅有一个实例
+- 单例模式 - 整个程序有且仅有一个实例
 
 vuex 和 vue-router 的插件注册方法 install 判断如果系统存在实例就直接返回掉
 
-3.发布-订阅模式 (vue 事件机制)
+- 发布-订阅模式 (vue 事件机制)
 
-4.观察者模式 (响应式数据原理)
+- 观察者模式 (响应式数据原理)
 
-5.装饰模式: (@装饰器的用法)
+- 装饰模式: (@装饰器的用法)
 
-6.策略模式 策略模式指对象有某个行为,但是在不同的场景中,该行为有不同的实现方案-比如选项的合并策略
+- 策略模式 策略模式指对象有某个行为,但是在不同的场景中,该行为有不同的实现方案-比如选项的合并策略
 
-...其他模式欢迎补充
-
-#### 4 浏览器缓存策略是怎样的（强缓存 协商缓存）具体是什么过程？
+#### 浏览器缓存策略是怎样的（强缓存 协商缓存）具体是什么过程？
 
 这个也是经典的前端缓存问题 知识点加起来是一篇文章了 推荐大家看 [前端浏览器缓存知识梳理](https://juejin.cn/post/6947936223126093861)
 
-#### 5 https 加密过程是怎样的
+### https 加密过程是怎样的
 
-使用了对称加密可非对称加密的混合方式
+使用了对称加密和非对称加密的混合方式
 
 具体过程请看 [前端进阶高薪必看-HTTPS 篇](https://juejin.cn/post/6844904150115827725)
 
-#### 6 flex:1 是哪些属性组成的
+### flex:是哪些属性组成的
 
 flex 实际上是 flex-grow、flex-shrink 和 flex-basis 三个属性的缩写。
 
-flex-grow：定义项目的的放大比例；
+flex-grow：定义项目的的放大比例
 
-```
-默认为0，即 即使存在剩余空间，也不会放大；
-所有项目的flex-grow为1：等分剩余空间（自动放大占位）；
-flex-grow为n的项目，占据的空间（放大的比例）是flex-grow为1的n倍。
-复制代码
-```
+- 默认为0，即 即使存在剩余空间，也不会放大
+- 所有项目的flex-grow为1：等分剩余空间（自动放大占位）
+- flex-grow为n的项目，占据的空间（放大的比例）是flex-grow为1的n倍。
 
 flex-shrink：定义项目的缩小比例；
 
@@ -1076,8 +220,7 @@ flex-shrink：定义项目的缩小比例；
 默认为1，即 如果空间不足，该项目将缩小；
 所有项目的flex-shrink为1：当空间不足时，缩小的比例相同；
 flex-shrink为0：空间不足时，该项目不会缩小；
-flex-shrink为n的项目，空间不足时缩小的比例是flex-shrink为1的n倍。
-复制代码
+flex-shrink为n的项目，空间不足时缩小的比例是flex-shrink为1的n倍9。
 ```
 
 flex-basis： 定义在分配多余空间之前，项目占据的主轴空间（main size），浏览器根据此属性计算主轴是否有多余空间
@@ -1085,10 +228,9 @@ flex-basis： 定义在分配多余空间之前，项目占据的主轴空间（
 ```
 默认值为auto，即 项目原本大小；
 设置后项目将占据固定空间。
-复制代码
 ```
 
-#### 7 304 是什么意思 一般什么场景出现 ，命中强缓存返回什么状态码
+#### 304 是什么意思 一般什么场景出现 ，命中强缓存返回什么状态码
 
 **协商缓存命中返回 304**
 
@@ -1110,62 +252,13 @@ If-Modified-Since: Thu, 20 Jun 2019 15:58:05 GMT
 请求头last-modified的日期与响应头的last-modified一致
 请求头if-none-match的hash与响应头的etag一致
 这两种情况会返回Status Code: 304
-复制代码
 ```
 
 **强缓存命中返回 200** 200（from cache）
 
-#### 8 手写 Vue.extend 实现
+> 
 
-```js
-//  src/global-api/initExtend.js
-import { mergeOptions } from "../util/index";
-export default function initExtend(Vue) {
-  let cid = 0; //组件的唯一标识
-  // 创建子类继承Vue父类 便于属性扩展
-  Vue.extend = function (extendOptions) {
-    // 创建子类的构造函数 并且调用初始化方法
-    const Sub = function VueComponent(options) {
-      this._init(options); //调用Vue初始化方法
-    };
-    Sub.cid = cid++;
-    Sub.prototype = Object.create(this.prototype); // 子类原型指向父类
-    Sub.prototype.constructor = Sub; //constructor指向自己
-    Sub.options = mergeOptions(this.options, extendOptions); //合并自己的options和父类的options
-    return Sub;
-  };
-}
-复制代码
-```
-
-具体可以看看这篇 [手写 Vue2.0 源码（八）-组件原理](https://juejin.cn/post/6954173708344770591)
-
-#### 9 vue-router 中路由方法 pushState 和 replaceState 能否触发 popSate 事件
-
-答案是：**不能**
-
-pushState 和 replaceState
-
-HTML5 新接口，可以改变网址(存在跨域限制)而不刷新页面，这个强大的特性后来用到了单页面应用如：vue-router，react-router-dom 中。
-
-注意:仅改变网址,网页不会真的跳转,也不会获取到新的内容,本质上网页还停留在原页面
-
-```js
-window.history.pushState(state, title, targetURL);
-@状态对象：传给目标路由的信息,可为空
-@页面标题：目前所有浏览器都不支持,填空字符串即可
-@可选url：目标url，不会检查url是否存在，且不能跨域。如不传该项,即给当前url添加data
-
-window.history.replaceState(state, title, targetURL);
-@类似于pushState,但是会直接替换掉当前url,而不会在history中留下记录
-复制代码
-```
-
-popstate 事件会在点击后退、前进按钮(或调用 history.back()、history.forward()、history.go()方法)时触发
-
-> **注意:用 history.pushState()或者 history.replaceState()不会触发 popstate 事件**
-
-#### 10 tree shaking 是什么，原理是什么
+#### tree shaking 是什么，原理是什么
 
 Tree shaking 是一种通过**清除多余代码方式**来优化项目打包体积的技术，专业术语叫 Dead code elimination
 
@@ -1192,7 +285,7 @@ CommonJS 是一种模块规范，最初被应用于 Nodejs，成为 Nodejs 的�
 
 5、CommonJs 的 this 是当前模块，ES6 Module 的 this 是 undefined
 
-#### 11 babel 是什么，原理了解吗
+#### babel 是什么，原理了解吗
 
 Babel 是一个 JavaScript 编译器。他把最新版的 javascript 编译成当下可以执行的版本，简言之，利用 babel 就可以让我们在当前的项目中随意的使用这些新最新的 es6，甚至 es7 的语法。
 
@@ -1204,31 +297,6 @@ Babel 的三个主要处理步骤分别是： 解析（parse），转换（trans
 
 还想深入了解的可以看 [[实践系列\]Babel 原理](https://juejin.cn/post/6844903760603398151)
 
-#### 12 原型链判断
-
-请写出下面的答案
-
-```js
-Object.prototype.__proto__;
-Function.prototype.__proto__;
-Object.__proto__;
-Object instanceof Function;
-Function instanceof Object;
-Function.prototype === Function.__proto__;
-复制代码
-Object.prototype.__proto__; //null
-Function.prototype.__proto__; //Object.prototype
-Object.__proto__; //Function.prototype
-Object instanceof Function; //true
-Function instanceof Object; //true
-Function.prototype === Function.__proto__; //true
-复制代码
-```
-
-这道题目深入考察了原型链相关知识点 尤其是 Function 和 Object 的之间的关系
-
-强烈推荐大家看看这篇文章 看完就清楚了 [JavaScript 原型系列（三）Function、Object、null 等等的关系和鸡蛋问题](https://juejin.cn/post/6844903937418461198)
-
 #### 13 RAF 和 RIC 是什么
 
 **requestAnimationFrame：** 告诉浏览器在下次重绘之前执行传入的回调函数(通常是操纵 dom，更新动画的函数)；由于是每帧执行一次，那结果就是每秒的执行次数与浏览器屏幕刷新次数一样，通常是每秒 60 次。
@@ -1239,7 +307,7 @@ Function.prototype === Function.__proto__; //true
 
 ### 困难
 
-#### 1 Es6 的 let 实现原理
+#### Es6 的 let 实现原理
 
 原始 es6 代码
 
@@ -1251,7 +319,6 @@ for (let i = 0; i < 10; i++) {
   };
 }
 funcs[0](); // 0
-复制代码
 ```
 
 babel 编译之后的 es5 代码（polyfill）
@@ -1269,7 +336,6 @@ for (var i = 0; i < 10; i++) {
   _loop(i);
 }
 funcs[0](); // 0
-复制代码
 ```
 
 其实我们根据 babel 编译之后的结果可以看得出来 let 是借助闭包和函数作用域来实现块级作用域的效果的 在不同的情况下 let 的编译结果是不一样的
