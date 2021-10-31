@@ -1,5 +1,5 @@
 >Create by **fall** on 2021年10月26日19:15:51
->Recently revised in 2021-09-02
+>Recently revised in 2021年10月31日18:09:39
 
 ## 文件结构
 
@@ -7,11 +7,9 @@
 <template>
   // Vue2中，template标签中只能有一个根元素，在Vue3中没有此限制
 </template>
-
 <script setup>
   // ...
 </script>
-
 <style lang="scss" scoped>
   // 支持CSS变量注入v-bind(color)
 </style>
@@ -41,7 +39,7 @@
 
 ## method
 
-```javascript
+```vue
 <template>
   // 调用方法
   <button @click='changeName'>按钮</button>  
@@ -59,7 +57,6 @@
     state.name = 'Tom'
   }  
 </script>
-复制代码
 ```
 
 ## computed
@@ -122,7 +119,7 @@ watch([()=>data1,()=>data2],()=>{
 })
 ```
 
-### watchEffect
+## watchEffect
 
 在组件初始化时， 会先执行一次来收集依赖， 然后当收集到的依赖中数据发生变化时， 就会再次执行回调函数。
 
@@ -149,13 +146,11 @@ watch([()=>data1,()=>data2],()=>{
 </script>
 ```
 
-
-
-## 六、props父传子
+## props父传子
 
 ### 子组件
 
-```javascript
+```vue
 <template>
   <span>{{props.name}}</span>
   // 可省略【props.】
@@ -166,8 +161,7 @@ watch([()=>data1,()=>data2],()=>{
   // import { defineProps } from 'vue'
   // defineProps在<script setup>中自动可用，无需导入
   // 需在.eslintrc.js文件中【globals】下配置【defineProps: true】
-
-  // 声明props
+  // 声明 props
   const props = defineProps({
     name: {
       type: String,
@@ -175,7 +169,6 @@ watch([()=>data1,()=>data2],()=>{
     }
   })  
 </script>
-复制代码
 ```
 
 ### 父组件
@@ -189,7 +182,6 @@ watch([()=>data1,()=>data2],()=>{
   // 引入子组件
   import child from './child.vue'
 </script>
-复制代码
 ```
 
 ## 七、emit子传父
@@ -423,27 +415,21 @@ watch([()=>data1,()=>data2],()=>{
 
 *Vue3 中的Vuex不再提供辅助函数写法
 
-```javascript
+```vue
 <script setup>
   import { useStore } from 'vuex'
   import { key } from '../store/index'
-
   // 必须先声明调用
   const store = useStore(key)
-	
   // 获取Vuex的state
   store.state.xxx
-
   // 触发mutations的方法
   store.commit('fnName')
-
   // 触发actions的方法
   store.dispatch('fnName')
-
   // 获取Getters
   store.getters.xxx
 </script>
-复制代码
 ```
 
 ## 十四、生命周期
