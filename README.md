@@ -1,7 +1,13 @@
 > Create by **fall** on 2020-11-18
-> Recently revised in 2021-09-02
+> Recently revised in 2021年11月1日11:14:29
 
-## HTML和CSS笔记
+# Fall的笔记仓库
+
+Github：https://github.com/Fall-zhang/self-note
+
+Gitee：https://gitee.com/mywings/noteself
+
+## HTML 和 CSS笔记
 
 最稳定的一部分，很少进行修改，以HTML/CSS知识点为主
 
@@ -23,7 +29,7 @@
 
 将Linux相关内容，2021年没有更新计划
 
-## MongoDB和其它数据库
+## MongoDB 和其它数据库
 
 就是数据库相关的内容，以MongoDB为主吧
 
@@ -42,11 +48,11 @@ vue 框架相关的内容，特性，官方组件，关于vue的知识点
 
 ## 第三方SDK
 
-前端的一些开发包的使用，包括地图之类，echart
+前端的一些开发包的使用，包括地图SDK，echart，axios，webpack
 
 ## 大前端知识点
 
-不同于 JavaScript & jQuery 这个模块，大前端知识点主要负责，文字居多，不怎么有代码相关的内容，算是知识点吧
+不同于 JavaScript & jQuery 这个模块，大前端知识点主要负责，文字居多，不怎么有代码相关的内容，算是前端所涉及到的知识点吧
 
 ## 技术思想
 
