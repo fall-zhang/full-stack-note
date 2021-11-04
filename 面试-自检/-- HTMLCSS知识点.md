@@ -1,7 +1,7 @@
 > Create by **fall** on 2021-10-18
 > Recently revised in 2021-10-18 13:52:00
 
-#### css 的渲染层合成是什么 浏览器如何创建新的渲染层
+### css 的渲染层合成是什么 浏览器如何创建新的渲染层
 
 在 DOM 树中每个节点都会对应一个渲染对象（RenderObject），当它们的渲染对象处于相同的坐标空间（z 轴空间）时，就会形成一个 RenderLayers，也就是渲染层。渲染层将保证页面元素以正确的顺序堆叠，这时候就会出现**层合成（composite）**，从而正确处理透明元素和重叠元素的显示。对于有位置重叠的元素的页面，这个过程尤其重要，因为一旦图层的合并顺序出错，将会导致元素显示异常。
 
@@ -22,7 +22,7 @@
 
 > 注意！不少人会将这些**合成层的条件和渲染层产生的条件**混淆，这两种条件发生在两个不同的层处理环节，是完全不一样的 具体可以看看这篇文章 [浏览器层合成与页面渲染优化](https://juejin.cn/post/6844903966573068301)
 
-#### css 优先级是怎么计算的
+### css 优先级是怎么计算的
 
 - 第一优先级：!important 会覆盖页面内任何位置的元素样式
 - 1.内联样式，如 style="color: green"，权值为 1000
@@ -32,7 +32,7 @@
 - 5.通配符、子类选择器、兄弟选择器，如*, >, +，权值为 0000
 - 6.继承的样式没有权值
 
-#### position 有哪些值，作用分别是什么
+### position 有哪些值，作用分别是什么
 
 - static
 
@@ -59,7 +59,7 @@
 
   **使用场景**：跟随窗口
 
-#### 垂直水平居中实现方式
+### 垂直水平居中实现方式
 
 这道题基本也是 css 经典题目 但是网上已经有太多千篇一律的答案了 如果大家想在这道题加分
 
@@ -67,7 +67,7 @@
 
 建议大家直接看 [面试官：你能实现多少种水平垂直居中的布局（定宽高和不定宽高）](https://juejin.cn/post/6844903982960214029)
 
-#### 路由原理 history 和 hash 两种路由方式的特点
+### 路由原理 history 和 hash 两种路由方式的特点
 
 **hash 模式**
 
@@ -90,7 +90,7 @@ window.addEventListener("hashchange", funcRef, false)
 
 > 特点：虽然美观，但是刷新会出现 404 需要后端进行配置
 
-#### 25 手写-将虚拟 Dom 转化为真实 Dom（类似的递归题-必考）
+### 手写-将虚拟 Dom 转化为真实 Dom（类似的递归题-必考）
 
 ```js
 {
@@ -114,7 +114,12 @@ window.addEventListener("hashchange", funcRef, false)
     }
   ]
 }
-把上诉虚拟Dom转化成下方真实Dom
+
+```
+
+把上面的虚拟DOM转换为
+
+```html
 <div id="app">
   <span>
     <a></a>
@@ -124,7 +129,6 @@ window.addEventListener("hashchange", funcRef, false)
     <a></a>
   </span>
 </div>
-复制代码
 ```
 
 **答案**
@@ -146,20 +150,20 @@ function _render(vnode) {
     // 遍历属性
     Object.keys(vnode.attrs).forEach((key) => {
       const value = vnode.attrs[key];
-      dom.setAttribute(key, value);
+        dom.setAttribute(key, value);
     });
   }
   // 子数组进行递归操作 这一步是关键
   vnode.children.forEach((child) => dom.appendChild(_render(child)));
   return dom;
 }
-
-复制代码
 ```
 
-#### 中等
+## 中等
 
-### css 怎么开启硬件加速(GPU 加速)
+### css 开启硬件加速
+
+硬件加速即 GPU 加速
 
 浏览器在处理下面的 css 的时候，会使用 GPU 渲染
 
@@ -171,12 +175,12 @@ function _render(vnode) {
 ```
 采用 transform: translateZ(0)
 采用 transform: translate3d(0, 0, 0)
-使用 CSS 的 will-change属性。 will-change 可以设置为opacity、transform、top、left、bottom、right。
+使用 CSS 的 will-change属性。 will-change 可以设置为 opacity、transform、top、left、bottom、right。
 ```
 
 > 注意！层爆炸，由于某些原因可能导致产生大量不在预期内的合成层，虽然有浏览器的层压缩机制，但是也有很多无法进行压缩的情况，这就可能出现层爆炸的现象（简单理解就是，很多不需要提升为合成层的元素因为某些不当操作成为了合成层）。解决层爆炸的问题，最佳方案是打破 overlap 的条件，也就是说让其他元素不要和合成层元素重叠。简单直接的方式：使用 3D 硬件加速提升动画性能时，最好给元素增加一个 z-index 属性，人为干扰合成的排序，可以有效减少创建不必要的合成层，提升渲染性能，移动端优化效果尤为明显。
 
-#### 常用设计模式有哪些并举例使用场景
+### 常用设计模式有哪些并举例使用场景
 
 - 工厂模式 - 传入参数即可创建实例
 
@@ -194,7 +198,7 @@ vuex 和 vue-router 的插件注册方法 install 判断如果系统存在实例
 
 - 策略模式 策略模式指对象有某个行为,但是在不同的场景中,该行为有不同的实现方案-比如选项的合并策略
 
-#### 浏览器缓存策略是怎样的（强缓存 协商缓存）具体是什么过程？
+### 浏览器缓存策略是怎样的（强缓存 协商缓存）具体是什么过程？
 
 这个也是经典的前端缓存问题 知识点加起来是一篇文章了 推荐大家看 [前端浏览器缓存知识梳理](https://juejin.cn/post/6947936223126093861)
 
@@ -214,23 +218,21 @@ flex-grow：定义项目的的放大比例
 - 所有项目的flex-grow为1：等分剩余空间（自动放大占位）
 - flex-grow为n的项目，占据的空间（放大的比例）是flex-grow为1的n倍。
 
-flex-shrink：定义项目的缩小比例；
+flex-shrink：定义项目的缩小比例
 
-```
-默认为1，即 如果空间不足，该项目将缩小；
-所有项目的flex-shrink为1：当空间不足时，缩小的比例相同；
-flex-shrink为0：空间不足时，该项目不会缩小；
-flex-shrink为n的项目，空间不足时缩小的比例是flex-shrink为1的n倍9。
-```
+- 默认为1，即 如果空间不足，该项目将缩小
+- 所有项目的flex-shrink为1：当空间不足时，缩小的比例相同
+- flex-shrink为0：空间不足时，该项目不会缩小
+- flex-shrink为n的项目，空间不足时缩小的比例是flex-shrink为1的n倍。
 
-flex-basis： 定义在分配多余空间之前，项目占据的主轴空间（main size），浏览器根据此属性计算主轴是否有多余空间
+flex-basis： 定义在分配多余空间之前，项目占据的主轴空间（main size，也就是flex-dircation），浏览器根据此属性计算主轴是否有多余空间。
 
 ```
 默认值为auto，即 项目原本大小；
 设置后项目将占据固定空间。
 ```
 
-#### 304 是什么意思 一般什么场景出现 ，命中强缓存返回什么状态码
+### 304 是什么意思一般什么场景出现 ，命中强缓存返回什么状态码
 
 **协商缓存命中返回 304**
 
@@ -254,11 +256,9 @@ If-Modified-Since: Thu, 20 Jun 2019 15:58:05 GMT
 这两种情况会返回Status Code: 304
 ```
 
-**强缓存命中返回 200** 200（from cache）
+**强缓存命中返回 200** 
 
-> 
-
-#### tree shaking 是什么，原理是什么
+### tree shaking 是什么，原理是什么
 
 Tree shaking 是一种通过**清除多余代码方式**来优化项目打包体积的技术，专业术语叫 Dead code elimination
 
@@ -268,7 +268,6 @@ tree shaking 的**原理**是什么?
 ES6 Module引入进行静态分析，故而编译的时候正确判断到底加载了那些模块
 
 静态分析程序流，判断那些模块和变量未被使用或者引用，进而删除对应代码
-复制代码
 ```
 
 > 扩展：common.js 和 es6 中模块引入的区别？
@@ -285,7 +284,7 @@ CommonJS 是一种模块规范，最初被应用于 Nodejs，成为 Nodejs 的�
 
 5、CommonJs 的 this 是当前模块，ES6 Module 的 this 是 undefined
 
-#### babel 是什么，原理了解吗
+### babel 是什么，原理了解吗
 
 Babel 是一个 JavaScript 编译器。他把最新版的 javascript 编译成当下可以执行的版本，简言之，利用 babel 就可以让我们在当前的项目中随意的使用这些新最新的 es6，甚至 es7 的语法。
 
@@ -297,7 +296,7 @@ Babel 的三个主要处理步骤分别是： 解析（parse），转换（trans
 
 还想深入了解的可以看 [[实践系列\]Babel 原理](https://juejin.cn/post/6844903760603398151)
 
-#### 13 RAF 和 RIC 是什么
+### 13 RAF 和 RIC 是什么
 
 **requestAnimationFrame：** 告诉浏览器在下次重绘之前执行传入的回调函数(通常是操纵 dom，更新动画的函数)；由于是每帧执行一次，那结果就是每秒的执行次数与浏览器屏幕刷新次数一样，通常是每秒 60 次。
 
@@ -340,21 +339,21 @@ funcs[0](); // 0
 
 其实我们根据 babel 编译之后的结果可以看得出来 let 是借助闭包和函数作用域来实现块级作用域的效果的 在不同的情况下 let 的编译结果是不一样的
 
-#### 2 如何设计实现一个渲染引擎
+#### 如何设计实现一个渲染引擎
 
 这道题是字节终面的最后一个题目 属于**开放性问题** 没有固定答案 我当时觉得题目概念太大了 把我整懵了 我只是回答了下浏览器渲染原理啥的 貌似面试官不太满意 哈哈 如果叫你设计一个渲染引擎 应该从哪些方面着手呢
 
 大家可以参考看看文章 [你不知道的浏览器页面渲染机制](https://juejin.cn/post/6844903815758479374)
 
-#### 3 require 具体实现原理是什么
+#### require 具体实现原理是什么
 
 **require 基本原理**
 
-![图片.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0f1dbabee4d849d3a3e018c91f04c619~tplv-k3u1fbpfcp-watermark.image)
+ <img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0f1dbabee4d849d3a3e018c91f04c619~tplv-k3u1fbpfcp-watermark.image" alt="图片.png" style="zoom:80%;" />
 
 **require 查找路径**
 
-![图片.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e49999989bcf496facdbc91179bebd71~tplv-k3u1fbpfcp-watermark.image)
+<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e49999989bcf496facdbc91179bebd71~tplv-k3u1fbpfcp-watermark.image" alt="图片.png" style="zoom:80%;" />
 
 require 和 module.exports 干的事情并不复杂，我们先假设有一个全局对象{}，初始情况下是空的，当你 require 某个文件时，就将这个文件拿出来执行，如果这个文件里面存在 module.exports，当运行到这行代码时将 module.exports 的值加入这个对象，键为对应的文件名，最终这个对象就长这样：
 
@@ -365,7 +364,6 @@ require 和 module.exports 干的事情并不复杂，我们先假设有一个�
   "c.js": 2,
   "d.js": { num: 2 }
 }
-复制代码
 ```
 
 当你再次 require 某个文件时，如果这个对象里面有对应的值，就直接返回给你，如果没有就重复前面的步骤，执行目标文件，然后将它的 module.exports 加入这个全局对象，并返回给调用者。这个全局对象其实就是我们经常听说的缓存。所以 require 和 module.exports 并没有什么黑魔法，就只是运行并获取目标文件的值，然后加入缓存，用的时候拿出来用就行。
