@@ -13,6 +13,9 @@ module.exports = {
     node: true
   },
   extends: ["plugin:vue/essential", "@vue/prettier"],  // 格式化代码插件
+  parserOptions: { // 语法分析器版本
+    ecmaVersion: 2020,
+  },
   rules: {  // 语法规则
     //  "规则名": [错误等级值, 规则配置],
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",

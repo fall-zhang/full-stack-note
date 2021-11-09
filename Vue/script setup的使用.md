@@ -123,6 +123,8 @@ watch([()=>data1,()=>data2],()=>{
 
 在组件初始化时， 会先执行一次来收集依赖， 然后当收集到的依赖中数据发生变化时， 就会再次执行回调函数。
 
+意思是，只要读取了任何响应式数据，都会触发 Proxy 的 getter 代理机制，从而调用 `watchEffect` 方法内的事件，执行一次，但是对 `watchEffect` 内进行更改时，不会触发
+
 ```vue
 <script setup>
   import { watchEffect,ref, reactive } from 'vue'
@@ -184,23 +186,21 @@ watch([()=>data1,()=>data2],()=>{
 </script>
 ```
 
-## 七、emit子传父
+## emit子传父
 
 ### 子组件
 
-```javascript
+```vue
 <template>
   <span>{{props.name}}</span>
   // 可省略【props.】
   <span>{{name}}</span>
   <button @click='changeName'>更名</button>
 </template>
-
 <script setup>
   // import { defineEmits, defineProps } from 'vue'
   // defineEmits和defineProps在<script setup>中自动可用，无需导入
   // 需在.eslintrc.js文件中【globals】下配置【defineEmits: true】、【defineProps: true】
-	
   // 声明props
   const props = defineProps({
     name: {
@@ -216,21 +216,18 @@ watch([()=>data1,()=>data2],()=>{
     emit('updateName', 'Tom')
   }
 </script>
-复制代码
+
 ```
 
 ### 父组件
 
-```javascript
+```vue
 <template>
   <child :name='state.name' @updateName='updateName'/>  
 </template>
-
 <script setup>
   import { reactive } from 'vue'
-  // 引入子组件
   import child from './child.vue'
-
   const state = reactive({
     name: 'Jerry'
   })
@@ -240,7 +237,6 @@ watch([()=>data1,()=>data2],()=>{
     state.name = name
   }
 </script>
-复制代码
 ```
 
 ## 八、v-model
