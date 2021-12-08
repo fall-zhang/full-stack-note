@@ -26,8 +26,18 @@
 
 **导出模块**
 
-export和export default都可以用于导出常量、函数、文件、模块等。
+export 和 export default 都可以用于导出常量、函数、文件、模块等。
+
+export 和 export default 的区别
+
+使用 export 导出的内容都必须使用大括号进行引用
+
+```js
+// module.js
+export const fake = '虚伪的人' 
+// main.js
+import {fake}
+```
 
 
-export和export default的区别
 
