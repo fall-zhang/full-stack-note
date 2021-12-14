@@ -1,5 +1,5 @@
 > Create by **fall** on 2020-08-15
-> Recently revised in 2021年10月13日17:45:23
+> Recently revised in 2021-12-14
 
 ## axios的使用
 
@@ -30,10 +30,8 @@ axios.get('/data',{
 
 ```js
 // 第一种 post 数据传输方式，如果后台支持 json，会更简单
-axios.post('/data',{
-  id:10010
-  data:"请不要回应"
-}).then(function(res){
+const
+axios.post('/data',postData).then(function(res){
   console.log(res.data)
 })
 // 第二种 post 数据的传输方法
@@ -135,10 +133,11 @@ const httpFetch = axios.create(config)
 // 配置拦截请求
 httpFetch.interreceptors.request.use(req=>{
   // setting
+  req.headers.token = 'set your token'
 })
 httpFetch.interreceptors.response.use(res=>{
-  if(res.data && typeof response.data == 'string'){
-    response.data = JSON.parse(response.data)
+  if(res.data && typeof res.data == 'string'){
+    res.data = JSON.parse(res.data)
   }
   // 其他操作
 })
