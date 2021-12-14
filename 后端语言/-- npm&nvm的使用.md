@@ -1,3 +1,6 @@
+> Create by **fall** on ——
+> Recently revised in 2021-12-14
+
 ## NPM命令的使用
 
 NPM 的功能：
@@ -88,158 +91,6 @@ npm install gulp@3.9.1 --sava-dev 的简写:npm i gulp@3.9.1 -S-D
 | `npm view <package-name> versions` | 查看该插件的所有版本                                         |
 | `npm publish`                      | 发布模块                                                     |
 
-### npm插件的安装
-
-#### PostCSS
-
-> `npm install postcss-cli -g`
->
-> PostCSS 是一个运行环境，用于使用 JavaScript 改变 CSS 的环境
->
-> 官方解释：A tool for transforming CSS with JavaScript
-
-**postcss-sprites**
-
-> `cnpm i postcss-sprites`
->
-> 将多张图片自动合成为一张图片（雪碧图|sprites）
-
-```js
-const sprites = require('postcss-sprites');
-module.exports = {
-	plugins :[
-		cssnext,
-		stylelint({
-            "rules" : {
-            "color-no-invalid-hex" true;
-            }
-		}),
-		sprites({
-		spritePath : './dist'
-		})
-	]
-}
-```
-
-**postcss-cssnext**
-
-> `cnpm i postcss-cssnext`
->
-> 对css进行降级，支持更早的浏览器版本
-
-```js
-const cssnext = require('postcss-cssnext');
-module.exports = {
-	plugins :[
-		cssnext
-	]
-}
-```
-
-**postcss-import**
-
-> `cnpm i postcss-import`
->
-> 对于多个css文件进行合并
-
-```js
-const postcss = require('postcss-import');
-module.exports = {
-	plugins :[
-		postcss
-	]
-}
-```
-
-#### autoprefixer
-
-> `cnpm i autoprefixer`
->
-> 自动添加浏览器前缀，进行浏览器兼容
-
-```javascript
-// 配置文件中引入
-const autoprefixer = require('autoprefixer');
-module.exports = {
-	plugins :[
-		autoprefixer({
-			browsers : ['> 0%']// 对所有浏览器兼容
-		})
-	]
-}
-```
-
-#### stylelint
-
-> 命令行安装`cnpm i stylelint`
->
-> 进行CSS文本纠错
-
-```js
-const cssnext = require('postcss-cssnext');
-module.exports = {
-	plugins :[
-		cssnext,
-		stylelint({
-            "rules" : {
-            "color-no-invalid-hex" true;
-            }
-		})
-	]
-}
-```
-
-#### Animate.css
-
-> `npm install animate.css --save`
->
-> animate.css 是一些CSS动画的集成
-
-#### cssnano
-
-> `cnpm i cssnano`
->
-> 对于css进行压缩
-
-```js
-const postcss = require('postcss-import');
-module.exports = {
-	plugins :[
-		cssnano
-	]
-}
-```
-
-## NVM命令的使用
-
-### 什么是NVM
-
-> nvm是用来**对 node 进行版本控制的工具**
->
-> windows 上的 nvm 和 linux & MacOS 上的 nvm 工具不是一个项目，它们是两个团队做出来的东西。
-
-**nvm（Linux、Unix、OS X）的安装**
-
-https://github.com/creationix/nvm
-
-**nvm(Windows)** 安装：https://github.com/coreybutler/nvm-windows
-
-### 常用命令
-
-> nvm install node & nvm install latest (安装最新版本的node)
->
-> nvm list  &  nvm ls 当前所拥有的npm版本
->
-> nvm use taobao 切换到淘宝镜像
->
-> cnpm install -g nvm  全局安装nvm命令
->
-> nvm -v 当前nvm工具的版本
->
-> nvm use 8.4.0 使用8.4.0版本的node
->
-> nvm uninstall 版本号 卸载该版本的node.js
-
 ## NPX工具
 
 npx 是一个工具，可以自动寻找当前文件夹（node_modules）文件夹下的可执行插件，正确引用并且执行。并且如果当前文件夹下没有下载可执行插件，那就会在网络中寻找后，下载并且运行，在运行成功后删除，利用这一特性，可以实现避免全局模块的安装。
@@ -294,3 +145,44 @@ npx 可以指定直接执行 git 上面的代码，前提是远程代码必须�
 用 npx 使用 live-server
 
 使用`npx http-server`
+
+## yarn & PNPM
+
+
+
+yarn 和 pnpm 都是为了解决 npm 上出现的一些固有的错误，而进行开发的。
+
+pmpm 的[官方文档](https://pnpm.io/zh/pnpm-cli)
+
+现在 PNPM 也作为包管理工具进行使用
+
+## NVM命令的使用
+
+### 什么是NVM
+
+> nvm是用来**对 node 进行版本控制的工具**
+>
+> windows 上的 nvm 和 linux & MacOS 上的 nvm 工具不是一个项目，它们是两个团队做出来的东西。
+
+**nvm（Linux、Unix、OS X）的安装**
+
+https://github.com/creationix/nvm
+
+**nvm(Windows)** 安装：https://github.com/coreybutler/nvm-windows
+
+### 常用命令
+
+> nvm install node & nvm install latest (安装最新版本的node)
+>
+> nvm list  &  nvm ls 当前所拥有的npm版本
+>
+> nvm use taobao 切换到淘宝镜像
+>
+> cnpm install -g nvm  全局安装nvm命令
+>
+> nvm -v 当前nvm工具的版本
+>
+> nvm use 8.4.0 使用8.4.0版本的node
+>
+> nvm uninstall 版本号 卸载该版本的node.js
+
