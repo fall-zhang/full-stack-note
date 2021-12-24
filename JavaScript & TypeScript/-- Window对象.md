@@ -61,7 +61,7 @@ history.go(-1) // 回退一次
 // 哈希值，URL 中从 # 开始，之后的内容
 location.hash() 
 // 主机名，和当前的 URL 的端口号
-location.host() // 主机名，或者是域名
+location.host( // 主机名，或者是域名
 // 完整的域名
 location.href() // "https://limestart.cn/"
 // 当前的网络请求路径
