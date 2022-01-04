@@ -21,7 +21,6 @@
 <script setup>
 	// 在 script setup里面声明的所有数据都是可以在 template 中使用的
   import { reactive, ref } from 'vue'
-  
   // ref声明响应式数据，用于声明基本数据类型
   const name = ref('Jerry')
   // 修改
@@ -239,7 +238,7 @@ watch([()=>data1,()=>data2],()=>{
 </script>
 ```
 
-## 八、v-model
+## v-model
 
 ### 子组件
 
@@ -313,7 +312,7 @@ watch([()=>data1,()=>data2],()=>{
 
 ### 子组件
 
-```javascript
+```vue
 <template>
   <span>{{state.name}}</span>
 </template>
@@ -344,7 +343,7 @@ watch([()=>data1,()=>data2],()=>{
 
 ### 父组件
 
-```javascript
+```vue
 <template>
   <child ref='childRef'/>  
 </template>
@@ -365,12 +364,11 @@ watch([()=>data1,()=>data2],()=>{
     childRef.value.changeName()
   })
 </script>
-复制代码
 ```
 
 ## 十一、路由useRoute和useRouter
 
-```javascript
+```vue
 <script setup>
   import { useRoute, useRouter } from 'vue-router'
 	
@@ -384,7 +382,6 @@ watch([()=>data1,()=>data2],()=>{
   // 路由跳转
   router.push('/newPage')
 </script>
-复制代码
 ```
 
 ## 十二、路由导航守卫
