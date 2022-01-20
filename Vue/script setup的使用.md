@@ -240,23 +240,22 @@ watch([()=>data1,()=>data2],()=>{
 
 ## v-model
 
+v-model 可以绑定多个值，并且如果不写 `v-model:` 中 `:` 后面的值，默认绑定的为 `modelValue`
+
 ### 子组件
 
-```javascript
+```vue
 <template>
   <span @click="changeInfo">我叫{{ modelValue }}，今年{{ age }}岁</span>
 </template>
-
 <script setup>
   // import { defineEmits, defineProps } from 'vue'
   // defineEmits和defineProps在<script setup>中自动可用，无需导入
   // 需在.eslintrc.js文件中【globals】下配置【defineEmits: true】、【defineProps: true】
-
   defineProps({
     modelValue: String,
     age: Number
   })
-
   const emit = defineEmits(['update:modelValue', 'update:age'])
   const changeInfo = () => {
     // 触发父组件值更新
@@ -264,12 +263,11 @@ watch([()=>data1,()=>data2],()=>{
     emit('update:age', 30)
   }
 </script>
-复制代码
 ```
 
 ### 父组件
 
-```javascript
+```vue
 <template>
   // v-model:modelValue简写为v-model
   // 可绑定多个v-model
@@ -289,10 +287,9 @@ watch([()=>data1,()=>data2],()=>{
     age: 20
   })
 </script>
-复制代码
 ```
 
-## 九、nextTick
+## nextTick
 
 ```javascript
 <script setup>
@@ -305,7 +302,7 @@ watch([()=>data1,()=>data2],()=>{
 复制代码
 ```
 
-## 十、子组件ref变量和defineExpose
+## 子组件ref变量和defineExpose
 
 - 在标准组件写法里，子组件的数据都是默认隐式暴露给父组件的，但在 script-setup 模式下，所有数据只是默认 return 给 template 使用，不会暴露到组件外，所以父组件是无法直接通过挂载 ref 变量获取子组件的数据。
 - 如果要调用子组件的数据，需要先在子组件显示的暴露出来，才能够正确的拿到，这个操作，就是由 defineExpose 来完成。
