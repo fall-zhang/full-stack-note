@@ -1,5 +1,5 @@
 > Create by **fall** on 2021-12-26
-> Recently revised in 2022-01-20
+> Recently revised in 2022-01-21
 
 使用 Hooks 的原因
 
@@ -58,7 +58,9 @@ function Counter2(){
 }
 ```
 
-惰性初始化 state
+
+
+state
 
 ```jsx
 function Compp(props){
@@ -82,13 +84,72 @@ function Compp(props){
 
 ## useEffect
 
+> 将所有的副作用整合到一个函数中，如果出现了数据的转变，或者是生命周期的变化，就会执行该 hook，同时也支持定义多个钩子。
+>
+> `useEffect` 会让 React 在完成对 DOM 的更改后，运行你的 useEffect 函数。由于副作用函数是在组件内声明的，所以可以访问到组件内部的 `props`、`state`。
+
+- React 会在每次渲染后调用副作用函数（useEffect） —— 包括第一次渲染的时候。
+- React 保证了每次运行 effect 的同时，DOM 都已经更新完毕。
+- React 会保存你传递的函数（我们将它称之为 “effect”），并且在执行 DOM 更新之后调用它。
+- 每次执行的时候，都使用当时的副作用空间去执行。官方文档的话来说，每个 effect“属于”一次特定的渲染。（证明可以看下面的 *特定的渲染证明*）
+- effect 不会阻塞浏览器更新屏幕，让你的应用看起来响应更快。
+
 数据获取、设置订阅以及手动更改 React 组件中的 DOM 都属于副作用。
 
-> 将所有的副作用整合到一个函数中，如果出现了数据的转变，或者是生命周期的变化，就会执行该钩子，当然也支持定义多个钩子。
+```jsx
+// 特定的渲染证明
+import React,{useState,useEffect} from 'react'
+function Content(){
+	const [count,setCount] = useState(0)
+  useEffect(()=>{
+    setTimeout((()=>{
+      console.log(count)
+    }),5000)
+  })
+  return(
+    <div>
+      <h2>当前的 count 值为：{count}</h2>
+      <button onClick={()=>setCount(count+1)}>点击输出当前值</button>
+    </div>
+  )
+}
+```
 
-`useEffect` 会让 React 在完成对 DOM 的更改后，运行你的 useEffect 函数。由于副作用函数是在组件内声明的，所以可以访问到组件内部的 `props`、`state`。
+### 清除机制
 
-React 会在每次渲染后调用副作用函数 —— 包括第一次渲染的时候。
+> 有些代码副作用无需进行清除，比如说网络请求和 DOM 绘制。
+>
+> 有些代码需要进行清除，比如说监听 onMouseMove 订阅外部数据源。
+
+```jsx
+import React,{useState,useEffect} from 'react'
+function FriendStatus(props){
+  const [isOnline,setIsOnline] = useState(null)
+  useEffect(()=>{
+    function handleStatusChange(status){
+      setIsOnline(status.isOnline)
+    }
+    ChatAPI.subscribeToFriendStatus(props.friend.id,handleStatusChange)
+    // 通过返回一个函数用来清除副作用
+    // return ()=>{} 也可以返回箭头函数
+    return function cleanup(){
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id,handleStatusChange)
+    }
+  })
+  if(isOnline === null){
+		return 'loading...'
+  }
+  return isOnline ? 'Online' : 'Offline'
+}
+```
+
+> class 中的所有代码都是按照生命周期进行分割的——以生命周期为逻辑
+>
+> Hook 中的代码是按照代码的用途进行分离的——以功能为逻辑
+>
+> 从而实现关注点的切换
+
+跳过 Effect 进行优化
 
 ```jsx
 import {useState,useEffect} from 'react'
@@ -97,18 +158,14 @@ function Example(){
   useEffect(()=>{
     // 更改当前文档的标题
     document.title = '别点了，都点' + count +'次了'
-  },[count])// useEffect 第二个参数表明，只有 count 发生变化，才会执行
+  },[count])// useEffect 第二个参数表明，只有 count 发生变化，才会执行该副作用函数
   return(
-  <div>
-    	<p>你点了 {count} 次了</p>
+    <div>
+      <p>你点了 {count} 次了</p>
       <button onClick={()=>setCount(count+1)}>点啊</button>
     </div>)
 }
 ```
-
-> 有些代码无需进行清除，比如说网络请求和 DOM 绘制
->
-> 有些代码需要进行清除，比如说监听 onMouseMove
 
 
 
@@ -167,14 +224,12 @@ function FriendListItem(props){
     return 'loading...'
   }
   return (
-  <div styl>
+  <div style={isOnline?{color:green}:{color:red}}>
    	{props.friend.name}
   </div>
   )
 }
 ```
-
-
 
 ### useMemo
 
@@ -183,7 +238,15 @@ function FriendListItem(props){
 - 类组件通过 `pureComponent`
 - 函数组件通过 `React.memo`，将组件传递给 memo 之后，返回一个新的组件，如果接收到的属性不变，就不会重新渲染
 
-### 
+## 参考文章
+
+| 作者          | 链接                                               |
+| ------------- | -------------------------------------------------- |
+| React官方文档 | https://react.docschina.org/docs/hooks-effect.html |
+|               |                                                    |
+|               |                                                    |
+|               |                                                    |
+|               |                                                    |
 
 
 
@@ -194,36 +257,6 @@ function FriendListItem(props){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-```jsx
-import React,{useState,useEffect} from 'react'
-function Example(){
-  const [count,setCount] = useState(0)
-  useEffect(()=>{
-    document.title = `you are ${count} years old`
-  })
-  return (
-  <div>
-  	<p>You clicked {count} times</p>
-    <button onClick={()=>{setCount(count+1)}}>成长吧，少年</button>
-  </div>
-  )
-}
-```
 
 
 
