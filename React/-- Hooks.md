@@ -1,5 +1,5 @@
 > Create by **fall** on 2021-12-26
-> Recently revised in 2022-01-21
+> Recently revised in 2022-01-27
 
 使用 Hooks 的原因
 
@@ -178,6 +178,31 @@ function Example(){
 
 
 
+
+## 其他钩子
+
+### useRef
+
+```jsx
+function MyComponent(){
+  const [count,setCount]= React.useState(0)
+  const onAdd = ()=>{
+    setCount(count+1)
+  }
+  const onShow= ()=>{
+    alert()
+  }
+  const myInput = React.useRef()
+  return (
+  	<div>
+    	<h2>当前显卡数量为：{count}</h2>
+      <input type="text" ref={myInput}></input>
+      <button onClick={onAdd}>给我加卡</button>
+      <button onClick={onShow}>我有多少卡？</button>
+    </div>
+  )
+}
+```
 
 ## 自定义 Hooks
 
