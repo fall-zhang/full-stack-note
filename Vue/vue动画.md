@@ -11,10 +11,13 @@ Vue 的动画，说起来很简单，用 transform 套住 vue-router 就可以�
 - `v-leave-active`：表示动画开始执行离开，到离开的过程
 - `v-leave-to`：表示动画结束的位置
 
+<img src="https://staging-cn.vuejs.org/assets/transition-classes.f0f7b3c9.png">
+
 > 如果两个动画同时执行，比如说切换界面，既是一个页面的出现动画，也是另一个界面的消失动画。此时需要考虑如何实现不同动画的实现。
 
 ```vue
 // 如果 name 中没有值，那么v就是所有动画的默认 name
+// 如果加上了 name 就在原有的基础上添加 name 的值而已
 <template>
 	<transition name="page-change">
   	<router-view ></router-view>
