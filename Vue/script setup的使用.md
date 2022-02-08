@@ -291,18 +291,29 @@ v-model 可以绑定多个值，并且如果不写 `v-model:` 中 `:` 后面的�
 
 ## nextTick
 
-```javascript
+A utility for waiting for the next DOM update flush.
+
+等待下一个 DOM 更新完成的工具
+
+```js
+// type
+function nextTick(callback?:()=>void):Promise<void>
+```
+
+
+
+```vue
 <script setup>
   import { nextTick } from 'vue'
-	
   nextTick(() => {
     // ...
   })
 </script>
-复制代码
 ```
 
-## 子组件ref变量和defineExpose
+## ref和defineExpose
+
+将方法、变量暴露给父组件使用，父组件才可通过 ref API拿到子组件暴露的数据
 
 - 在标准组件写法里，子组件的数据都是默认隐式暴露给父组件的，但在 script-setup 模式下，所有数据只是默认 return 给 template 使用，不会暴露到组件外，所以父组件是无法直接通过挂载 ref 变量获取子组件的数据。
 - 如果要调用子组件的数据，需要先在子组件显示的暴露出来，才能够正确的拿到，这个操作，就是由 defineExpose 来完成。
@@ -313,29 +324,24 @@ v-model 可以绑定多个值，并且如果不写 `v-model:` 中 `:` 后面的�
 <template>
   <span>{{state.name}}</span>
 </template>
-
 <script setup>
   import { defineExpose, reactive, toRefs } from 'vue'
-	
   // 声明state
   const state = reactive({
     name: 'Jerry'
   }) 
-	
   // 声明方法
   const changeName = () => {
     // 执行
     state.name = 'Tom'
   }
-  
-  // 将方法、变量暴露给父组件使用，父组见才可通过ref API拿到子组件暴露的数据
+  // 将方法、变量暴露给父组件使用，父组件才可通过 ref API拿到子组件暴露的数据
   defineExpose({
     // 解构state
     ...toRefs(state),
     changeName
   })
 </script>
-复制代码
 ```
 
 ### 父组件
@@ -349,13 +355,11 @@ v-model 可以绑定多个值，并且如果不写 `v-model:` 中 `:` 后面的�
   import { ref, nextTick } from 'vue'
   // 引入子组件
   import child from './child.vue'
-
   // 子组件ref
   const childRef = ref('childRef')
-  
   // nextTick
   nextTick(() => {
-    // 获取子组件name
+    // 获取子组件 name
     console.log(childRef.value.name)
     // 执行子组件方法
     childRef.value.changeName()
