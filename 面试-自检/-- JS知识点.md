@@ -564,68 +564,7 @@ const longestCommonPrefix = function (strs) {
     index++;
   }
   return str;
-};
-复制代码
-```
-
-### 手写-字符串最长的不重复子串
-
-题目描述
-
-```js
-给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
-示例 1:
-
-输入: s = "abcabcbb"
-输出: 3
-解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
-
-示例 2:
-
-输入: s = "bbbbb"
-输出: 1
-解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
-
-示例 3:
-
-输入: s = "pwwkew"
-输出: 3
-解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
-     请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
-
-示例 4:
-
-输入: s = ""
-输出: 0
-复制代码
-```
-
-答案
-
-```js
-const lengthOfLongestSubstring = function (s) {
-  if (s.length === 0) {
-    return 0;
-  }
-
-  let left = 0;
-  let right = 1;
-  let max = 0;
-  while (right <= s.length) {
-    let lr = s.slice(left, right);
-    const index = lr.indexOf(s[right]);
-
-    if (index > -1) {
-      left = index + left + 1;
-    } else {
-      lr = s.slice(left, right + 1);
-      max = Math.max(max, lr.length);
-    }
-    right++;
-  }
-  return max;
-};
-复制代码
+}
 ```
 
 ### 手写-如何找到数组中第一个没出现的最小正整数 怎么优化（字节）
@@ -635,20 +574,16 @@ const lengthOfLongestSubstring = function (s) {
 请你实现时间复杂度为 O(n) 并且只使用常数级别额外空间的解决方案。
 
 示例 1：
-
 输入：nums = [1,2,0]
 输出：3
 
 示例 2：
-
 输入：nums = [3,4,-1,1]
 输出：2
 
 示例 3：
-
 输入：nums = [7,8,9,11,12]
 输出：1
-复制代码
 ```
 
 这是一道字节的算法题 目的在于不断地去优化算法思路
@@ -669,7 +604,6 @@ const firstMissingPositive = (nums) => {
   }
   return res;
 };
-复制代码
 ```
 
 - 第二版 时间空间均为 O(n)
@@ -686,7 +620,6 @@ const firstMissingPositive = (nums) => {
     }
   }
 };
-复制代码
 ```
 
 - 最终版 时间复杂度为 O(n) 并且只使用常数级别空间
@@ -711,89 +644,7 @@ const firstMissingPositive = (nums) => {
     }
   }
   return nums.length + 1; // 发现元素 1~nums.length 占满了数组，一个没缺
-};
-复制代码
-```
-
-### 手写-怎么在制定数据源里面生成一个长度为 n 的不重复随机数组 能有几种方法 时间复杂度多少（字节）
-
-- 第一版 时间复杂度为 O(n^2)
-
-```js
-function getTenNum(testArray, n) {
-  let result = [];
-  for (let i = 0; i < n; ++i) {
-    const random = Math.floor(Math.random() * testArray.length);
-    const cur = testArray[random];
-    if (result.includes(cur)) {
-      i--;
-      break;
-    }
-    result.push(cur);
-  }
-  return result;
 }
-const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-const resArr = getTenNum(testArray, 10)
-```
-
-- 第二版 标记法 / 自定义属性法 时间复杂度为 O(n)
-
-```js
-function getTenNum(testArray, n) {
-  let hash = {};
-  let result = [];
-  let ranNum = n;
-  while (ranNum > 0) {
-    const ran = Math.floor(Math.random() * testArray.length);
-    if (!hash[ran]) {
-      hash[ran] = true;
-      result.push(ran);
-      ranNum--;
-    }
-  }
-  return result;
-}
-const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-const resArr = getTenNum(testArray, 10)
-```
-
-- 第三版 交换法 时间复杂度为 O(n)
-
-```js
-function getTenNum(testArray, n) {
-  const cloneArr = [...testArray];
-  let result = [];
-  for (let i = 0; i < n; i++) {
-    debugger;
-    const ran = Math.floor(Math.random() * (cloneArr.length - i));
-    result.push(cloneArr[ran]);
-    cloneArr[ran] = cloneArr[cloneArr.length - i - 1];
-  }
-  return result;
-}
-const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-const resArr = getTenNum(testArray, 14)
-```
-
-> 值得一提的是操作数组的时候使用交换法 这种思路在算法里面很常见
-
-- 最终版 边遍历边删除 时间复杂度为 O(n)
-
-```js
-function getTenNum(testArray, n) {
-  const cloneArr = [...testArray];
-  let result = [];
-  for (let i = 0; i < n; ++i) {
-    const random = Math.floor(Math.random() * cloneArr.length);
-    const cur = cloneArr[random];
-    result.push(cur);
-    cloneArr.splice(random, 1);
-  }
-  return result;
-}
-const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-const resArr = getTenNum(testArray, 14)
 ```
 
 ## 已学习
@@ -886,4 +737,163 @@ Function.prototype === Function.__proto__; //true
 这道题目深入考察了原型链相关知识点 尤其是 Function 和 Object 的之间的关系
 
 强烈推荐大家看看这篇文章 看完就清楚了 [JavaScript 原型系列（三）Function、Object、null 等等的关系和鸡蛋问题](https://juejin.cn/post/6844903937418461198)
+
+### 手写-字符串最长的不重复子串
+
+题目描述
+
+```js
+给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
+示例 1:
+输入: s = "abcabcbb"
+输出: 3
+解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+示例 2:
+输入: s = "bbbbb"
+输出: 1
+解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
+示例 3:
+输入: s = "pwwkew"
+输出: 3
+解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
+     请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
+示例 4:
+输入: s = ""
+输出: 0
+```
+
+答案
+
+```js
+const lengthOfLongestSubstring = function (s) {
+  if (s.length === 0) {
+    return 0;
+  }
+  let left = 0;
+  let right = 1;
+  let max = 0;
+  while (right <= s.length) {
+    let lr = s.slice(left, right);
+    const index = lr.indexOf(s[right]);
+    if (index > -1) {
+      left = index + left + 1;
+    } else {
+      lr = s.slice(left, right + 1);
+      max = Math.max(max, lr.length);
+    }
+    right++;
+  }
+  return max;
+}
+```
+
+我给的答案
+
+```js
+// 字符串中 最长不重复字符
+function maxLength (str) {
+  if (str.length == 0) {
+    return 0
+  }
+  let left = 0
+  let right = 1
+  let max = 0
+  while (right < str.length) {
+    let currentStr = str.slice(left, right)
+    if (currentStr.includes(str[right])) {
+      left++
+      if (right - left <= 0) {
+        right++
+      }
+    } else {
+      right++
+    }
+    max = Math.max(max, currentStr.length)
+  }
+  return max
+}
+const res = maxLength('abcdeffeeduxfnaomx')
+console.log(res);
+```
+
+### 手写-怎么在指定数据源里面生成一个长度为 n 的不重复随机数组 能有几种方法 时间复杂度多少（字节）
+
+- 第一版 时间复杂度为 O(n^2)
+
+```js
+function getTenNum(testArray, n) {
+  let result = [];
+  for (let i = 0; i < n; ++i) {
+    const random = Math.floor(Math.random() * testArray.length);
+    const cur = testArray[random];
+    if (result.includes(cur)) {
+      i--;
+      break;
+    }
+    result.push(cur);
+  }
+  return result;
+}
+const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+const resArr = getTenNum(testArray, 10)
+```
+
+- 第二版 标记法 / 自定义属性法 时间复杂度为 O(n) 
+
+```js
+function getTenNum(testArray, n) {
+  let hash = {};
+  let result = [];
+  let ranNum = n;
+  while (ranNum > 0) {
+    const ran = Math.floor(Math.random() * testArray.length);
+    if (!hash[ran]) {
+      hash[ran] = true;
+      result.push(ran);
+      ranNum--;
+    }
+  }
+  return result;
+}
+const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+const resArr = getTenNum(testArray, 10)
+```
+
+- 第三版 交换法 时间复杂度为 O(n)
+
+```js
+function getTenNum(testArray, n) {
+  const cloneArr = [...testArray];
+  let result = [];
+  for (let i = 0; i < n; i++) {
+    debugger;
+    const ran = Math.floor(Math.random() * (cloneArr.length - i));
+    result.push(cloneArr[ran]);
+    cloneArr[ran] = cloneArr[cloneArr.length - i - 1];
+  }
+  return result;
+}
+const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+const resArr = getTenNum(testArray, 14)
+```
+
+> 值得一提的是操作数组的时候使用交换法 这种思路在算法里面很常见
+
+- 最终版 边遍历边删除 时间复杂度为 O(n)
+
+```js
+function getTenNum(testArray, n) {
+  const cloneArr = [...testArray];
+  let result = [];
+  for (let i = 0; i < n; ++i) {
+    const random = Math.floor(Math.random() * cloneArr.length);
+    const cur = cloneArr[random];
+    result.push(cur);
+    cloneArr.splice(random, 1);
+  }
+  return result;
+}
+const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+const resArr = getTenNum(testArray, 14)
+```
 
