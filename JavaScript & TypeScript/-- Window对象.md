@@ -193,7 +193,6 @@ window.prompt('提示字符串','默认内容') // 返回内容，或者是 null
 window.defaultStatus
 // 临时改变浏览状态的显示
 window.status
-
 ```
 
 
