@@ -1,3 +1,33 @@
+> Create by fall on ——
+> Recently revised in 2022-02-15
+
+## 浏览器操作
+
+### 清除所有 Cookie
+
+```js
+function clearCookies(){
+  const cookies = document.cookie.split(';')
+  cookies.forEach()
+}
+const clearCookies = document.cookie.split(';').forEach(cookie => document.cookie = cookie.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date(0).toUTCString()};path=/`));
+```
+
+### 滚动到页面顶部
+
+```js
+const goToTop = () => window.scrollTo(0, 0);
+goToTop()
+```
+
+### 是否是苹果设备
+
+```js
+const isAppleDevice = () => /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+```
+
+
+
 ## DOM操作实例
 
 ### 在标签中添加标签
