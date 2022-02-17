@@ -1,23 +1,35 @@
-> 创建时间：2020-12-07
-> 更新时间：2021-01-15
+> Create by **fall** on:2020-12-07
+> Recently reviced in:2022-02-17
 
 ## webpack
 
-webpack 是一个前端项目构建工具，为 web 开发中的面临的问题——给大型 SPA 提供更好的构建方案。
+> webpack 是一个前端项目构建工具，为 web 开发中的面临的问题——给大型 SPA 提供更好的构建方案。
 
-在使用 webpack 构建的典型应用程序或站点中，有三种主要的代码类型：
+webpack 可以
 
-- 个人或者团队编写的代码
-- 这些代码依赖的任何第三方的 library 或者 "vendor" 代码。
+- 代码打包
+- 代码分割
+- 代码预处理
+
+简单来讲，webpack 的执行顺序是这样的：
+
+- 使用 loader 解析代码
+- 将解析后的代码进行合并
+- 按照需求分割代码
+
+在使用 webpack 构建的应用程序或站点中，有三类代码：
+
+- 个人或者团队编写的代码。
+- 这些代码依赖的任何第三方的 library 或者 "vendor" 代码（node_modules）。
 - webpack 的 runtime 和 manifest 管理所有模块的交互
 
 > - runtime：在模块交互时，连接模块所需的加载和解析逻辑；包括浏览器中的已加载模块的连接，以及懒加载模块的执行逻辑。
 > - manifest：当编译器(compiler)开始执行、解析、映射应用程序时，它会保留所有模块的详细要点，这个数据集合称为 "Manifest"。当完成打包并发送到浏览器时，会在运行时通过 manifest 来解析、加载模块。
 > - runtime 和 manifest 之间的交互：浏览器在运行时，runtime 和 manifest 用来连接应用模块化的所有代码。无论是使用哪一种模块语法，那些 import 或者 require 语句都已经转化为 `__webpack_require__` 方法，此方法指向模块标识符(module identifier)，在使用 manifest 中的数据时，runtime 能够查询模块标识符，检索出背后对应的模块。
 
-### webpack 的使用
+webpack 的一般使用方式
 
-- 搭建webpack环境 `npm install webpakc webpack-cli -D`
+- 搭建 webpack 环境 `npm install webpack webpack-cli -D`
 
 - 使用 `npm init -y` 初始化环境
 - 新建 `src` 作为源代码库
@@ -42,12 +54,12 @@ module.export = {
 **两种模式的区别**
 
 ```js
-// development ：会将 process.env.NODE_ENV 的值设为 development。启用  NamedChunksPlugin 和 NamedModulesPlugin
-// production :会将 process.env.NODE_ENV 的值设为 production。 启用 FlagDependencyUsagePlugin, FlagIncludedChunksPlugin, ModuleConcatenationPlugin,  NoEmitOnErrorsPlugin, OccurrenceOrderPlugin,   SideEffectsFlagPlugin 和 UglifyJsPlugin
+// development ：开发者模式（开发环境），会将 process.env.NODE_ENV 的值设为 development。启用  NamedChunksPlugin 和 NamedModulesPlugin
+// production :生产环境，会将 process.env.NODE_ENV 的值设为 production。 启用 FlagDependencyUsagePlugin, FlagIncludedChunksPlugin, ModuleConcatenationPlugin,  NoEmitOnErrorsPlugin, OccurrenceOrderPlugin,   SideEffectsFlagPlugin 和 UglifyJsPlugin
 if(process.env.NODE_ENV === 'development'){
-    //开发环境 do something
+  //开发环境 do something
 }else{
-    //生产环境 do something
+  //生产环境 do something
 }
 ```
 
@@ -59,9 +71,9 @@ module.exports = {
   entry:path.join(__dirname,'./src/index.js'), // entry 接受字符串
   // 告诉 webpack 将从那个文件开始构建，这个文件将作为 webpack 关系依赖图的起点
   output:{
-  	path:path.join(__dirname,"./dist"),// 输出文件存放路径
+    path:path.join(__dirname,"./dist"),// 输出文件存放路径
     filename:'bundle.js' // 输出文件的名称
-	}
+  }
 }
 // 其中 entry 也可以接受对象，进而进行多个网页的配置
 // {main: './src/main.js'}
@@ -124,7 +136,7 @@ module.exports = {
 // 这些参数的意义是，自动打开浏览器，并且 在127.0.0.1 端口号为 8888 上创建新的项目
 ```
 
-> **webpack的注意点**
+> **webpack 的注意点**
 >
 > `webpack-dev-server` 会启动一个实时打包的 http 服务器
 >
@@ -377,3 +389,10 @@ source map 会改变代码中显示错误的方式（打包后代码、生成后
 - 如果你能接受稍差一些的 mapping 质量，可以使用 cheap-source-map 选项来提高性能
 - 使用 `eval-source-map` 配置进行增量编译
 - 在大多数情况下，`cheap-module-eval-source-map` 是最好的选择
+
+## 参考文章
+
+| 文章名称 | 链接 |
+| -------- | ---- |
+|          |      |
+
