@@ -1,9 +1,14 @@
 > Create by **fall** on:2020-12-07
-> Recently reviced in:2022-02-04
+> Recently reviced in:2022-02-18
 
 ## babel 插件详解
 
-官网有一句话：所有转换将使用本地配置文件`babel.config.js`，之前版本是`babelrc.`
+官网有一句话：所有转换将使用本地配置文件 `babel.config.js`，之前版本是`babelrc.`
+
+> 两个关于 JS 转译比较基础的概念：
+>
+> - 转译器（transpilers）：对语法的转换，如控制合并符 `??`，babel 是最著名的转译器。
+> - 垫片（polyfills）：更新 / 添加新函数的脚本被称为“polyfill”，core js 支持了很多特性。
 
 ### @babel/core
 
