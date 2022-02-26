@@ -142,13 +142,11 @@ npx 可以指定直接执行 git 上面的代码，前提是远程代码必须�
 
 使用 `npx http-server`
 
-## yarn & PNPM
-
-yarn 和 pnpm 都是为了解决 npm 上出现的一些固有的错误，而进行开发的。
-
-pmpm 的[官方文档](https://pnpm.io/zh/pnpm-cli)
-
-现在 PNPM 也作为包管理工具进行使用
+> yarn & pnpm
+>
+> yarn 和 pnpm 都是为了解决 npm 上出现的一些固有的错误，而进行开发的。pmpm 的[官方文档](https://pnpm.io/zh/pnpm-cli)
+>
+> 现在 PNPM 也作为包管理工具进行使用
 
 ## NVM命令的使用
 
