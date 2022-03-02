@@ -1,5 +1,5 @@
->Create by **fall** on 2021年10月26日19:15:51
->Recently revised in 2021年10月31日18:09:39
+>Create by **fall** on 2021-10-26
+>Recently revised in 2022-03-02
 
 ## 文件结构
 
@@ -289,6 +289,49 @@ v-model 可以绑定多个值，并且如果不写 `v-model:` 中 `:` 后面的�
 </script>
 ```
 
+## provide 和 inject
+
+### 父组件
+
+```vue
+<template>
+  <child/>
+</template>
+<script setup>
+  import { provide } from 'vue'
+  import { ref, watch } from 'vue'
+  // 引入子组件
+  import child from './child.vue'
+  let name = ref('Jerry')
+  // 声明provide
+  provide('provideState', {
+    name,
+    changeName: () => {
+      name.value = 'Tom'
+    }
+  })
+  // 监听name改变
+  watch(name, () => {
+    console.log(`name变成了${name}`)
+    setTimeout(() => {
+      console.log(name.value) // Tom
+    }, 1000)
+  })
+</script>
+```
+
+### 子组件
+
+```vue
+<script setup>
+  import { inject } from 'vue'
+	// 注入
+  const provideState = inject('provideState')
+  // 子组件触发name改变
+  provideState.changeName()
+</script>
+```
+
 ## nextTick
 
 A utility for waiting for the next DOM update flush.
@@ -367,7 +410,7 @@ function nextTick(callback?:()=>void):Promise<void>
 </script>
 ```
 
-## 十一、路由useRoute和useRouter
+## 路由useRoute和useRouter
 
 ```vue
 <script setup>
@@ -385,7 +428,7 @@ function nextTick(callback?:()=>void):Promise<void>
 </script>
 ```
 
-## 十二、路由导航守卫
+## 路由导航守卫
 
 ```javascript
 <script setup>
@@ -405,7 +448,7 @@ function nextTick(callback?:()=>void):Promise<void>
 复制代码
 ```
 
-## 十三、store
+## store
 
 *Vue3 中的Vuex不再提供辅助函数写法
 
@@ -426,7 +469,7 @@ function nextTick(callback?:()=>void):Promise<void>
 </script>
 ```
 
-## 十四、生命周期
+## 生命周期
 
 通过在生命周期钩子前面加上 “on” 来访问组件的生命周期钩子。
 
@@ -448,9 +491,9 @@ function nextTick(callback?:()=>void):Promise<void>
 | activated       | onActivated       |
 | deactivated     | onDeactivated     |
 
-## 十五、CSS变量注入
+## CSS变量注入
 
-```javascript
+```vue
 <template>
   <span>Jerry</span>  
 </template>
@@ -469,7 +512,6 @@ function nextTick(callback?:()=>void):Promise<void>
     color: v-bind('state.red');
   }  
 </style>
-复制代码
 ```
 
 ## 十六、原型绑定与组件内使用
@@ -528,61 +570,11 @@ prototype.name = 'Jerry'
 复制代码
 ```
 
-## 十九、provide和inject
-
-### 父组件
-
-```javascript
-<template>
-  <child/>
-</template>
-
-<script setup>
-  import { provide } from 'vue'
-  import { ref, watch } from 'vue'
-  // 引入子组件
-  import child from './child.vue'
-
-  let name = ref('Jerry')
-  // 声明provide
-  provide('provideState', {
-    name,
-    changeName: () => {
-      name.value = 'Tom'
-    }
-  })
-
-  // 监听name改变
-  watch(name, () => {
-    console.log(`name变成了${name}`)
-    setTimeout(() => {
-      console.log(name.value) // Tom
-    }, 1000)
-  })
-</script>
-复制代码
-```
-
-### 子组件
-
-```javascript
-<script setup>
-  import { inject } from 'vue'
-	// 注入
-  const provideState = inject('provideState')
-  
-  // 子组件触发name改变
-  provideState.changeName()
-</script>
-复制代码
-```
-
 ## 使用echarts
 
 ```javascript
 // 安装
 cnpm i echarts --save
-
 // 组件内引入
 import * as echarts from 'echarts'
 ```
