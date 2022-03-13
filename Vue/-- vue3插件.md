@@ -12,12 +12,12 @@
 
 ```html
 <script lang="ts">
-    import {Vue, Component} from 'vue-property-decorator';
-    @Component({})
-    export default class "组件名" extends Vue{
-        ValA: string = "hello world";
-        ValB: number = 1;
-    }
+  import {Vue, Component} from 'vue-property-decorator';
+  @Component({})
+  export default class "组件名" extends Vue{
+    ValA: string = "hello world";
+    ValB: number = 1;
+  }
 </script>
 ```
 
