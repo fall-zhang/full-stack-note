@@ -1,5 +1,5 @@
 > Create by **fall** on 2021-12-13
-> Recently revised in 2021-12-13
+> Recently revised in 2022-03-20
 
 Window 对象上的内容
 
@@ -24,7 +24,7 @@ navigator.userAgent //"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:95.0) Gecko/
 
 ## screen
 
-显示器对象
+显示器对象，用的是什么显示器，就会展示对应的信息
 
 ```js
 // 显示屏幕的可用高度
@@ -44,17 +44,19 @@ screen.colorDepth // 32
 浏览器历史对象
 
 ```js
+// history：控制浏览器当前网页的历史
 // 返回前一个URL
 history.back()
 // 返回下一个URL
 history.forward()
 // 前进后退
-history.go(-1) // 回退一次
+history.go(-1) // 填入0，刷新当前页面，填入正数前进页面，填入负数后后退页面
+history.length // 输出总历史记录长度
 ```
 
 ## Location
 
-位置对象
+当前路由位置对象
 
 ```js
 // 对象上的属性
@@ -70,14 +72,15 @@ location.pathname // "/"
 location.protocol // "https:"
 // 查询字符串
 location.search //
-
+  
 // 对象上的方法
 // 重新加载文档
-location.assign(URL)
+location.assign(URL) // 当前窗口跳转到该 url 产生新的历史记录--可以后退
 // 重新加载当前界面
-location.reload()
+location.reload() // 重新载入窗口，刷新
+location.reload(true) // 不经过浏览器缓存，强制从服务器重载
 // 用新的文档替换当前文档
-location.replace(newURL)
+location.replace(newURL)// 在当前窗口替换成新的url		不产生新的历史记录--不可以后退
 ```
 
 ## Document
@@ -119,6 +122,16 @@ document.close()
 document.write()
 ```
 
+## console
+
+```js
+console.time('test1');
+console.timeEnd('test1');
+//通过以上的方法，进行时间的计算
+console.log('log') // 打印日志
+console.error('one Error') // 打印错误
+```
+
 ## 窗口控制
 
 ```js
@@ -136,6 +149,41 @@ window.scrollBy(X,Y) // 参照当前位置进行移动
 window.scrollTo(X,Y)
 ```
 
+## URL
+
+URL:统一资源定位符
+
+> * 定位符的内容：`协议://主机名(域名):端口号/路径/?查询字符串#锚点`
+> * `protocol://hostname:port/pathname/?search#hash`
+> * 实例：`https://juejin.cn/post/6960262593265025031#heading-26`（端口号会自动隐藏）
+>
+> location.protocol包括
+>
+> - file:本地磁盘访问
+> - http:
+> - https:(证书认证协议)
+>
+> location.hostname 通过IP找到全球范围内该主机所在的网络地址
+>
+> location.port(端口号(默认隐藏))
+>
+> > 当前电脑中使用的网络软件，随机分配一个编号 0-65535
+> > hostname:port  定位到当前使用网络的程序
+> > 浏览器默认端口号：8080
+> > http:80
+> > https:443
+>
+> location.search 由问号拼接的部分直接提交到查询字符串中,给服务器提交查询字符串
+>
+> > https://www.xxx.com/?value1=5&value2=10
+> > alert(location.search)
+>
+> location.hash  锚点，通过锚点可以实现单页面跳转
+>
+> 输出网址：
+> 	alert(location)	数据类型是对象
+> 	alert(location.href) 数据类型是string
+
 ## 焦点控制
 
 ```js
@@ -149,6 +197,8 @@ window.blur
 
 ```js
 window.open(URL,'WindowName','WindowStyle')
+// 或者直接 open
+open("https://www.baidu.com","name1","height=400,width=400,left=400,top400")
 // 窗口风格
 // height:number>100 窗口高度
 // width:number>100 窗口宽度
@@ -179,7 +229,7 @@ clearInterval
 // 提示
 window.alert('提示内容')
 // 确认
-window.confirm('提示内容') // 会返回 true or false
+const result = window.confirm('提示内容') // 会返回 true or false
 // 内容
 window.prompt('提示字符串','默认内容') // 返回内容，或者是 null
 ```
