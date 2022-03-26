@@ -3,7 +3,7 @@
 
 ## axios的使用
 
-基于Promise，用于浏览器和 node.js 的HTTP客户端(可以调用一个 http 的接口)，能拦截请求和响应，自动转化 json 数据。
+基于 Promise，用于浏览器和 node.js 的HTTP客户端(可以调用一个 http 的接口)，能拦截请求和响应，自动转化 json 数据。
 
 ```js
 axios.get('/data')
@@ -29,8 +29,7 @@ axios.get('/data',{
 **post 数据的传输**
 
 ```js
-// 第一种 post 数据传输方式，如果后台支持 json，会更简单
-const
+// 第一种 post 数据传输方式
 axios.post('/data',postData).then(function(res){
   console.log(res.data)
 })
@@ -103,7 +102,6 @@ axios.interceptors.request.use(function(config){
 axios.interreceptors.response.use(function(res){
   // 对返回的数据进行处理
   var data = res.data
-  
   return data
 },function(err){
   console.log('有错误信息'+err)

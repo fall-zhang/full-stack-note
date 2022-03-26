@@ -1,54 +1,5 @@
-
-
-### 跨域是什么，你是怎么解决跨域问题的
-
-### 如何实现对象的深拷贝
-
 > Create by **fall** on 2021-10-18
-> Recently revised in 2021-10-18 13:52:00
-
-## 简单
-
-### 什么是事件代理（事件委托） 有什么好处
-
-事件委托的原理：不给每个子节点单独设置事件监听器，而是设置在其父节点上，然后利用冒泡原理设置每个子节点，即`event.target`。
-
-**优点：**
-
-- **减少内存消耗和对 DOM 操作，提高性能**。因为需要不断的操作 DOM，持续操作 DOM 会引起浏览器重绘和回流的可能也就越多，页面交互的事件也就变的越长。在 JavaScript 中，添加到页面上的事件处理程序数量将直接关系到页面的整体运行性能。每一个事件处理函数，都是一个对象，多一个事件处理函数，**内存**中就会被多占用一部分空间。如果要用事件委托，就会将所有的操作放到 js 程序里面，只对它的父级进行操作，与 DOM 的操作就只需要交互一次，这样就能大大的减少与 DOM 的交互次数，提高性能。
-- 动态绑定事件 因为事件绑定在父级元素 所以新增的元素也能触发同样的事件
-
-### addEventListener 默认是捕获还是冒泡
-
-默认是**冒泡**
-
-addEventListener**第三个参数**默认为 false 代表执行事件冒泡行为。
-
-当为 true 时执行事件捕获行为。
-
-### apply call bind 区别
-
-- 三者都可以改变函数的 this 对象指向。
-- 三者第一个参数都是 this 要指向的对象，如果如果没有这个参数或参数为 undefined 或 null，则默认指向全局 window。
-- 三者都可以传参，但是 **apply 是数组**，而 **call 是参数列表**，且 apply 和 call 是一次性传入参数，而 **bind 可以分为多次传入**。
-- bind 是返回**绑定 this 之后的函数**，便于稍后调用；apply 、call 则是**立即执行** 。
-- bind()会返回一个新的函数，如果这个返回的新的函数作为**构造函数**创建一个新的对象，那么此时 this **不再指向**传入给 bind 的第一个参数，而是指向用 new 创建的实例
-
-```js
-function add(a,b){
-  console.log(this) // '10+20'
-  console.log(a) // 10
-  console.log(b) // 33
-  return a+b
-}
-const reAdd = add.bind('10+20',10).bind(22,33)
-const result = reAdd()
-result // 43
-```
-
-> 注意！很多同学可能会忽略 bind 绑定的函数作为构造函数进行 new 实例化的情况
->
-> 如果这个返回的新的函数作为构造函数创建一个新的对象，那么此时 this 不再指向传入给 bind 的第一个参数，而是指向用 new 创建的实例
+> Recently revised in 2022-03-20
 
 ### 闭包的应用场景
 
@@ -57,7 +8,7 @@ result // 43
 ```js
 // 防抖
 function debounce(fn, delay = 300) {
-  let timer; //闭包引用的外界变量
+  let timer; // 闭包引用的外界变量
   return function () {
     const args = arguments;
     if (timer) {
@@ -66,13 +17,14 @@ function debounce(fn, delay = 300) {
     timer = setTimeout(() => {
       fn.apply(this, args);
     }, delay);
-  };
+  }
 }
 ```
 
 使用闭包可以在 JavaScript 中模拟块级作用域
 
 ```js
+// babel 中也用这个模拟块级作用域
 function outputNumbers(count) {
   (function () {
     for (var i = 0; i < count; i++) {
@@ -216,53 +168,6 @@ Function.prototype.myBind = function (context, ...args) {
 //  bindFun('我是参数传进来的age')
 ```
 
-### 手写 promise.all 和 race（京东）
-
-```js
-  //静态方法
-  static all(promiseArr) {
-    let result = [];
-    //声明一个计数器 每一个promise返回就加一
-    let count = 0;
-    return new Mypromise((resolve, reject) => {
-      for (let i = 0; i < promiseArr.length; i++) {
-      //这里用 Promise.resolve包装一下 防止不是Promise类型传进来
-        Promise.resolve(promiseArr[i]).then(
-          (res) => {
-            //这里不能直接push数组  因为要控制顺序一一对应(感谢评论区指正)
-            result[i] = res;
-            count++;
-            //只有全部的promise执行成功之后才resolve出去
-            if (count === promiseArr.length) {
-              resolve(result);
-            }
-          },
-          (err) => {
-            reject(err);
-          }
-        );
-      }
-    });
-  }
-  //静态方法
-  static race(promiseArr) {
-    return new Mypromise((resolve, reject) => {
-      for (let i = 0; i < promiseArr.length; i++) {
-        Promise.resolve(promiseArr[i]).then(
-          (res) => {
-            //promise数组只要有任何一个promise 状态变更  就可以返回
-            resolve(res);
-          },
-          (err) => {
-            reject(err);
-          }
-        );
-      }
-    });
-  }
-}
-```
-
 ### 手写-实现一个寄生组合继承
 
 ```js
@@ -275,11 +180,12 @@ function Parent(name) {
 Parent.prototype.play = () => {
   console.log(222);
 };
+
 function Children(name) {
   Parent.call(this);
   this.name = name;
 }
-Children.prototype = Object.create(Parent.prototype);
+Children.prototype = Object.create(Parent.prototype)
 Children.prototype.constructor = Children;
 // let child = new Children("111");
 // // console.log(child.name);
@@ -317,7 +223,7 @@ function myNew(fn, ...args) {
 ```js
 function mySetInterval(fn, time = 1000) {
   let timer = null,
-    isClear = false;
+      isClear = false;
   function interval() {
     if (isClear) {
       isClear = false;
@@ -400,72 +306,7 @@ class EventEmitter {
 // event.emit("dbClick");
 ```
 
-### 手写-实现一个对象的 flatten 方法（阿里）
-
-题目描述
-
-```
-const obj = {
- a: {
-        b: 1,
-        c: 2,
-        d: {e: 5}
-    },
- b: [1, 3, {a: 2, b: 3}],
- c: 3
-}
-
-flatten(obj) 结果返回如下
-// {
-//  'a.b': 1,
-//  'a.c': 2,
-//  'a.d.e': 5,
-//  'b[0]': 1,
-//  'b[1]': 3,
-//  'b[2].a': 2,
-//  'b[2].b': 3
-//   c: 3
-// }
-
-复制代码
-```
-
-答案
-
-```js
-function isObject(val) {
-  return typeof val === "object" && val !== null;
-}
-
-function flatten(obj) {
-  if (!isObject(obj)) {
-    return;
-  }
-  let res = {};
-  const dfs = (cur, prefix) => {
-    if (isObject(cur)) {
-      if (Array.isArray(cur)) {
-        cur.forEach((item, index) => {
-          dfs(item, `${prefix}[${index}]`);
-        });
-      } else {
-        for (let k in cur) {
-          dfs(cur[k], `${prefix}${prefix ? "." : ""}${k}`);
-        }
-      }
-    } else {
-      res[prefix] = cur;
-    }
-  };
-  dfs(obj, "");
-
-  return res;
-}
-flatten();
-复制代码
-```
-
-### 手写-判断括号字符串是否有效（小米）
+### 写-判断括号字符串是否有效（小米）
 
 题目描述
 
@@ -632,8 +473,9 @@ const firstMissingPositive = (nums) => {
       nums[i] <= nums.length && // 对1~nums.length范围内的元素进行安排
       nums[nums[i] - 1] !== nums[i] // 已经出现在理想位置的，就不用交换
     ) {
+      // arr[i] 交换到 arr[arr[i]-1]，如果 arr[i] = 6 arr[5] = 6
       const temp = nums[nums[i] - 1]; // 交换
-      nums[nums[i] - 1] = nums[i];
+      nums[nus[i] - 1] = nums[i];
       nums[i] = temp;
     }
   }
@@ -648,6 +490,70 @@ const firstMissingPositive = (nums) => {
 ```
 
 ## 已学习
+
+### 手写-实现一个对象的 flatten 方法（阿里）
+
+题目描述
+
+```js
+const obj = {
+  a: {
+    b: 1,
+    c: 2,
+    d: {e: 5}
+  },
+  b: [1, 3, {a: 2, b: 3}],
+  c: 3
+}
+
+flatten(obj) 结果返回如下
+// {
+//  'a.b': 1,
+//  'a.c': 2,
+//  'a.d.e': 5,
+//  'b[0]': 1,
+//  'b[1]': 3,
+//  'b[2].a': 2,
+//  'b[2].b': 3
+//   c: 3
+// }
+
+```
+
+答案
+
+```js
+function isObject(val) {
+  return typeof val === "object" && val !== null;
+}
+
+function flatten(obj) {
+  if (!isObject(obj)) {
+    return;
+  }
+  let res = {};
+  const dfs = (cur, prefix) => {
+    if (isObject(cur)) {
+      if (Array.isArray(cur)) {
+        cur.forEach((item, index) => {
+          dfs(item, `${prefix}[${index}]`);
+        });
+      } else {
+        for (let k in cur) {
+          dfs(cur[k], `${prefix}${prefix ? "." : ""}${k}`);
+        }
+      }
+    } else {
+      res[prefix] = cur;
+    }
+  };
+  dfs(obj, "");
+  return res;
+}
+flatten();
+```
+
+
 
 ### undefined 和 null 的区别是什么？
 
@@ -897,3 +803,117 @@ const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 const resArr = getTenNum(testArray, 14)
 ```
 
+### 实现对象的深拷贝
+
+```js
+const obj = {
+  staff:['六','久']
+}
+function deepClone(content){
+  if(typeof content!=='obj'){
+    return content
+  }
+  let result = {}
+  if(Array.isArray(content)){
+    result = []
+  }
+  Object.keys(content).forEach(item=>{
+      console.log('深克隆/')
+    if(typeof content[item] ==='object'&&content!==null){
+      console.log('深克隆/')
+      result[item] = deepClone(item)
+    }else{
+      result[item] = content[item]
+    }
+  })
+  return result
+}
+const child = deepClone(obj)
+```
+
+### 手写 promise.all 和 race（京东）
+
+```js
+//静态方法
+static all(promiseArr) {
+  let result = [];
+  //声明一个计数器 每一个promise返回就加一
+  let count = 0;
+  return new Mypromise((resolve, reject) => {
+    for (let i = 0; i < promiseArr.length; i++) {
+      //这里用 Promise.resolve包装一下 防止不是Promise类型传进来
+      Promise.resolve(promiseArr[i]).then(
+        (res) => {
+          //这里不能直接push数组  因为要控制顺序一一对应(感谢评论区指正)
+          result[i] = res;
+          count++;
+          //只有全部的promise执行成功之后才resolve出去
+          if (count === promiseArr.length) {
+            resolve(result);
+          }
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    }
+  });
+}
+//静态方法
+static race(promiseArr) {
+  return new Mypromise((resolve, reject) => {
+    for (let i = 0; i < promiseArr.length; i++) {
+      Promise.resolve(promiseArr[i]).then(
+        (res) => {
+          //promise数组只要有任何一个promise 状态变更  就可以返回
+          resolve(res);
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    }
+  });
+}
+```
+
+### 什么是事件代理（事件委托） 有什么好处
+
+事件委托的原理：不给每个子节点单独设置事件监听器，而是设置在其父节点上，然后利用冒泡原理设置每个子节点，即`event.target`。
+
+**优点：**
+
+- **减少内存消耗和对 DOM 操作，提高性能**。因为需要不断的操作 DOM，持续操作 DOM 会引起浏览器重绘和回流的可能也就越多，页面交互的事件也就变的越长。在 JavaScript 中，添加到页面上的事件处理程序数量将直接关系到页面的整体运行性能。每一个事件处理函数，都是一个对象，多一个事件处理函数，**内存**中就会被多占用一部分空间。如果要用事件委托，就会将所有的操作放到 js 程序里面，只对它的父级进行操作，与 DOM 的操作就只需要交互一次，这样就能大大的减少与 DOM 的交互次数，提高性能。
+- 动态绑定事件 因为事件绑定在父级元素 所以新增的元素也能触发同样的事件
+
+### addEventListener 默认是捕获还是冒泡
+
+默认是**冒泡**
+
+addEventListener**第三个参数**默认为 false 代表执行事件冒泡行为。
+
+当为 true 时执行事件捕获行为。
+
+### apply call bind 区别
+
+- 三者都可以改变函数的 this 对象指向。
+- 三者第一个参数都是 this 要指向的对象，如果如果没有这个参数或参数为 undefined 或 null，则默认指向全局 window。
+- 三者都可以传参，但是 **apply 是数组**，而 **call 是参数列表**，且 apply 和 call 是一次性传入参数，而 **bind 可以分为多次传入**。
+- bind 是返回**绑定 this 之后的函数**，便于稍后调用；apply 、call 则是**立即执行** 。
+- bind()会返回一个新的函数，如果这个返回的新的函数作为**构造函数**创建一个新的对象，那么此时 this **不再指向**传入给 bind 的第一个参数，而是指向用 new 创建的实例
+
+```js
+function add(a,b){
+  console.log(this) // '10+20'
+  console.log(a) // 10
+  console.log(b) // 33
+  return a+b
+}
+const reAdd = add.bind('10+20',10).bind(22,33)
+const result = reAdd()
+result // 43
+```
+
+> 注意！很多同学可能会忽略 bind 绑定的函数作为构造函数进行 new 实例化的情况
+>
+> 如果这个返回的新的函数作为构造函数创建一个新的对象，那么此时 this 不再指向传入给 bind 的第一个参数，而是指向用 new 创建的实例
