@@ -1,10 +1,13 @@
+> Create by **fall** on ——
+> Recently revised in 2022-02-08
+
 ## package.json
 
 package.json 是一个项目清单，可以做很多互不相关的事情
 
 存储元数据：元数据就是描述数据信息的数据
 
-- 工具的配置中心
+- 工具的配置中心（可以在该文件内放置工具的配置）
 - npm 和 yarn 存储所有已经安装的包的名称和版本的地方。
 
 最简单的 package.json 文件：
@@ -17,15 +20,15 @@ package.json 的文件当然要符合语法规范
 
 ```json
 {
-  name:'program name'
+  name:'my_demo'
 }
 ```
 
 > 命令行工具快速创建 package.json ： `npm init` 初始化当前环境。
 >
-> `npm init -y` 或者`npm init -yes` 快速创建
+> `npm init -y` 或者 `npm init -yes` 快速创建
 
-### 文件的属性值
+### 属性值含义
 
 所有属性都可以通过 npm 或者其它工具使用
 
@@ -43,7 +46,9 @@ package.json 的文件当然要符合语法规范
 
 > name 必须小于 214 个字符，不能包含空格，只能包含小写字母、连字符(`-`)、下划线（`_`）
 
-### 其它可选值：
+### 其它可选值
+
+> 和标准的 json 文件格式相同即可
 
 **author**：列出软件包的作者名称
 
@@ -61,6 +66,7 @@ package.json 的文件当然要符合语法规范
 ```json
 // 写法1
 {"contributors":['personA','personB']}
+// 写法2
 {
   "contributors":[
     {
@@ -87,9 +93,9 @@ package.json 的文件当然要符合语法规范
 **keywords**：属性包含与软件包相关的关键字词组
 
 ```json
-{"keywords":[
-  "email","machine learning","ai"
-]}
+{
+  "keywords":[  "email","machine learning","ai"]
+}
 ```
 
 **repository**：指定了程序包仓库所在的位置
@@ -128,6 +134,14 @@ package.json 的文件当然要符合语法规范
 ```
 
 ### 软件包版本描述
+
+**语义化版本控制**：简单来讲所有版本都有三个数字
+
+比如说：`2.6.5`
+
+- 第一个数字是主板本，进行不兼容的 API 更改时，升级主板本。
+- 第二个数字是次版本，进行不兼容的 API 更改时，升级主板本。
+- 第三个数字是补丁版本，向后兼容的缺陷修复时，升级补丁版本
 
 > - `~`：如果写入是 `~0.13.0` 则只更新补丁版本 `0.13.1` 可以 `0.14.0` 不行
 > - `^` ：如果写入的是 `^` 表示需要更新补丁版本和次版本 `0.13.1` `0.14.0`

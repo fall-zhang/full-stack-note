@@ -1,5 +1,5 @@
->Create by **fall** on 2021年10月26日19:15:51
->Recently revised in 2021年10月31日18:09:39
+>Create by **fall** on 2021-10-26
+>Recently revised in 2022-03-02
 
 ## 文件结构
 
@@ -21,7 +21,6 @@
 <script setup>
 	// 在 script setup里面声明的所有数据都是可以在 template 中使用的
   import { reactive, ref } from 'vue'
-  
   // ref声明响应式数据，用于声明基本数据类型
   const name = ref('Jerry')
   // 修改
@@ -239,25 +238,24 @@ watch([()=>data1,()=>data2],()=>{
 </script>
 ```
 
-## 八、v-model
+## v-model
+
+v-model 可以绑定多个值，并且如果不写 `v-model:` 中 `:` 后面的值，默认绑定的为 `modelValue`
 
 ### 子组件
 
-```javascript
+```vue
 <template>
   <span @click="changeInfo">我叫{{ modelValue }}，今年{{ age }}岁</span>
 </template>
-
 <script setup>
   // import { defineEmits, defineProps } from 'vue'
   // defineEmits和defineProps在<script setup>中自动可用，无需导入
   // 需在.eslintrc.js文件中【globals】下配置【defineEmits: true】、【defineProps: true】
-
   defineProps({
     modelValue: String,
     age: Number
   })
-
   const emit = defineEmits(['update:modelValue', 'update:age'])
   const changeInfo = () => {
     // 触发父组件值更新
@@ -265,12 +263,11 @@ watch([()=>data1,()=>data2],()=>{
     emit('update:age', 30)
   }
 </script>
-复制代码
 ```
 
 ### 父组件
 
-```javascript
+```vue
 <template>
   // v-model:modelValue简写为v-model
   // 可绑定多个v-model
@@ -290,61 +287,109 @@ watch([()=>data1,()=>data2],()=>{
     age: 20
   })
 </script>
-复制代码
 ```
 
-## 九、nextTick
+## provide 和 inject
 
-```javascript
+### 父组件
+
+```vue
+<template>
+  <child/>
+</template>
+<script setup>
+  import { provide } from 'vue'
+  import { ref, watch } from 'vue'
+  // 引入子组件
+  import child from './child.vue'
+  let name = ref('Jerry')
+  // 声明provide
+  provide('provideState', {
+    name,
+    changeName: () => {
+      name.value = 'Tom'
+    }
+  })
+  // 监听name改变
+  watch(name, () => {
+    console.log(`name变成了${name}`)
+    setTimeout(() => {
+      console.log(name.value) // Tom
+    }, 1000)
+  })
+</script>
+```
+
+### 子组件
+
+```vue
+<script setup>
+  import { inject } from 'vue'
+	// 注入
+  const provideState = inject('provideState')
+  // 子组件触发name改变
+  provideState.changeName()
+</script>
+```
+
+## nextTick
+
+A utility for waiting for the next DOM update flush.
+
+等待下一个 DOM 更新完成的工具
+
+```js
+// type
+function nextTick(callback?:()=>void):Promise<void>
+```
+
+
+
+```vue
 <script setup>
   import { nextTick } from 'vue'
-	
   nextTick(() => {
     // ...
   })
 </script>
-复制代码
 ```
 
-## 十、子组件ref变量和defineExpose
+## ref和defineExpose
+
+将方法、变量暴露给父组件使用，父组件才可通过 ref API拿到子组件暴露的数据
 
 - 在标准组件写法里，子组件的数据都是默认隐式暴露给父组件的，但在 script-setup 模式下，所有数据只是默认 return 给 template 使用，不会暴露到组件外，所以父组件是无法直接通过挂载 ref 变量获取子组件的数据。
 - 如果要调用子组件的数据，需要先在子组件显示的暴露出来，才能够正确的拿到，这个操作，就是由 defineExpose 来完成。
 
 ### 子组件
 
-```javascript
+```vue
 <template>
   <span>{{state.name}}</span>
 </template>
-
 <script setup>
   import { defineExpose, reactive, toRefs } from 'vue'
-	
   // 声明state
   const state = reactive({
     name: 'Jerry'
   }) 
-	
   // 声明方法
   const changeName = () => {
     // 执行
     state.name = 'Tom'
   }
-  
-  // 将方法、变量暴露给父组件使用，父组见才可通过ref API拿到子组件暴露的数据
+  // 将方法、变量暴露给父组件使用，父组件才可通过 ref API拿到子组件暴露的数据
   defineExpose({
     // 解构state
     ...toRefs(state),
     changeName
   })
 </script>
-复制代码
 ```
 
 ### 父组件
 
-```javascript
+```vue
 <template>
   <child ref='childRef'/>  
 </template>
@@ -353,24 +398,21 @@ watch([()=>data1,()=>data2],()=>{
   import { ref, nextTick } from 'vue'
   // 引入子组件
   import child from './child.vue'
-
   // 子组件ref
   const childRef = ref('childRef')
-  
   // nextTick
   nextTick(() => {
-    // 获取子组件name
+    // 获取子组件 name
     console.log(childRef.value.name)
     // 执行子组件方法
     childRef.value.changeName()
   })
 </script>
-复制代码
 ```
 
-## 十一、路由useRoute和useRouter
+## 路由useRoute和useRouter
 
-```javascript
+```vue
 <script setup>
   import { useRoute, useRouter } from 'vue-router'
 	
@@ -384,10 +426,9 @@ watch([()=>data1,()=>data2],()=>{
   // 路由跳转
   router.push('/newPage')
 </script>
-复制代码
 ```
 
-## 十二、路由导航守卫
+## 路由导航守卫
 
 ```javascript
 <script setup>
@@ -407,7 +448,7 @@ watch([()=>data1,()=>data2],()=>{
 复制代码
 ```
 
-## 十三、store
+## store
 
 *Vue3 中的Vuex不再提供辅助函数写法
 
@@ -428,7 +469,7 @@ watch([()=>data1,()=>data2],()=>{
 </script>
 ```
 
-## 十四、生命周期
+## 生命周期
 
 通过在生命周期钩子前面加上 “on” 来访问组件的生命周期钩子。
 
@@ -450,9 +491,9 @@ watch([()=>data1,()=>data2],()=>{
 | activated       | onActivated       |
 | deactivated     | onDeactivated     |
 
-## 十五、CSS变量注入
+## CSS变量注入
 
-```javascript
+```vue
 <template>
   <span>Jerry</span>  
 </template>
@@ -471,7 +512,6 @@ watch([()=>data1,()=>data2],()=>{
     color: v-bind('state.red');
   }  
 </style>
-复制代码
 ```
 
 ## 十六、原型绑定与组件内使用
@@ -530,61 +570,11 @@ prototype.name = 'Jerry'
 复制代码
 ```
 
-## 十九、provide和inject
-
-### 父组件
-
-```javascript
-<template>
-  <child/>
-</template>
-
-<script setup>
-  import { provide } from 'vue'
-  import { ref, watch } from 'vue'
-  // 引入子组件
-  import child from './child.vue'
-
-  let name = ref('Jerry')
-  // 声明provide
-  provide('provideState', {
-    name,
-    changeName: () => {
-      name.value = 'Tom'
-    }
-  })
-
-  // 监听name改变
-  watch(name, () => {
-    console.log(`name变成了${name}`)
-    setTimeout(() => {
-      console.log(name.value) // Tom
-    }, 1000)
-  })
-</script>
-复制代码
-```
-
-### 子组件
-
-```javascript
-<script setup>
-  import { inject } from 'vue'
-	// 注入
-  const provideState = inject('provideState')
-  
-  // 子组件触发name改变
-  provideState.changeName()
-</script>
-复制代码
-```
-
 ## 使用echarts
 
 ```javascript
 // 安装
 cnpm i echarts --save
-
 // 组件内引入
 import * as echarts from 'echarts'
 ```
