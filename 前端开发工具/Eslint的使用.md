@@ -33,7 +33,7 @@ module.exports = {
 - `warn` 或者 `1` 打开规则，表示警告，打印黄色字体（黄色波浪线）
 - `error` 或者 `2` 打开规则，并且作为错误，打印红色字体（红色波浪线）
 
-## Eslint 语法配置
+### Eslint 语法配置
 
 > P.S.我认为经常使用的会优先排列在前面
 
@@ -213,3 +213,7 @@ module.exports = {
   "yoda": [2, "never"]// 禁止尤达条件
 }
 ```
+
+## TypeScript
+
+TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而是合并到 eslint 中

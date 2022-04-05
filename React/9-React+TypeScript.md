@@ -14,7 +14,7 @@ npx create-react-app my-app --template typescript
 `React.FC` 是 TypeScript 中的一个泛型，FC 是 Function Component 的缩写，也可以写为 `React.FunctionComponent`
 
 ```tsx
-// 泛型中包含了 PropsWithChildren 的泛型，所以不需要定义 children，如果要添加其他属性，需要添加类型注释
+// 泛型中包含了 PropsWithChildren 的泛型，所以不需要定义 children，如果要添加其他属性，需要添加类型注释，比如这里的 message
 const MyComponent:React.FC<{message:string}> = ({message})=>{
   return (
     <div>{message}</div>
