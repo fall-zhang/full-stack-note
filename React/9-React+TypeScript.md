@@ -22,5 +22,106 @@ const MyComponent:React.FC<{message:string}> = ({message})=>{
 }
 ```
 
+### Hooks
+
+useState
+
+```tsx
+import {useState} from 'react'
+const [val,setVal] = useState(22)
+// 没有初始值，或者是 null
+type AppProps = {message:string}
+const App = ()=>{
+  const [data] = useState<AppProps |null>(null)
+  return <div>{data?.message}</div>
+}
+```
+
+useEffect
+
+```tsx
+import {useEffect} from 'react'
+function DealyedEffect(props:{timerMs:number}){
+  const {timerMs} = props
+  useEffect(()=>{
+    const timer = setTimeout(()=>{
+      console.log('yep')
+    },timerMs)
+    return ()=>clearTimeout(timer)
+  },[timerMs])
+  return null
+}
+useEffect(()=>{
+  (async ()=>{
+    const {data} = await ajax(params)
+  })()
+},[params])
+useEffect(()=>{
+  ajax(params).then(res=>{
+    // todo
+  })
+})
+```
+
+useRef
+
+```tsx
+function TextInputWithFocusButton(){
+  const inputEl = React.useRef<HTMLInputElement>(null)
+  const onButtonClick = ()=>{
+    if(inputEl && inputEl.current){
+      input.current.focus()
+    }
+    inputEl.current?.focus()
+  }
+  return (
+    <div>
+      <input ref={inputEl} type='text' />
+      <button onClick={onButtonClick}>Focus on Input</button>
+    </div>
+  )
+}
+```
+
+useReducer
+
+
+
+
+
+
+
+
+
+## Hello World
+
+```tsx
+// src/components/Hello.tsx
+import * as React from 'react'
+export interface Props{
+  name:string
+  enthusiasmLevel?:number
+}
+function Hello({name,enthusiasmLevel=1}:Props){
+  if(enthusiasmLevel <=0){
+    throw new Error('you should have a talk with your friends')
+  }
+  return (
+  <div className="hello">
+    <div className="greeting">
+      Hello{name+getExclamationMarks(enthusiasmLevel)}
+      </div>
+    </div>
+  )
+}
+function getExclamationMarks(numChars:number){
+  return Array(numChars + 1).join('!')
+}
+```
+
+响应消
+
+
+
 
 
