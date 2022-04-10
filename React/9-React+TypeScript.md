@@ -85,11 +85,138 @@ function TextInputWithFocusButton(){
 
 useReducer
 
+一个钩子，牛逼的钩子，先传入方法，后传入初始参数，return的值，就是函数的值
 
+```tsx
+const initialState = { count: 0 }
+type ACTIONTYPE =
+  | { type: 'increment', payload: number }
+  | { type: 'decrement', payload: string }
+  | { type: 'inital' }
+function reducer(state: typeof initialState, action: ACTIONTYPE) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + action.payload }
+    case 'decrement':
+      return { count: state.count - Number(action.payload) }
+    case 'inital':
+      return { count: initialState.count }
+    default:
+      throw new Error()
+  }
+}
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  return (
+    <div>
+      剩余卡:{state.count}
+      <button onClick={() => dispatch({ type: 'decrement', payload: '2' })}>抛卡！</button>
+      <button onClick={() => dispatch({ type: 'increment', payload: 3 })}>加卡！</button>
+      <button onClick={() => dispatch({ type: 'inital' })}>归零</button>
+    </div>
+  )
+}
+```
 
+useContext
 
+useContext 和 useReducer 结合使用，用来管理全局数据流
 
+```tsx
+interface AppContextInterface {
+  state:typeof initialState
+  dispatch:React.Dispatch<ACTIONTYPE>
+}
+// 创建 context
+const AppCtx = React.createContext<AppContextInterface>({
+  state:initialState,
+  dispatch:(action)=>action
+})
+const App = ():React.ReactNode=>{
+  const [state,dispathc]=useReducer(reducer,initialState)
+  return (
+  	<AppCtx.provider value={{state,disatch}}>
+    	<Counter />
+    </AppCtx.provider>
+  )
+}
+// 使用 context
+function Consumer(){
+  const {state,dispatch} = React.useContext(AppCtx)
+  return (
+  	<div>
+    	Count:{state.count}
+      <button onClick={()=>dispatch({type:'decrement',payload:'5'})}>-</button>
+      <button onClick={()=>dispatch({type:'increment',payload:5})}>-</button>
+    </div>
+  )
+}
+```
 
+自定义 Hooks
+
+```tsx
+export function useLoading(){
+  const [isLoading,setState] = React.useState(false)
+  const load = (onePromise:Promise<any>)=>{
+    setState(true)
+    return onePromise.finally(()=setState(false))
+  }
+  return [isLoading,load] as const
+  // return [isLoading,load] as [boolean,(onePromise:Promise<any>)=>Promise<any>] 
+}
+
+// 元组
+function tuplify<T extends any[]>(...elements:T){
+  return elements
+}
+function useArray(){
+  const numberValue = useRef(3).current
+  const functionValue = useRef(()=>{}).current
+  return [numberValue,functionValue] as const
+}
+function useTuple(){
+  const numberValue = useRef(3).current
+  const functionValue = useRef(()=>{}).current
+  return tuplify(numberValue,functionValue)
+}
+```
+
+```tsx
+const initVal = {
+   name:'刘华',
+  count:0
+}
+type DealType={
+  type:'add'
+  value:number
+}|{
+  type:'reduce'
+  value:number
+}
+function handsome(state:typeof initVal,deal:DealType){
+  switch(deal.type){
+    case 'add':
+      return {name:'刘华',count:deal.value+state.count}
+    case 'reduce':
+      return {name:'刘华',count:state.count-deal.value}
+    default:
+      throw new Error('没有对应的 useReduce操作')
+  }
+}
+const App:React.FC = function(){
+  const [state,dispatch] = useReducer(handsome,{name:'',count:1})
+  return (
+    <div>
+      当前的人名：{state.name}
+      <div></div>
+      当前的钱：{state.count}
+      <button onClick={()=>dispatch({type:'add',value:20})}>加钱</button>
+      <button onClick={()=>dispatch({type:'reduce',value:177})}>扣钱</button>
+    </div>
+  )
+}
+```
 
 
 
@@ -118,10 +245,4 @@ function getExclamationMarks(numChars:number){
   return Array(numChars + 1).join('!')
 }
 ```
-
-响应消
-
-
-
-
 
