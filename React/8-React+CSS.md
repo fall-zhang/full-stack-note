@@ -1,23 +1,89 @@
+## 代码隔离
+
+在文件名称的扩展名之前添加 `module.` 即可改变代码作用域，比如说在 less 中，通过`module.less` 实现代码隔离。
+
+> 使用 `React.lazy()` 包裹的内容中，如果引入了 `module.less` 等内容，则会自动打包生成文件。
+
+
+
+## ClassName
+
+引入之后，可以实现解析为之后的类名
+
 ```tsx
-import cn from "classnames"
-import React from 'react'
-import "./style/index.less"
-import {Icon,IIconProps} from "zent" // 理解为自定义的模块即可，zent 是啥不重要
-interface IProps {
-  title:string
-  iconType?:IIconProps["type"]
-  isShowIcon?:boolean
-  iconClassName?:string
-  titileClassName?:string
-}
-export const ContentTitle:React.FC<IProps>=(props)=>{
-  const {title,iconType= 'liuchuan',isShowIcon=false,iconClassName,titleClassName,...popProps}= props
+import classnames from "classnames"
+const bottomCardSty=classNames({
+  [styles.ownBHeight]: true,
+  [styles.isBChecked]: checked,
+  [styles.noBChecked]: !checked,
+  [styles.noBCheckedMq]:!checked&&dataSet.dsCodeType==3,
+})
+
+```
+
+### classnames
+
+```jsx
+import classnames from 'classnames'
+import style from './style.css'
+const oneDOM = <div className={style.class1, style.class2}></div>
+```
+
+### css-module
+
+create-react-app 中会内置该方法
+
+`className` 中传入的是对象，所以是双括号
+
+```jsx
+function MyComponent(){
   return(
-  <div className={cn("content-title",titleClassName)}>
-    {title}
-    {isShowIcon && <Icon className={cn("content-title__icon",iconClassName)} {...popProps} type={iconType} />}
-    </div>
+    <div className={{marginTop:8}}></div>
   )
 }
 ```
+
+css 隔离
+
+- css-module 类似于 vue 中的 scoped
+
+```jsx
+/* style.module.css */
+.text{
+  color:blue
+}
+/* app.tsx */
+import style from './style.module.css'
+function FallComponent(){
+  return(
+  	<div className={style.text}>隔离后的CSS</div>
+  )
+}
+// 编译后
+.text_fdu25RER{
+  color:blue
+}
+```
+
+### styled-components
+
+```jsx
+import syled from 'styled-components'
+// 创建一个名称为 Title 的 div
+const Title = styled.div`
+	font-size:30px;
+	background-color:cyan;
+`
+function App(){
+  return(
+  <Title>CSS in JS</Title>
+  )
+}
+```
+
+## 参考文章
+
+| 文章名称 | 文章链接            |
+| -------- | ------------------- |
+| 官方文档 | https://reactjs.org |
 
