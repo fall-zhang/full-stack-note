@@ -3,9 +3,10 @@
 
 # Fall的笔记仓库
 
-Github：https://github.com/Fall-zhang/self-note
-
-Gitee：https://gitee.com/mywings/noteself
+> 在 github 和 gitee 上都有我的仓库，但是后者经常更新，前者只是同步后者。
+>
+> - Github：https://github.com/Fall-zhang/self-note
+> - Gitee：https://gitee.com/mywings/noteself
 
 ## HTML 和 CSS笔记
 
