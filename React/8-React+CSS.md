@@ -4,8 +4,6 @@
 
 > 使用 `React.lazy()` 包裹的内容中，如果引入了 `module.less` 等内容，则会自动打包生成文件。
 
-
-
 ## ClassName
 
 引入之后，可以实现解析为之后的类名
@@ -80,6 +78,26 @@ function App(){
   )
 }
 ```
+
+### 直接引入
+
+```jsx
+import 'index.module.less'
+```
+
+更改全局样式
+
+```less
+// 更改 ant-design 的全局样式
+:global(.ant-result .ant-result-title) {
+  color: white;
+  .ant-result-subtitle {
+    color: rgba(255, 255, 255, 0.45);
+  }
+}
+```
+
+
 
 ## 参考文章
 
