@@ -3,6 +3,20 @@
 
 Window 对象上的内容
 
+## JS中的对象
+
+对象分为三种
+
+- 本地对象 ( native object )：Boolean、String、Number、Object、Array、Function、Error、Date、RegExp
+- 内置对象（ built-in object ）：Global、Math、JSON
+- 宿主对象：BOM、DOM
+
+> 这些分类也不知道是谁进行分类的，反正我觉得，
+>
+> - 本地对象，差不多就是 ECMA 标准语法进行实现的；
+> - 内置对象，就是为了方便编程，浏览器提供的，或者说是浏览器引擎提供的对象；
+> - 宿主对象，就是浏览器的实现，需要对可视界面进行的操作。
+
 ## navigator
 
 导航器对象，浏览器所处环境，和 cookie
