@@ -180,6 +180,15 @@ pnpm 的最佳特征之一是，在一个项目中，`package`的一个特定版
 
 ### 支持 monorepo
 
+### 配置
+
+`shamefully-hoist=true` 可以让包名提升，即还可以实现幽灵引用
+
+```
+// .npmrc
+shamefully-hoist=true
+```
+
 ## 参考文章
 
 | 作者          | 链接                                       |
