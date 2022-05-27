@@ -158,6 +158,11 @@ package.json 的文件当然要符合语法规范
 
 package-lock.json 和 package.json 文件一样，只不过， package-lock.json 会固化当前安装的每个软件包的版本，当运行 `npm install`时，`npm` 会使用这些确切的版本。如果不存在，就会自动生成该文件。
 
+> 为什么单一的 package-lock.json 不能确定唯一的依赖树？
+>
+> 不同的 npm 版本导致的 npm 安装依赖的策略和算法不同，根据 `package.json` 中的 [semver-range version](https://link.juejin.cn?target=https%3A%2F%2Fdocs.npmjs.com%2Fcli%2Fv6%2Fusing-npm%2Fsemver) 更新依赖，可能某些依赖自上次安装以后，己经发布了新的版本。
+
 > 没有 `package-lock.json` 时，会通过包名查找位置，然后包的依赖，之后进行安装，有了`package-lock.json` 后，可以直接从 package-lock.json 中直接查找地址进行下载，在 npm 5.0.0 之后的版本支持该特性。即，安装时更快，更高效。
 >
 > `package-lock.json` 文件需要被提交到 Git 仓库，以便被其他人获取（如果项目是公开的或有合作者，或者将 Git 作为部署源）。
+

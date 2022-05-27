@@ -1,5 +1,5 @@
 > Create by **fall** on ——
-> Recently revised in 2022-02-08
+> Recently revised in 2022-05-13
 
 ## npm 命令的使用
 
@@ -11,28 +11,26 @@ npm 的功能：
 
 ### npm 下载
 
-npm 在 Node.V10 之后就自带了，不需要额外下载。
+npm 在 Node V10 之后就自带了，不需要额外下载。
 
 LTS 版本:  Long Term Support（[长期支持版本](https://nodejs.org/en/about/releases/)）
 
 - 官方网址：https://nodejs.org
 - 安装 npm 组件：https://www.npmjs.com
 
-> 注：因为某些大家知道的原因，需要更换为国内的镜像
+> 注：因为某些大家知道的原因，需要更换为国内的镜像，或者安装 yarn，代替 npm
 >
-> 当然，你可以先查看当前使用的镜像：`npm config get registry`
+> 当然，你可以通过该命令 `npm config get registry` 查看当前使用的镜像。默认：`https://registry.npmjs.org/`
 >
-> 我当前使用的镜像是：`https://registry.npmjs.org/`
->
-> 可以使用`npm config set registry https://registry.npm.taobao.org`更改镜像地址，当然也可以使用这个方法改回原来的地址。
+> 可以使用 `npm config set registry https://registry.npm.taobao.org` 更改使用的镜像地址，当然也可以使用这个方法改回原来的地址。
 >
 > 安装 cnpm：`npm install -g cnpm --registry=https://registry.npm.taobao.org`
 >
-> 安装完成之后就可以通过 cnpm 代替 npm 的所有命令
+> 安装完成之后就可以通过 cnpm 代替 npm 的所有命令（有些插件使用 cnpm 安装，可能会出现问题）
 >
 > `npm -v` 用于检测 npm 是否安装成功
 
-### npm 插件的版本控制
+### 版本控制
 
 **语义化版本控制**：简单来讲所有版本都有三个数字
 
@@ -64,15 +62,17 @@ npm install gulp@3.9.1 --save-dev # 的简写:npm i gulp@3.9.1 -S-D
 
 **卸载命令**
 
-> `npm uninstall <package-name>`  卸载 node.js 指定的包
->
-> `npm uninstall <package-name> -g` 安装全局模块 -g 后进行全局模块的卸载
->
-> 如果安装时使用 -S(即--save) ，卸载时必须添加 -S ，移除在 package.json 中的引用
->
-> 同理，使用-D(--save-dev)，卸载时必须添加 -D
+`npm uninstall <package-name>`  卸载 node.js 指定的包
+
+`npm uninstall <package-name> -g` 安装全局模块 -g 后进行全局模块的卸载
+
+如果安装时使用 -S(即--save) ，卸载时必须添加 -S ，移除在 package.json 中的引用
+
+同理，使用-D(--save-dev)，卸载时必须添加 -D
 
 **其他命令**
+
+线上查找模块 `npm search react`
 
 | 命令（常用命令）                   | 功能                                                         |
 | ---------------------------------- | ------------------------------------------------------------ |
@@ -86,6 +86,9 @@ npm install gulp@3.9.1 --save-dev # 的简写:npm i gulp@3.9.1 -S-D
 | `npm view <package-name> version`  | 查看该软件的最新版本                                         |
 | `npm view <package-name> versions` | 查看该插件的所有版本                                         |
 | `npm publish`                      | 发布模块                                                     |
+| `npm config get cache`             | 查看 缓存所在位置                                            |
+
+
 
 ## NPX工具
 

@@ -1,3 +1,6 @@
+> Create by **fall** on 2020-11-18
+> Recently revised in 2022-05-14
+
 > **下载：** 从淘宝镜像上下载 git
 >
 > https://npm.taobao.org/mirrors/git-for-windows/
@@ -23,6 +26,8 @@
 ## git 工具
 
 ### git介绍
+
+帮助使用 git 工具
 
 **版本回退**
 

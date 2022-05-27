@@ -3,6 +3,20 @@
 
 Window 对象上的内容
 
+## JS中的对象
+
+对象分为三种
+
+- 本地对象 ( native object )：Boolean、String、Number、Object、Array、Function、Error、Date、RegExp
+- 内置对象（ built-in object ）：Global、Math、JSON
+- 宿主对象：BOM、DOM
+
+> 这些分类也不知道是谁进行分类的，反正我觉得，
+>
+> - 本地对象，差不多就是 ECMA 标准语法进行实现的；
+> - 内置对象，就是为了方便编程，浏览器提供的，或者说是浏览器引擎提供的对象；
+> - 宿主对象，就是浏览器的实现，需要对可视界面进行的操作。
+
 ## navigator
 
 导航器对象，浏览器所处环境，和 cookie
@@ -245,11 +259,29 @@ window.defaultStatus
 window.status
 ```
 
+## 全局方法
 
+`parseInt(string[,radix])` 其中 radix 的范围是 `2-36`，即从 2 进制到 36 进制去解析前面的字符串。默认是十进制。
 
+`Number.parseInt === parseInt` 为 true
 
+```js
+// 过大或者过小都会有特性
+// 如果大于等于 1e+21 或者小于等于 1e-7，使用十进制时，都会返回最开始的系数，下面的返回 4
+parseInt(4.7, 10)
+parseInt(4.7 * 1e22, 10)        // Very large number becomes 4
+parseInt(0.00000000000434, 10)  // Very small number becomes 4
+// 解析 BigInt 会丢失精确度
+parseInt('900719925474099267n')
+// 900719925474099300
+```
 
+`isNaN()` 用于判断是否是 `NaN`，也可以判断字符串是否是数字
 
+```js
+isNaN('12')
+isNaN('0b12')
+```
 
 
 

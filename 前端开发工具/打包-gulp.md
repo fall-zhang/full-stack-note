@@ -162,13 +162,13 @@ gulp.task("server",function(){
 
 > 注：当任务名称为`default`时，直接使用gulp命令就可以执行
 
-## webpack
+## 对比 webpack
 
-> 详情可以查看 webpack 模块化开发章节
+> 详情可以查看 `打包-webpack` 文件
 
 几个比较基础的概念
 
-- module，开发使得单个模块
+- module，开发时所编写的单个模块
 - bundle，打包后生成的文件
 - chunk，模块分析之后，分割出来的代码块
 

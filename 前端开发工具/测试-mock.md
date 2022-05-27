@@ -17,22 +17,6 @@
 - 组合模式（就是组合）
   - easy-moke、Apifox（Postman + Swagger + Mock + JMeter）
 
-
-
-## 配置
-
-会自动配置时间
-
-```js
-Mock.setup({
-    timeout: 400
-})
-```
-
-
-
-
-
 ## 随机数生成数据
 
 生成示例的文档：http://mockjs.com/examples.html
@@ -79,10 +63,68 @@ Random.image()
 
 > 生成图片是通过 https://dummyimage.com/ 网站进行生成的
 
+## 配置
+
+### 搭配 Vite
+
+```bash
+npm i mockjs -S
+npm i vite-plugin-mock cross-env -D
+```
+
+引入插件
+
+```js
+plugins: [
+  createMockServer({
+    // close support .ts file
+    supportTs: false,
+  }),
+]
+```
+
+配置 `package.json` 脚本
+
+```json
+{"dev": "cross-env NODE_ENV=development vite"}
+```
+
+创建 `mock/main.js`
+
+```js
+export default [
+  {
+    url: "/api/users",
+    method: "get",
+    response: req => {
+      return {
+        code: 0,
+        data: [
+          { name: "tom", },
+          { name: "jerry", },
+        ],
+      };
+    },
+  },
+  {
+    url: "/api/post",
+    method: "post",
+    timeout: 2000,
+    response: {
+      code: 0,
+      data: { name: "vben", },
+    },
+  },
+];
+```
+
+
+
 ## 参考文章
 
 | 作者/文章名称 | 链接                                       |
 | ------------- | ------------------------------------------ |
 | tager         | https://juejin.cn/post/7026165301255340045 |
 | mock.js       | http://mockjs.com/                         |
+| 杨村长        | https://juejin.cn/post/6910014283707318279 |
 
