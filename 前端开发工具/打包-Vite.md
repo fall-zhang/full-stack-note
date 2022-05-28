@@ -162,6 +162,26 @@ plugins: [
 
 因为 Vite 使用的 ESbuild 并不支持 TS 中的 `enum` 语法，所以，使用带有 `enum` 的语法库，会有问题，可以通过 `"skipLibCheck":true` 解决。
 
+### 静态资源处理
+
+服务时引入一个静态资源会返回解析后的公共路径。
+
+```js
+import imgUrl from './img.png'
+document.getElementById('hero-img').src = imgUrl
+// 在开发时，会作为当前路径下的相对路径
+// 构建后，放置在/assets/img.2d8efhg.png
+```
+
+- CSS 中的 `url()` 也以同样的方式处理。
+- 当静态资源小于一定大小（默认为 `4kb` ），将内联为 `base64` 编码
+
+作为特殊资源引入时：
+
+- 使用 `?raw` 作为字符串引入 `import shaderString from './shader.glsl?raw'`
+- 同理，使用 `?url` 表示导入一个 URL
+- 导入为 `worker` 时，路径后面拼接 `?worker` 或者 `?sharedworker`
+
 ## 插件
 
 ### rollup 插件
@@ -295,9 +315,61 @@ export default defineConfig({
 });
 ```
 
+## 默认配置
 
+这是我的 `vite.config.ts` 默认配置，仅供参考
 
+```ts
+import { defineConfig } from 'vite'
+import reactRefresh from '@vitejs/plugin-react'
+import { apiAddress, proxyApi } from './src/config'
+import * as path from 'path'
 
+// https://vitejs.dev/config/
+export default defineConfig({
+  server: {
+    port: 3001,
+    proxy: {
+      [proxyApi]: {
+        target: apiAddress,
+        changeOrigin: true,
+        cookieDomainRewrite: '',
+        secure: false,
+        rewrite: (p) => p.replace(/^\/api/, ''),
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@C': path.resolve(__dirname, 'src/components'),
+      '@U': path.resolve(__dirname, 'src/utils'),
+      '@H': path.resolve(__dirname, 'src/hooks'),
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        // 支持内联 JavaScript
+        javascriptEnabled: true,
+        // 重写 less 变量，定制样式
+        modifyVars: {
+          // font
+          '@font-black': '#1c1e21',
+          '@font-white': '#ffffffe6;',
+          // color
+          '@success-color': '#52c41a', // 成功色
+          '@warning-color': '#faad14', // 警告色
+          '@error-color': '#f5222d', // 错误色
+          '@heading-color': 'rgba(0, 0, 0, 0.85)', // 标题色
+          '@disabled-color': 'rgba(0, 0, 0, 0.25)', // 失效色
+        },
+      },
+    },
+  },
+  plugins: [reactRefresh()],
+})
+```
 
 
 
@@ -306,4 +378,7 @@ export default defineConfig({
 | 作者     | 链接                                       |
 | -------- | ------------------------------------------ |
 | 前端论道 | https://juejin.cn/post/7078622707104874503 |
+|          |                                            |
+|          |                                            |
+|          |                                            |
 
