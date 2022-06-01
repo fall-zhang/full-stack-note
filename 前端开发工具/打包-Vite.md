@@ -38,7 +38,7 @@ import { oneMethod } from 'my-dev'
 
 当前已经得到了需要构建的依赖列表，只需把他们进行打包就好了
 
-为了避免在程序运行过程中发生了错误，导致缓存不可用。`vite` 并没有将`esbuild`的`outdir`（输出目录）直接配置为`.vite`目录，而是先将构建产物存放到了一个临时目录。当构建完成后，才将原来旧的 `.vite`（如果有的话）删除。然后再将临时目录重命名为`.vite`。
+为了避免在程序运行过程中发生了错误，导致缓存不可用。`vite` 并没有将`esbuild` 的 `outdir`（输出目录）直接配置为`.vite`目录，而是先将构建产物存放到了一个临时目录。当构建完成后，才将原来旧的 `.vite`（如果有的话）删除。然后再将临时目录重命名为`.vite`。
 
 - 其它缓存操作
 
@@ -315,9 +315,61 @@ export default defineConfig({
 });
 ```
 
+## 默认配置
 
+这是我的 `vite.config.ts` 默认配置，仅供参考
 
+```ts
+import { defineConfig } from 'vite'
+import reactRefresh from '@vitejs/plugin-react'
+import { apiAddress, proxyApi } from './src/config'
+import * as path from 'path'
 
+// https://vitejs.dev/config/
+export default defineConfig({
+  server: {
+    port: 3001,
+    proxy: {
+      [proxyApi]: {
+        target: apiAddress,
+        changeOrigin: true,
+        cookieDomainRewrite: '',
+        secure: false,
+        rewrite: (p) => p.replace(/^\/api/, ''),
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@C': path.resolve(__dirname, 'src/components'),
+      '@U': path.resolve(__dirname, 'src/utils'),
+      '@H': path.resolve(__dirname, 'src/hooks'),
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        // 支持内联 JavaScript
+        javascriptEnabled: true,
+        // 重写 less 变量，定制样式
+        modifyVars: {
+          // font
+          '@font-black': '#1c1e21',
+          '@font-white': '#ffffffe6;',
+          // color
+          '@success-color': '#52c41a', // 成功色
+          '@warning-color': '#faad14', // 警告色
+          '@error-color': '#f5222d', // 错误色
+          '@heading-color': 'rgba(0, 0, 0, 0.85)', // 标题色
+          '@disabled-color': 'rgba(0, 0, 0, 0.25)', // 失效色
+        },
+      },
+    },
+  },
+  plugins: [reactRefresh()],
+})
+```
 
 
 

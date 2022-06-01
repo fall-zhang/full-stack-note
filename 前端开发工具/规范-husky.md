@@ -1,5 +1,5 @@
 > Create by **fall** on 2022-04-05
-> Recently revised in 2022-04-05
+> Recently revised in 2022-05-30
 
 ## husky
 
@@ -8,7 +8,7 @@
 ```bash
 npm i lint-staged husky -D
 npm set-script prepare "husky install" # 在 package.json 中添加脚本
-npm run prepare # 初始化 husky，将 git hooks 钩子交由，husky 执行
+npm run prepare # 初始化 husky，将 git hooks 钩子交由 husky 执行
 ```
 
 在初始化之后，会在根目录创建 `.husky` 文件夹
@@ -27,13 +27,9 @@ lint-satged 用于 lint 的缓存。
 npm run lint-staged
 ```
 
-
-
 ## 搭配其他插件
 
 `commitlint`：用来对 commit 的内容进行约束。
-
-
 
 `lint-staged`：对代码进行格式化，如果有错误，将不能上传代码。
 
@@ -58,10 +54,6 @@ package.json 中，添加如下内容
   }
 }
 ```
-
-
-
-
 
 ## 参考文章
 
