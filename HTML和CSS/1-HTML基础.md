@@ -1,20 +1,24 @@
-
+---
+sidebar_position: 2
+---
 
 > Create by **Fall** on 2019-07-11
->Recently revised in 2022-04-30
+>Recently revised in 2022-06-02
 
 # HTML5
 
 > `HTML`指的是`Hyper Text Markup Language` 即超文本标记语言
 >
 > 超文本标记语言的意义：标记特定文本实现特定的效果
+>
+> xhtml 是更加严格的 html 模式，因为移动端的出现，对于浏览器的需求变更，从此舍弃了 xhtml。
 
 ## 基础标签
 
-> 标签分为双标签和单标签
->
-> - 双标签：有开头，有结尾，比如：`<div></div>`、`<span></span>`
-> - 单标签：单个标签，比如：`<img>`
+标签分为双标签和单标签
+
+- 双标签：有开头，有结尾，比如：`<div></div>`、`<span></span>`
+- 单标签：单个标签，比如：`<img>`
 
 ### 注释
 

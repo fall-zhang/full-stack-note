@@ -16,7 +16,7 @@
 
 ## useState
 
- useState 总是替换变量而不是 class 组件中的 合并。
+ useState 总是替换变量而不是 class 组件中的合并。
 
 ```jsx
 import { useState } from 'react'
@@ -49,11 +49,11 @@ function Counter2(){
     },3000);
   }
   return (
-    <>
-    <p>{number}</p>
-    <button onClick={()=>setNumber(number+1)}>+</button>
-    <button onClick={()=>alertNumber()}>alertNumber</button>
-    </>
+    <div>
+      <p>{number}</p>
+      <button onClick={()=>setNumber(number+1)}>+</button>
+      <button onClick={()=>alertNumber()}>alertNumber</button>
+    </div>
   )
 }
 ```
@@ -72,13 +72,19 @@ function Compp(props){
     }
   }
   const [file,setFile] = useState(initState)
-  return(<>
+  return(<div>
     <h2>{file.age}</h2>
     <button onClick={()=>setFile({age:file.age+1,name:props})}>Plus</button>
     <button onClick={()=>setFile({age:file.age+1,name:props})}>Plus</button>
-    </>)
+    </div>)
 }
 ```
+
+
+
+## useReduce
+
+处理全局状态
 
 
 
