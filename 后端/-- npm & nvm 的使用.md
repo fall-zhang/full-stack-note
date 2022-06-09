@@ -1,5 +1,5 @@
 > Create by **fall** on ——
-> Recently revised in 2022-05-13
+> Recently revised in 2022-06-05
 
 ## npm 命令的使用
 
@@ -143,7 +143,7 @@ npx 可以指定直接执行 git 上面的代码，前提是远程代码必须�
 
 用 npx 使用 live-server
 
-使用 `npx http-server`
+使用 `npx http-server` 在当前文件夹下开启 `live-server` 即开启本地环境
 
 > yarn & pnpm
 >
@@ -155,7 +155,7 @@ npx 可以指定直接执行 git 上面的代码，前提是远程代码必须�
 
 ### 什么是NVM
 
-nvm是用来**对 node 进行版本控制的工具**
+nvm 是用来对 node 进行**版本控制的工具**
 
 > 注：windows 上运行的 nvm 和 linux & MacOS 上的 nvm 工具不是一个项目，它们是两个团队做出来的东西。
 
