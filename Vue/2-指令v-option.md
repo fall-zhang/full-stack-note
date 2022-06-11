@@ -1,4 +1,9 @@
-## v-cloak
+> Create by fall on:2022-03-10
+> Recently revised in:2022-06-11
+
+## 官方指令
+
+### v-cloak
 
 > 先通过隐藏样式在内存中进行值的替换，替换好之后再替换最终的结果
 
@@ -11,11 +16,11 @@
 <div/>
 ```
 
-## v-text
+### v-text
 
 填充纯文本（不存在先渲染原文本，再渲染 vue 内容的问题）
 
-## v-html
+### v-html
 
 作用：填充HTML片段
 
@@ -23,17 +28,17 @@
 
 - 本网站的内容可以使用，来自于第三方的数据安全属性未知，不推荐使用
 
-## v-pre
+### v-pre
 
 按照原始信息进行填充，vue不对信息进行处理（跳过编译过程） 
 
-## v-once 
+### v-once
 
 只编译一次
 
 - 显示内容之后不具有响应式的功能（只能进行一次改动）
 
-## v-model
+### v-model
 
 > - 使用v-model
 >   - 实现数据的监听（用在form表单，数据输入框）
@@ -43,7 +48,7 @@
 >   - `v-model.lazy='value'` 只在失去焦点的时候输出，将input事件转换为change事件
 >
 
-##   v-on
+###   v-on
 
 **鼠标点击事件**
 
@@ -122,7 +127,7 @@ Vue.directive('on').keyCodes.f2 = 113;
 <input type="text" v-model="name" @keyup.f2="add">
 ```
 
-## v-bind
+### v-bind
 
 修改后面样式的值
 
@@ -143,7 +148,7 @@ key: 帮助vue区分不同的元素，提高性能
 <li :key= 'item.id' v-for='(item,index)in list'>{{item}} +'------'{{index}} </li> 
 ```
 
-## v-if
+### v-if
 
 (包括同类的v-else-if;v-else)
 ```vue
@@ -153,7 +158,7 @@ key: 帮助vue区分不同的元素，提高性能
 
 搭配v-else使用
 
-## v-show
+### v-show
 
 使用方法
 
@@ -170,7 +175,7 @@ v-if和v-show的区别，v-if是只在符合条件时显示，其它直接隐藏
 
 > 一般来说，v-if 有更高的切换消耗而 v-show 有更高的初始渲染消耗。因此，如果需要频繁切换 v-show 较好，如果在运行时条件不大可能改变 v-if 较好。
 
-## v-for
+### v-for
 
 **遍历数组**
 
@@ -190,4 +195,7 @@ v-if和v-show的区别，v-if是只在符合条件时显示，其它直接隐藏
 
 > 算法的优化，需要在标签内部书写 `v-bind:key="item.id"`优化，简写`:key="item.id"`
 >
-> 当然也可以用`v-for="value of object"`
+> 当然也可以用 `v-for="value of object"`
+
+## 自定义指令
+
