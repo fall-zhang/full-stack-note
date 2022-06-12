@@ -55,16 +55,16 @@
 ```vue
 <button v-on:click="num++">button</button>
 <button @click="num++">button</button>
-<button @submit.prevent="onSubmit">button</button>//提交事件但是不重载页面
+<button @submit.prevent="onSubmit">button</button>// 使用修饰符，提交事件但是不重载页面
 ```
 
-**v-on的方法**
+**v-on的修饰符**
 
-- .stop  阻止冒泡
-- .prevent  阻止默认行为
-- .self   只有事件本身可以触发
-- .once 事件只触发一次
-- .capture 添加事件监听器，使用事件捕获模式（发生事件冒泡时，优先触发该事件）
+- `.stop`：阻止冒泡
+- `.prevent`：阻止默认行为
+- `.self`：只有事件本身可以触发
+- `.once`：事件只触发一次
+- `.capture`：添加事件监听器，使用事件捕获模式（发生事件冒泡时，优先触发该事件）
 
 **修饰符的顺序很重要**
 
@@ -129,9 +129,9 @@ Vue.directive('on').keyCodes.f2 = 113;
 
 ### v-bind
 
-修改后面样式的值
+用于向组件内传递值
 
-- 修改`url`的值
+- 绑定 `url` 的值
 
 ```vue
 <a v-bind:href="url" >点击跳转</a>
@@ -139,14 +139,54 @@ Vue.directive('on').keyCodes.f2 = 113;
 <a :href="url" >点击跳转</a>
 ```
 
-- 修改class类名
-- 修改style属性值
-- 绑定key
+- 绑定 class 类名
+- 修改 style 属性值
+- 绑定 key
 
 ```vue
-key: 帮助vue区分不同的元素，提高性能
+key: 帮助 vue 区分不同的元素，提高性能
 <li :key= 'item.id' v-for='(item,index)in list'>{{item}} +'------'{{index}} </li> 
 ```
+
+向子组件传递其它数据
+
+```vue
+<MyComponent v-bind="data">
+</MyComponent>
+<script>
+  export default{
+    data(){
+      return{
+        data:{
+          age:42,
+          name:'老刘'
+        }
+      }
+    }
+  }
+</script>
+```
+
+相当于
+
+```vue
+<MyComponent :age="age" :name="name">
+</MyComponent>
+<script>
+  export default{
+    data(){
+      return{
+        data:{
+          age:42,
+          name:'老刘'
+        }
+      }
+    }
+  }
+</script>
+```
+
+
 
 ### v-if
 
@@ -198,4 +238,27 @@ v-if和v-show的区别，v-if是只在符合条件时显示，其它直接隐藏
 > 当然也可以用 `v-for="value of object"`
 
 ## 自定义指令
+
+> 因为内置指令不足以满足全部需求，所以出现自定义指令
+
+```vue
+<input type="text" v-focus/>
+<script>
+  Vue.directive("focus",{
+    inserted:function(el){
+      el.focus();
+    }
+  })
+</script>
+//第二个参数
+<input type="text" v-focus>
+<script>
+  Vue.directive("focus",{
+    inserted:function(el,binding){
+      console.log(binding)
+      el.style.backgroundColor = binding.value;
+    }
+  })
+</script>
+```
 

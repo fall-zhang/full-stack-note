@@ -93,40 +93,11 @@ var app = new Vue({
 
 被 `keep-alive` 包含的组件/路由中，会多出两个生命周期的钩子：`activated` 与 `deactivated`。`activated` 会在组件第一次渲染时调用，之后如果激活了，也会去调用。
 
-`$route.meta.keepAlive` 可以用来判断当前路由是否被缓存，可以利用这点添加骨架屏，以保证用户的体验
-
-## 模块的导入导出
-
-导入以使用模块，导出模块，可以提供给其他模块使用
-
-**导入模块**
-
-导入常量，函数，文件，模块等，方便进行使用
-
-`import Name from './path/file'`
-
-**导出模块**
-
-export 和 export default 都可以用于导出常量、函数、文件、模块等。
-
-export 和 export default 的区别
-
-使用 export 导出的内容都必须使用大括号进行引用
-
-```js
-// module.js
-export const fake = '虚伪的人' 
-// main.js
-import {fake}
-```
-
-
-
-> 
-
-
+`$route.meta.keepAlive` 可以用来判断当前路由是否被缓存，可以利用这点添加骨架屏，以保证用户的体验。
 
 ## 指令
+
+> 使用详情可见第 2 节
 
 | 指令名称    | 指令功能                                 | 简写 |
 | ----------- | ---------------------------------------- | ---- |
@@ -140,102 +111,6 @@ import {fake}
 | **v-show**  | 判断是否展示                             | 无   |
 | **v-for**   | 遍历属性                                 | 无   |
 
-##　样式绑定
-
-1. class样式处理
-
-- 传入数组
-
-```vue
-<div :class="['activeClass',errorClass]" >看看里面有什么</div>
-// 可以在data中更改errorClass里面的值
-```
-
--  传入对象
-
-```vue
-<div :class="{active:activeJudge,errorClass:true}" >看看里面有什么</div>
-// 只可以设置真假
-```
-
-2. 绑定样式的细节
-
-- 对象绑定和数组绑定可以同时使用
-- 数组绑定和对象绑定可以结合使用
-- 默认的CSS样式也会生效
-
-```vue
-// 简化操作
-<div :class="activeClass">看看里面有什么</div>
-new Vue({data:{
-	  activeClass:["bg-active","font-active"]
-}})
-```
-
-## 循环遍历的使用
-
-**遍历数组**
-
-```vue
-<div v-show="got" v-for="item in list">{{item}}</div>
-// 将对象传入数组，输出对应的对象的值
-<div v-show="got" v-for="item in list">{{item.age +"-------"+item.name}}</div>
-```
-
-**遍历对象**(键值对)
-
-```vue
-// 可以同时输出对象的键和对象的值
-// value:值    key:键    index: 索引
-<div v-show="got" v-for="(value,key,index) in object">{{v+"-------"+k+"-------"+i}}</div>
-```
-
-> 算法的优化，务必在标签内部书写 `v-bind:key="item.id"`优化，系统进行数据查找时不会盲目，也可以简写为`:key="item.id"`
-
-## 绑定表单控件
-
-> 绑定表单事件
-
-```html
-<div class="resume">
-    <div class="hobby">
-        <span>个人爱好：</span>
-        <input type="checkbox" id="wo" value="1" v-model="hobby">女人
-        <input type="checkbox" id="woman" value="2" v-model="hobby">女人♀
-        <input type="checkbox" id="girl" value="3" v-model="hobby"> girl
-    </div>
-</div>
-<script>
-var vm = new Vue({
-      el:".resume",
-      data:{
-        hobby:[3,1],//里面存放无序数组，绑定对应id的数据
-      },
-    })
-</script>
-```
-
-## 自定义指令
-
-> 因为内置指令不足以满足全部需求，所以出现自定义指令
-
-```js
-<input type="text" v-focus>
-Vue.directive("focus"{
-	inserted:function(el){
-    el.focus();
-}
-})
-//第二个参数
-<input type="text" v-focus>
-Vue.directive("focus"{
-	inserted:function(el,binding){
-    console.log(binding)
-    el.style.backgroundColor = binding.value;
-}
-})
-```
-
 ## 计算属性
 
 > 可以通过计算属性对于函数进行计算
@@ -246,12 +121,12 @@ Vue.directive("focus"{
 
 ```js
 var vm = new Vue({
-    computed:{
-         reverse:function(){
-             console.log()
-             return this.msg.split("").reverse().join('')
-         }
-     }    
+  computed:{
+    reverse:function(){
+      console.log()
+      return this.msg.split("").reverse().join('')
+    }
+  }    
 }) 
 ```
 
