@@ -40,17 +40,15 @@
 
 ```vue
 <template>
-  // 调用方法
-  <button @click='changeName'>按钮</button>  
+<!--调用方法-->
+<button @click='changeName'>按钮</button>  
 </template>
 
 <script setup>
   import { reactive } from 'vue'
-
   const state = reactive({
     name: 'Jery'
   })
-
   // 声明method方法
   const changeName = () => {
     state.name = 'Tom'
@@ -60,7 +58,9 @@
 
 ## computed
 
-```javascript
+计算属性值会基于其响应式依赖被缓存，可以通过计算属性对于函数进行计算，牺牲内存，节省性能
+
+```vue
 <script setup>
   import { computed, ref } from 'vue'
   const count = ref(1)
@@ -70,6 +70,29 @@
   })
 </script>
 ```
+
+传入对象
+
+```js
+// 组合式API
+import {ref,computed} from 'vue'
+const firstName = ref('鲁尼')
+const lastName = ref('帕瓦')
+// 可以同时设置名称和读取名称
+const fullName = computed({
+  get() { // getter
+    return firstName.value + ' ' + lastName.value
+  },
+  set(newValue) { // setter
+    // 注意：我们这里使用的是解构赋值语法
+    [firstName.value, lastName.value] = newValue.split(' ')
+  }
+})
+// 设置名称时，会同步更新
+const fullName.value = '小泽 玛利亚' // firstName.value 小泽 lastName.value 玛利亚
+```
+
+
 
 ## watch
 

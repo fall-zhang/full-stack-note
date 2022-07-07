@@ -113,13 +113,12 @@ var app = new Vue({
 
 ## 计算属性
 
-> 可以通过计算属性对于函数进行计算
->
-> 由于有缓存机制，无论调用多少次，只会打印一次
->
-> 牺牲内存，节省性能
+**计算属性值会基于其响应式依赖被缓存**
+
+可以通过计算属性对于函数进行计算，由于有缓存机制，无论调用多少次，只会打印一次，牺牲内存，节省性能
 
 ```js
+// 选项式 API
 var vm = new Vue({
   computed:{
     reverse:function(){
@@ -127,8 +126,35 @@ var vm = new Vue({
       return this.msg.split("").reverse().join('')
     }
   }    
-}) 
+})
 ```
+
+```js
+// 组合式API
+import {ref,computed} from 'vue'
+const firstName = ref('鲁尼')
+const lastName = ref('帕瓦')
+// 一般的 computed 的使用
+//const fullName = computed(()=>{
+//  return firstName.value +lastName.value
+//})
+// 可以同时设置名称和读取名称
+const fullName = computed({
+  // getter
+  get() {
+    return firstName.value + ' ' + lastName.value
+  },
+  // setter
+  set(newValue) {
+    // 注意：我们这里使用的是解构赋值语法
+    [firstName.value, lastName.value] = newValue.split(' ')
+  }
+})
+// 设置名称时，会同步更新
+const fullName.value = '小泽 玛利亚' // firstName.value 小泽 lastName.value 玛利亚
+```
+
+
 
 ## 侦听器
 
