@@ -1,5 +1,5 @@
 > Create by **fall** on 2020-08
-> Recently revised in 2022-03-01
+> Recently revised in 2022-07-11
 
 ## Eslint
 
@@ -36,7 +36,119 @@ module.exports = {
 - `warn` 或者 `1` 打开规则，表示警告，打印黄色字体（黄色波浪线）
 - `error` 或者 `2` 打开规则，并且作为错误，打印红色字体（红色波浪线）
 
-### Eslint 语法配置
+## TypeScript
+
+TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而是合并到 eslint 中
+
+## 推荐配置
+
+### vue
+
+```json
+{
+  rules: {
+    // vue
+    'vue/max-attributes-per-line': ['error', {
+      singleline: {
+        max: 4
+      },
+      multiline: {
+        max: 1
+      }
+    }],
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/multiline-html-element-content-newline': 'off',
+    'vue/html-indent': ['error', 2],
+    'vue/script-indent': ['error', 2],
+    'vue/html-quotes': ['error', 'single'],
+    'vue/multi-word-component-names': ['off'],
+    // js
+    quotes: ['error', 'single'], // 单引号
+    indent: ['error', 2], // 2 行缩进
+    semi: ['error', 'never'], // 禁止使用分号
+    'no-debugger': 'warn', // 使用 debugger 会警告
+    'no-else-return': 'error', // 如果 if 语句里面有 return ,后面不能跟 else 语句
+    'space-infix-ops': ['error', { int32Hint: false }], // 要求操作符周围有空格
+    'no-multi-spaces': 'error', // 禁止多个空格
+    'no-multiple-empty-lines': ['error', { max: 2 }], // 空行最多不能超过2行
+    'no-whitespace-before-property': 'error', // 禁止在属性前使用空格
+    'space-before-blocks': 'error', // 在块之前强制保持一致的间距
+    'no-trailing-spaces': 'error', // 一行结束后面不要有空格
+    'space-before-function-paren': ['error', 'never'], // 在“ function”定义打开括号之前强制不加空格
+    'space-in-parens': ['error', 'never'], // 强制括号左右的不加空格
+    'spaced-comment': ['error', 'always'], // 注释间隔
+    'template-tag-spacing': ['error', 'always'], // 在模板标签及其文字之间需要空格
+    'no-var': 'error', // 禁止使用 var
+    'prefer-destructuring': ['error', { // 优先使用数组和对象解构
+      array: true,
+      object: true
+    }, {
+      enforceForRenamedProperties: false
+    }],
+    // 组件名称为多个单词，忽略的组件名称
+    'comma-dangle': ['error', 'never'], // 最后一个属性不允许有逗号
+    'arrow-spacing': 'error', // 箭头函数空格
+    'prefer-template': 'error',
+    'template-curly-spacing': 'error',
+    'quote-props': ['error', 'as-needed'], // 对象字面量属性名称使用引号
+    'object-curly-spacing': ['error', 'always'], // 强制在花括号中使用一致的空格
+    'no-unneeded-ternary': 'error', // 禁止可以表达为更简单结构的三元操作符
+    'no-restricted-syntax': ['error', 'WithStatement', 'BinaryExpression[operator="in"]'], // 禁止with/in语句
+    'no-lonely-if': 'error', // 禁止 if 语句作为唯一语句出现在 else 语句块中
+    'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }], // 要求方法链中每个调用都有一个换行符
+    // 路径别名设置
+    'no-submodule-imports': ['off', '/@'],
+    'no-implicit-dependencies': ['off', ['/@']],
+    // typescript
+    '@typescript-eslint/no-explicit-any': 'warn' // 类型可以使用any
+  }
+}
+```
+
+### React
+
+```json
+{
+  rules: {
+    // js
+    'no-else-return': 2, //如果 if 语句里面有 return ,后面不能跟 else 语句
+    'arrow-body-style': 0,
+    'jsx-a11y/label-has-for': 0,
+    'max-lines-per-function': [
+      2,
+      { max: 320, skipComments: true, skipBlankLines: true }
+    ],
+    semi: [2, 'never'], //语句不使用分号结尾
+    'no-confusing-arrow': 0,
+    'no-nested-ternary': 0,
+    'no-console': 1,
+    'no-debugger': 1, //使用 debugger 会警告
+    'no-multiple-empty-lines': [2, { max: 2 }], // 空行最多不能超过2行
+    'no-multi-spaces': 2, // 不能用多余的空格
+    'no-trailing-spaces': 2, // 一行结束后面不要有空格
+    'eol-last': 0, // 文件以单一的换行符结束
+    eqeqeq: 1, //必须使用全等
+    'no-proto': 1, // 禁止使用__proto__属性
+    'no-sparse-arrays': 2, // 禁止稀疏数组， [1,,2]
+    quotes: [1, 'single'], // 引号类型 `` "" ''
+    // 'consistent-this': [2, 'that'],// this别名
+    'no-param-reassign': [
+      2,
+      { props: true, ignorePropertyModificationsFor: ['draft'] }
+    ],
+    'react/no-this-in-sfc': 0,
+    'react/prop-types': 0,
+    'comma-dangle': ['error', 'never'], // 最后一个属性不允许有逗号
+    'react/display-name': 'off'
+  }
+}
+```
+
+
+
+## Eslint 语法配置清单
+
+
 
 > P.S.我认为经常使用的会优先排列在前面
 
@@ -115,7 +227,7 @@ module.exports = {
   "no-obj-calls": 2,//不能调用内置的全局对象，比如Math() JSON()
   "no-octal": 2,//禁止使用八进制数字
   "no-octal-escape": 2,//禁止使用八进制转义序列
-  "no-param-reassign": 2,//禁止给参数重新赋值
+  "no-param-reassign": 2,// 禁止给参数重新赋值
   "no-path-concat": 0,//node中不能使用__dirname或__filename做路径拼接
   "no-plusplus": 0,// 禁止使用++，--
   "no-process-env": 0,// 禁止使用process.env
@@ -216,7 +328,3 @@ module.exports = {
   "yoda": [2, "never"]// 禁止尤达条件
 }
 ```
-
-## TypeScript
-
-TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而是合并到 eslint 中

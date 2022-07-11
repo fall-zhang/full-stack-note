@@ -3,7 +3,7 @@ sidebar_position: 13
 ---
 
 > Create by fall on:2022-03-10
-> Recently revised in:2022-03-10
+> Recently revised in:2022-07-11
 
 一般有两类相反的 CSS 属性的写法，两类解决方案
 
@@ -120,10 +120,6 @@ sidebar_position: 13
 - 不同团队的命名也不同，学习成本 up
 - 扩展新的 css 会重新构建，速度较慢
 - 提供统一严谨的代码开发风格
-
-
-
-
 
 ## 参考文章
 

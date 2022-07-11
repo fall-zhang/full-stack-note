@@ -1,7 +1,13 @@
 > Create by fall on:2021-07-03
-> Recently revised in:2022-04-19
+> Recently revised in:2022-07-11
 
-## 定义Name
+> 注：这里只提供 Vite 环境下的插件说明
+
+## 插件
+
+### vite-plugin-vue-setup-extend
+
+定义包名称
 
 ```javascript
 // 包名称
@@ -23,7 +29,9 @@ export default defineConfig({
 </script>
 ```
 
-## 自动导入包
+### unplugin-auto-import
+
+自动导入包
 
 ```js
 // 包名称
@@ -82,330 +90,158 @@ module.exports = {
 }
 ```
 
+### unplugin-vue-components
 
+### vite-plugin-style-import
 
-## vue-property-decorator
-
-`vue-property-decorator` 是社区出品，依赖 `vue-class-component` ，拓展出更多操作符。
-
-### 基本使用
-
-在开发时进行引入就行
-
-```html
-<script lang="ts">
-  import {Vue, Component} from 'vue-property-decorator';
-  @Component({})
-  export default class "组件名" extends Vue{
-    ValA: string = "hello world";
-    ValB: number = 1;
-  }
-</script>
-```
-
-该文件等同于下面的文件
-
-```html
-<script lang="es6">
-    import Vue from 'vue';
-    export default {
-        data(){
-            return {
-                ValA: 'hello world',
-                ValB: 1
-            }
-        }
-    }
-</script>
-```
-
-总结：对于变量的定义，只需要按照 `ts` 中变量的命名方法即可
-
-如果有 `computed` ，可以使用 getter 进行代替
-
-原本`Vue`中的`computed`里的每个计算属性都变成了在前缀添加`get`的函数.
-
-```html
-<script lang="ts">
-    import {Vue, Component} from 'vue-property-decorator';
-    @Component({})
-    export default class "组件名" extends Vue{
-        get ValA(){
-            return 1;
-        }
-    }
-</script>
-```
-
-```html
-<script lang="es6">
-    import Vue from 'vue';
-    export default {
-        computed: {
-            ValA() {
-                return 1;
-            }
-        }
-    }
-</script>
-```
-
-### @Emit
-
-在 `vue` 中，事件的监听和触发原本是通过 `$emit`、`$on` 在 `vue-property-decorator` 中，需要使用 `@Emit` 属性。
-
-```html
-<script lang="ts">
-  import {Vue, Component, Emit} from 'vue-property-decorator';
-  @Component({})
-  export default class "组件名" extends Vue{
-    mounted(){
-      // $on 的作用是，绑定时间名称，和方法
-      this.$on('emit-todo', function(n) {
-        console.log(n)
-      })
-      this.emitTodo('world');
-    }
-    @Emit()
-    emitTodo(n: string){
-      console.log('hello'); // 先执行此处的内容，然后，再回调执行 emit-todo
-    }
-  }
-</script>
-```
-
-触发 `@Emit` 后，会先执行在 `emit-todo` 后，执行 `emit-todo`
-
-```html
-<script lang="es6">
-  import Vue from 'vue';
-  export default {
-    mounted(){
-      this.$on('emit-todo', function(n) {
-        console.log(n)
-      })
-      this.emitTodo('world');
-    },
-    methods: {
-      emitTodo(n){
-        console.log('hello');
-        this.$emit('emit-todo', n);
-      }
-    }
-  }
-</script>
-```
-
-总结：在 `Vue` 中我们是使用 `$emit` 触发事件,使用 `vue-property-decorator` 时,可以借助 `@Emit` 装饰器来实现。`@Emit`修饰的函数所接受的参数会在运行之后触发事件的时候传递过去。
- `@Emit`触发事件有两种写法
-
-- `@Emit() `不传参数,那么它触发的事件名就是它所修饰的函数名。
-
-- `@Emit(name: string)`，里面传递一个字符串,该字符串为要触发的事件名.
-
-### @Watch
-
-一看就知道是用做监听的，
+自动引入样式
 
 ```js
-// vue2 的书写格式
-export default{
-  watch: {
-    'child': this.onChangeValue, // 监听的数据:执行的方法
-    // 这种写法默认 `immediate`和`deep`为`false`
-    'person': {
-      handler: 'onChangeValue',
-      immediate: true,
-      deep: true
-    }
-  },
-  methods: {
-    onChangeValue(newVal, oldVal){ // 监听事件，自带传入两个值，第一个是更改之后的新字符串，另一个自己想
-      // todo sth...
-    }
-  }
-}
-```
+// vite.config.js
+import styleImport, { AndDesignVueResolve } from 'vite-plugin-style-import';
 
-```js
-// vue3 的书写格式
-import {Vue, Component, Watch} from 'vue-property-decorator';
-@Watch('child')
-onChangeValue(newVal: string, oldVal: string){
-    // todo...
-}
-@Watch('person', {immediate: true, deep: true})
-onChangeValue(newVal: Person, oldVal: Person){
-    // todo...
-}
-```
-
-### @prop
-
-学过vue2的都知道是用来向子传值的
-
-```js
-// 比如说子组件接收父组件的值
 export default {
-  props: {
-    propA: {
-      type: Number
-    },
-    propB: {
-      default: 'default value'
-    },
-    propC: {
-      type: [String, Boolean]
-    },
-  }
-}
-// vue3 中，变更后是这个样子的
-import {Vue, Component, Prop} from 'vue-property-decorator';
-@Component({})
-export default class "组件名" extends Vue{
-  @Prop(Number) propA!: number;// !是 typescript 中的内容，表示可选值
-  @Prop({default: 'default value'}) propB!: string;
-  @propC([String, Boolean]) propC: string | boolean;
+  plugins: [
+    // ...
+    styleImport({
+      resolves: [AndDesignVueResolve()],
+    }),
+  ],
 }
 ```
 
-总结： `@Prop` 接受一个参数可以是类型变量或者对象或者数组。`@Prop` 接受的类型比如 `Number` 是 `JavaScript` 的类型,之后定义的属性类型则是 `TypeScript` 的类型。
+### unplugin-icons
 
-### Mixins
+自动引入 icon，使用的是 [icons](https://icones.netlify.app/) 作为图标库
 
-真正开发过程中，经常用到混合
+安装：`npm i -D unplugin-icons @iconify/json`
 
-#### 第一种混合方法
-
-这个混合方法由 `vue-class-component`
-
-首先，需要定义一个要混合的类
-
-```typescript
-// 创建mixins.ts 用来定义要混合的类
-import Vue from 'vue';
-import  Component  from 'vue-class-component';
-@Component  // 一定要用 Component 修饰
-export default class myMixins extends Vue {
-    value: string = "Hello"
-}
-// 然后引入这个类
-import  Component  {mixins}  from 'vue-class-component';
-import myMixins from 'mixins.ts';
-@Component			// 直接extends myMinxins 也可以正常运行
-export class myComponent extends mixins(myMixins) {
-      created(){
-          console.log(this.value) // => Hello
-    }
-}
-```
-
-#### 第二种混合方法
+配置：
 
 ```js
-// mixins.ts
-import { Vue, Component } from 'vue-property-decorator';
-declare module 'vue/types/vue' {
-    interface Vue {
-        value: string;
-    }
-}
-@Component
-export default class myMixins extends Vue {
-    value: string = 'Hello'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
+import Components from 'unplugin-vue-components/vite'
+export default {
+  plugins: [
+    Components({
+      resolvers: IconsResolver(),
+    }),
+    Icons({
+      compiler: 'vue3',
+      autoInstall: true,
+    }),
+  ],
 }
 ```
+
+## 解决报错问题
+
+### TypeScript 报错
+
+因为我们生成的 `auto-imports.d.ts` 和 `components.d.ts` 两个文件，默认是生成在项目根目录，正常我们配置的 TypeScript 解析的文件都放在 src 文件夹下。
+
+- 在 tsconfig.json 中 include `auto-imports.d.ts` 和 `components.d.ts` 这两个文件
+- 像下面这样配置，把两个 .d.ts 的生成目录放到 src 文件夹下
 
 ```js
-import { Vue, Component, Prop } from 'vue-property-decorator';
-import myMixins from '@static/js/mixins';
-@Component({
-    mixins: [myMixins]
-})
-export default class myComponent extends Vue{
-    created(){
-        console.log(this.value) // => Hello
-    }
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+
+export default {
+  plugins: [
+    // ...
+    AutoImport({
+      dts: './src/auto-imports.d.ts',
+    }),
+    Components({
+      dts: './src/components.d.ts'
+    }),
+  ],
 }
 ```
 
-总结：两种方式不同的是在定义 `mixins` 时如果没有定义 `vue/type/vue` 模块, 那么在混入的时候就要 `继承` 该 `mixins`； 如果定义 `vue/type/vue` 模块,在混入时可以在 `@Component` 中 `mixins` 直接混入。
+### ESlint 报错
 
-### @Model
+因为 ESlint 并不知道我们引入了哪些内容，所以会报错
 
-`Vue`组件提供`model`: `{prop?: string, event?: string}`让我们可以定制`prop`和`event`.
- 默认情况下，一个组件上的`v-model` 会把 `value`用作 `prop`且把 `input`用作 `event`，但是一些输入类型比如单选框和复选框按钮可能想使用 `value prop`来达到不同的目的。使用`model`选项可以回避这些情况产生的冲突。
-
-- 下面是`Vue`官网的例子
-
-```xml
-<my-checkbox v-model="foo" value="some value"></my-checkbox>
-```
+首先调用插件的时候，同时也导出使用的内容，导出为 `.eslintrc-auto-import.json` 
 
 ```js
-Vue.component('my-checkbox', {
-  model: {
-    prop: 'checked',
-    event: 'change'
-  },
-  props: {
-    // this allows using the `value` prop for a different purpose
-    value: String,
-    // use `checked` as the prop which take the place of `value`
-    checked: {
-      type: Number,
-      default: 0
-    }
-  },
-  // ...
-})
-```
+import AutoImport from 'unplugin-auto-import/vite'
 
-相当于
-
-```csharp
-<my-checkbox
-  :checked="foo"
-  @change="val => { foo = val }"
-  value="some value">
-</my-checkbox>
-```
-
-即`foo`双向绑定的是组件的`checke`, 触发双向绑定数值的事件是`change`
-
-使用`vue-property-decorator`提供的`@Model`改造上面的例子.
-
-```js
-import { Vue, Component, Model} from 'vue-property-decorator';
-
-@Component
-export class myCheck extends Vue{
-   @Model ('change', {type: Boolean})  checked!: boolean;
+export default {
+  plugins: [
+    // ...
+    AutoImport({
+      // Generate corresponding .eslintrc-auto-import.json file.
+      // eslint globals Docs - https://eslint.org/docs/user-guide/configuring/language-options#specifying-globals
+      eslintrc: {
+        enabled: true, // Default `false`
+        filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
+        globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+      },
+    }),
+  ],
 }
 ```
 
-- 总结, `@Model()`接收两个参数, 第一个是`event`值, 第二个是`prop`的类型说明, 与`@Prop`类似, 这里的类型要用`JS`的. 后面在接着是`prop`和在`TS`下的类型说明.
+然后再 `eslint.config.js` 中导入即可
 
-### 官方文档
+```js
+module.exports = { 
+  /* ... */
+  extends: [
+    // ...
+    './.eslintrc-auto-import.json',
+  ],
+}
+```
 
-- [`@Prop`](https://github.com/kaorun343/vue-property-decorator#Prop)
-- [`@PropSync`](https://github.com/kaorun343/vue-property-decorator#PropSync)
-- [`@Model`](https://github.com/kaorun343/vue-property-decorator#Model)
-- [`@ModelSync`](https://github.com/kaorun343/vue-property-decorator#ModelSync)
-- [`@Watch`](https://github.com/kaorun343/vue-property-decorator#Watch)
-- [`@Provide`](https://github.com/kaorun343/vue-property-decorator#Provide)
-- [`@Inject`](https://github.com/kaorun343/vue-property-decorator#Provide)
-- [`@ProvideReactive`](https://github.com/kaorun343/vue-property-decorator#ProvideReactive)
-- [`@InjectReactive`](https://github.com/kaorun343/vue-property-decorator#ProvideReactive)
-- [`@Emit`](https://github.com/kaorun343/vue-property-decorator#Emit)
-- [`@Ref`](https://github.com/kaorun343/vue-property-decorator#Ref)
-- [`@VModel`](https://github.com/kaorun343/vue-property-decorator#VModel)
-- `@Component` (**provided by** [vue-class-component](https://github.com/vuejs/vue-class-component))
-- `Mixins` (the helper function named `mixins` **provided by** [vue-class-component](https://github.com/vuejs/vue-class-component))
+
+
+## 配置
+
+`unplugin-auto-import` 和 `unplugin-vue-components`
+
+```js
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+
+export default {
+  plugins: [
+    // ...
+    AutoImport({
+      // 这里除了引入 vue 以外还可以引入pinia、vue-router、vueuse等，
+      // 甚至你还可以使用自定义的配置规则，见 https://github.com/antfu/unplugin-auto-import#configuration
+      imports: ['vue'],
+      // 第三方组件库的解析器
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      // dirs 指定组件所在位置，默认为 src/components
+      // 可以让我们使用自己定义组件的时候免去 import 的麻烦
+      dirs: ['src/components/'],
+      // 配置需要将哪些后缀类型的文件进行自动按需引入
+      extensions: ['vue', 'md'],
+      // 解析的 UI 组件库，这里以 Element Plus 和 Ant Design Vue 为例
+      resolvers: [ElementPlusResolver(), AntDesignVueResolver()]
+    }),
+  ],
+}
+```
+
+
 
 ## 参考文章
 
 | 作者名称    | 文章链接                                   |
 | ----------- | ------------------------------------------ |
 | 小学生study | https://juejin.cn/post/7054317318343491615 |
+| 菜猫子neko  | https://juejin.cn/post/7062648728405934087 |
+|             |                                            |
+|             |                                            |
+
 
