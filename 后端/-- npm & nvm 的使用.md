@@ -88,8 +88,6 @@ npm install gulp@3.9.1 --save-dev # 的简写:npm i gulp@3.9.1 -S-D
 | `npm publish`                      | 发布模块                                                     |
 | `npm config get cache`             | 查看 缓存所在位置                                            |
 
-
-
 ## NPX工具
 
 npx 是一个工具，可以自动寻找当前文件夹（node_modules）文件夹下的可执行插件，正确引用并且执行。并且如果当前文件夹下没有下载可执行插件，那就会在网络中寻找后，下载并且运行，在运行成功后删除，利用这一特性，可以实现避免全局模块的安装。
