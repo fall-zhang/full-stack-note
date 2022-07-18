@@ -82,13 +82,35 @@ const grid = {
 
 ### legend
 
+需要先设置 serice 中的 name 属性
+
 ```js
 const legend = {
-  type:'plain', // 默认就是 plain，scroll 表示可以滚动
+  type:'plain', // 默认就是 plain，scroll 表示可以滚动，图例多的时候使用
+  // left, right, top, bottom 上下左右四个方向上的距离
+  // width, height 控制宽高
+  orient:'horizontal', // 表示布局朝向 horizontal 水平 vertical 表示水平
+  itemGap:10, // 表示图例之间的差距
+  itemWidth:25, // 和 itemHeight 共同控制单个图例大小
+  itemStyle:{}, // 所有 item 样式
+  lineStyle:{}, // 当示例为线的时候的样式
+  symbolRotate:'inherit', // 默认继承，表示旋转角度
+  formatter:'Legend {name}', // string 或者是 回调函数，(name)=>name==='去年'?'历史':'当前'
+  inactiveColor:'#ccc', // 图例关闭时的颜色 inactiveBorderColor, inactiveBorderWidth 控制 border 颜色和宽度
+  data:['去年','今年'], // 表示那些数据，series 中的 name 属性填写在此处，也可以填写对象 {name:'',icon:'',itemStyle:{}} 这里的 itemStyle 同上
+  selected:{}, // 表示选中的是那些数据
+  icon:{}, // 表示图形形状 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
+  tooltip:{}, //同 tooltip
+  backgroundColor:'transparent', // 背景颜色
+  borderColor:'ccc', // borderWidth, borderRadius 
+  shadowBlur:'', // shaodowColor, shadowOffsetX, shadowOffsetY
+  selector:'', // 选择器的功能，包括反选和全选
 }
 ```
 
+### textStyle
 
+全局字体样式
 
 ### yAxis 和 xAxis
 
@@ -102,13 +124,20 @@ const xAxis = {
   offset:0, // X 轴相对于默认位置的偏移，在相同的 position 上有多个 X 轴的时候有用。
   type:'value', // value 为数值轴，category 为分类，time 为时间轴，log 对数轴。
   name:'坐标名',
-  nameLocation:'end', // 名称在哪里显示
+  nameGap:15, // 名称和坐标轴的距离 nameRotate 名称的旋转
+  nameLocation:'end', // 名称在哪里显示 start, middle, center, end
+  nameTextStyle:{},
+  inverse:false, // 让坐标轴的数据 reverse
+  boundaryGap:true, //对于类别所在的轴来说：表示数据在坐标轴刻度线中间，false 则表示在刻度线上
+  // 对于数据所在的轴来说，就是数据展示的空间 ['0','20%'] 表示最少展示 0，最高值上侧空余 20%
+  min:200, // min 表示最小刻度值，max 表示最大刻度值——只对 数据所在的轴，type='value' 生效
+ 	minInterval:1, // 设置最小间隔大小，设置为 1 可以让间隔为整数 type='value'|'time' 时有效
+  maxInterval:200, // 设置最大的间隔大小，设置为 3600 *24*1000 可以保证最小间隔为一天
+  // interval:200, // 强制设置间隔，
+  // 当 type 为 'log' 时，可以设置 logBase，即对数的底数，默认为 10
+  silent:false, // true 时表示静态坐标轴，无法
 }
 ```
-
-
-
-
 
 ## 柱状图
 
