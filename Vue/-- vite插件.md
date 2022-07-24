@@ -1,5 +1,5 @@
 > Create by fall on:2021-07-03
-> Recently revised in:2022-07-11
+> Recently revised in:2022-07-24
 
 > 注：这里只提供 Vite 环境下的插件说明
 
@@ -10,7 +10,7 @@
 定义包名称
 
 ```javascript
-// 包名称
+// 包名称 setup 扩展包
 // vite-plugin-vue-setup-extend
 // vite.config.ts
 import { defineConfig } from 'vite'
@@ -94,12 +94,24 @@ module.exports = {
 
 ### vite-plugin-style-import
 
-自动引入样式
+手动引入库的时候，自动引入对应的样式文件
+
+```js
+import { ElButton } from 'element-plus';
+        ↓ ↓ ↓ ↓ ↓ ↓
+// dev
+import { Button } from 'element-plus';
+import 'element-plus/lib/theme-chalk/el-button.css`;
+
+// prod
+import Button from 'element-plus/lib/el-button';
+import 'element-plus/lib/theme-chalk/el-button.css';
+```
 
 ```js
 // vite.config.js
+// 其它的解析器有 ElementPlusResolve VantResolve NutResolve AntdResolve
 import styleImport, { AndDesignVueResolve } from 'vite-plugin-style-import';
-
 export default {
   plugins: [
     // ...
@@ -123,7 +135,7 @@ import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
 export default {
-  plugins: [
+  plugins: [ // ...
     Components({
       resolvers: IconsResolver(),
     }),
@@ -135,14 +147,24 @@ export default {
 }
 ```
 
+使用：
+
+```vue
+<template>
+  <i-mdi-account-reactivate style="font-size: 2em; color: red" />
+</template>
+```
+
+
+
 ## 解决报错问题
 
 ### TypeScript 报错
 
-因为我们生成的 `auto-imports.d.ts` 和 `components.d.ts` 两个文件，默认是生成在项目根目录，正常我们配置的 TypeScript 解析的文件都放在 src 文件夹下。
+因为我们生成的 `auto-imports.d.ts` 和 `components.d.ts` 两个文件，默认是生成在项目根目录，正常我们配置的 TypeScript 解析的文件都放在 src 文件夹下。所以解决方案有两种
 
 - 在 tsconfig.json 中 include `auto-imports.d.ts` 和 `components.d.ts` 这两个文件
-- 像下面这样配置，把两个 .d.ts 的生成目录放到 src 文件夹下
+- 或者像下面这样配置，把两个 .d.ts 的生成目录放到 src 文件夹下
 
 ```js
 import AutoImport from 'unplugin-auto-import/vite'
@@ -152,7 +174,7 @@ export default {
   plugins: [
     // ...
     AutoImport({
-      dts: './src/auto-imports.d.ts',
+      dts: './src/auto-imports.d.ts', // 解析后的文件所在的路径
     }),
     Components({
       dts: './src/components.d.ts'
@@ -200,22 +222,21 @@ module.exports = {
 
 
 
-## 配置
+## 推荐配置
 
-`unplugin-auto-import` 和 `unplugin-vue-components`
+使用插件：`unplugin-auto-import` 和 `unplugin-vue-components`
 
 ```js
+// vite.config.ts
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
-
 export default {
-  plugins: [
-    // ...
+  plugins: [ // ... 其他插件
     AutoImport({
       // 这里除了引入 vue 以外还可以引入pinia、vue-router、vueuse等，
-      // 甚至你还可以使用自定义的配置规则，见 https://github.com/antfu/unplugin-auto-import#configuration
+      // 自定义的配置规则，可见 https://github.com/antfu/unplugin-auto-import#configuration
       imports: ['vue'],
       // 第三方组件库的解析器
       resolvers: [ElementPlusResolver()],
@@ -227,7 +248,7 @@ export default {
       // 配置需要将哪些后缀类型的文件进行自动按需引入
       extensions: ['vue', 'md'],
       // 解析的 UI 组件库，这里以 Element Plus 和 Ant Design Vue 为例
-      resolvers: [ElementPlusResolver(), AntDesignVueResolver()]
+      resolvers: [ElementPlusResolver(), AntDesignVueResolver()],
     }),
   ],
 }

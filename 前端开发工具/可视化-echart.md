@@ -6,7 +6,7 @@
 使用：
 
 ```js
-import * as echarts from 'echarts';
+import * as echarts from 'echarts'
 // 获取需要进行渲染图表的
 let chartDOM = document.getElementById('main');
 // 初始化
@@ -105,6 +105,9 @@ const legend = {
   borderColor:'ccc', // borderWidth, borderRadius 
   shadowBlur:'', // shaodowColor, shadowOffsetX, shadowOffsetY
   selector:'', // 选择器的功能，包括反选和全选
+  pageIcons:{}, // type = 'scroll' 时有效，
+  pageIconColor:'#2f4554', // 
+  
 }
 ```
 
@@ -118,6 +121,7 @@ const legend = {
 - xAxis：控制 x 坐标轴
 
 ```js
+
 const xAxis = {
   show:true, // 是否显示该轴
   position:'bottom', // 默认在 bottom 底部，可选为 top，在 grid 上方
@@ -139,9 +143,31 @@ const xAxis = {
 }
 ```
 
+### toolTip
+
+点击图标后出现的内容，可以通过 `trigger` 更改触发的机制
+
 ## 柱状图
 
 ## 散点图
 
 ## 折线图
+
+## 象形柱图
+
+象形柱状图是直角坐标系中的一类图，可以使用 **图片** 或者 `SVG PathData` 进行填充。
+
+象形图可以理解为，是一个柱状图，但是柱状图使用不同内容进行填充，以达到想要的效果。
+
+```json
+{
+  type:'pictorialBar', // 象形柱图的类型
+  symbolPosition:'start', // 'center','end' 填充形状在柱状图的那个位置
+  symbolOffset:[0,0], // 填充内容在 x, y 轴上的偏移
+  symbolSize:[50,'50%'], // 调整象形柱图在柱状图内的宽高
+  symbolRepeat:true, // 表示是否重复以体现宽高（以一个，或者是多个图形来代表一个数据项）
+}
+```
+
+
 
