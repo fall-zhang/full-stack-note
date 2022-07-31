@@ -92,39 +92,29 @@ const fullName = computed({
 const fullName.value = '小泽 玛利亚' // firstName.value 小泽 lastName.value 玛利亚
 ```
 
-
-
 ## watch
 
 ```javascript
-<script setup>
-  import { watch, reactive } from 'vue'
-  const state = reactive({
-    count: 1
-  })
-  // 声明方法
-  const changeCount = () => {
-    state.count = state.count * 2
+import { watch, reactive,ref } from 'vue'
+const state = reactive({
+  count: 1
+})
+// 声明方法
+const changeCount = () => {
+  state.count = state.count * 2
+}
+// 只监听 state.count
+watch(() => state.count, // 只有在 getter 函数返回不同的对象时，才会触发回调，如果想深度监听，使用 deep:true
+  (newVal, oldVal) => {
+    console.log(state.count)
+    console.log(`watch监听变化前的数据：${oldVal}`)
+    console.log(`watch监听变化后的数据：${newVal}`)
+  },{
+    immediate: true, // 立即执行
+    deep: true // 深度监听
   }
-  // 监听count
-  watch(
-    () => state.count,
-    (newVal, oldVal) => {
-      console.log(state.count)
-      console.log(`watch监听变化前的数据：${oldVal}`)
-      console.log(`watch监听变化后的数据：${newVal}`)
-    },{
-      immediate: true, // 立即执行
-      deep: true // 深度监听
-    }
-  )
-</script>
-```
-
-侦听ref中的数据
-
-```js
-// 省略引入
+)
+// 侦听 ref 中的数据
 const num = ref()
 setTimeout(()=>{num.value++},1000)
 watch(num,(newVal,oldVal)=>{
@@ -141,11 +131,11 @@ watch([()=>data1,()=>data2],()=>{
 })
 ```
 
-## watchEffect
+### watchEffect
 
 在组件初始化时， 会先执行一次来收集依赖， 然后当收集到的依赖中数据发生变化时， 就会再次执行回调函数。
 
-意思是，只要读取了任何响应式数据，都会触发 Proxy 的 getter 代理机制，从而调用 `watchEffect` 方法内的事件，执行一次，但是对 `watchEffect` 内进行更改时，不会触发
+意思是，只要读取了任何响应式数据，都会触发 Proxy 的 getter 代理机制，从而调用 `watchEffect` 方法内的事件，执行一次，但是对 `watchEffect` 内进行更改时，不会触发。
 
 ```vue
 <script setup>
@@ -162,13 +152,18 @@ watch([()=>data1,()=>data2],()=>{
   setTimeout(()=>{
     age.value++
   },5000)
-  // 监听count
- watchEffect(()=>{
+  // 监听 count
+ watchEffect(()=>{ // watchEffect 不用传递第一个参数，自动找到响应式数据，这些响应式数据更新时，立即执行 
    console.log(state)
    console.log(age)
  })
 </script>
 ```
+
+- `watch` 只追踪明确侦听的源。它不会追踪任何在回调中访问到的东西。另外，仅在响应源确实改变时才会触发回调。`watch` 会避免在发生副作用时追踪依赖，因此，我们能更加精确地控制回调函数的触发时机。
+- `watchEffect`，则会在副作用发生期间追踪依赖。它会在同步执行过程中，自动追踪所有能访问到的响应式 property。这更方便，而且代码往往更简洁，但其响应性依赖关系不那么明确。
+
+> watch 事件发生在 DOM 更新之前，所以，如果想要进行获取 DOM，或者进行相关操作，需要设置第三个参数中 `flush: 'post'` 。
 
 ## props父传子
 

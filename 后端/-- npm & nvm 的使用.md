@@ -13,7 +13,7 @@ npm 的功能：
 
 npm 在 Node V10 之后就自带了，不需要额外下载。
 
-LTS 版本:  Long Term Support（[长期支持版本](https://nodejs.org/en/about/releases/)）
+LTS 版本：Long Term Support（[长期支持版本](https://nodejs.org/en/about/releases/)）
 
 - 官方网址：https://nodejs.org
 - 安装 npm 组件：https://www.npmjs.com

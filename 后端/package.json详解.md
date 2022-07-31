@@ -148,7 +148,7 @@ package.json 的文件当然要符合语法规范
 > - `*` ：如果写入 `*` 表示接受所有更新，包括主版本升级
 > - `>` ：接受高于指定版本的任意版本
 > - `<` ：接受低于指定版本的任何版本
-> - `<= `和 `>=` ：接受大于等于，或者小于等于指定版本的任何版本
+> - `<= ` 和 `>=` ：接受大于等于，或者小于等于指定版本的任何版本
 > - 无符号：只接受特指的版本
 > - `latest` ：使用可用的最新的版本
 > - `-`: 接受一定范围的版本。例如：`2.1.0 - 2.6.2`。
@@ -156,7 +156,7 @@ package.json 的文件当然要符合语法规范
 
 ## package-lock.json
 
-package-lock.json 和 package.json 文件一样，只不过， package-lock.json 会固化当前安装的每个软件包的版本，当运行 `npm install`时，`npm` 会使用这些确切的版本。如果不存在，就会自动生成该文件。
+`package-lock.json` 和 `package.json` 文件一样，只不过， `package-lock.json` 会固化当前安装的每个软件包的版本，当运行 `npm install` 时，`npm` 会使用这些确切的版本。如果不存在，就会自动生成该文件。
 
 > 为什么单一的 package-lock.json 不能确定唯一的依赖树？
 >
@@ -166,3 +166,4 @@ package-lock.json 和 package.json 文件一样，只不过， package-lock.json
 >
 > `package-lock.json` 文件需要被提交到 Git 仓库，以便被其他人获取（如果项目是公开的或有合作者，或者将 Git 作为部署源）。
 
+其它的包管理器也有类似于 `package-lock.json` 的功能，比如说 `yarn` 工具中的 `yarn.lock` 文件，和 `pnpm` 包管理工具中的

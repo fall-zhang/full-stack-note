@@ -7,7 +7,7 @@
 
 `pnpm create vite` 然后选择所需的技术栈搭建项目。
 
-> 如果是 vue 项目，可以参考该文章
+> 如果是 vue 项目，可以参考该文章  https://juejin.cn/post/7058201396113309703
 
 ### 预构建
 
@@ -120,7 +120,7 @@ export default {
       '@C': path.resolve(__dirname, 'src/components'),
       '@U': path.resolve(__dirname, 'src/utils'),
       '@H': path.resolve(__dirname, 'src/hooks'),
-    },
+    }
   }
 }
 ```
@@ -192,7 +192,7 @@ document.getElementById('hero-img').src = imgUrl
 
 ### Vue插件
 
-> 详情请见 vue 文件夹下的 vite 插件，这里面只有建议的配置
+> 详情请见 vue 文件夹下的 vite 插件 ，这里面只有建议的配置
 
 ```js
 // vite.config.ts
@@ -203,9 +203,8 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 export default {
   plugins: [ // ... 其他插件
     AutoImport({
-      // 这里除了引入 vue 以外还可以引入pinia、vue-router、vueuse等，
       // 自定义的配置规则，可见 https://github.com/antfu/unplugin-auto-import#configuration
-      imports: ['vue'],
+      imports: ['vue'],  // 这里除了引入 vue 以外还可以引入pinia、vue-router、vueuse 等
       // 第三方组件库的解析器
       resolvers: [ElementPlusResolver()],
     }),
@@ -278,9 +277,10 @@ export default defineConfig({
 npm install vite-plugin-compress -s
 ```
 
-vite.config.ts
+
 
 ```ts
+// vite.config.ts
 import compress from 'vite-plugin-compress'
 export default defineConfig({
   // ...
@@ -355,6 +355,8 @@ export default defineConfig({
 
 ## 默认配置
 
+### react
+
 这是我的 `vite.config.ts` 默认配置，仅供参考
 
 ```ts
@@ -406,6 +408,40 @@ export default defineConfig({
     },
   },
   plugins: [reactRefresh()],
+})
+```
+
+### vue
+
+```js
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+import {resolve as pathResolve}  from 'path'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  host:true, // 表示可以通过 ip 进行访问
+  resolve: {
+    alias: {
+      '@': pathResolve(__dirname, 'src'),
+      '@C': pathResolve(__dirname, 'src/components'),
+    },
+  },
+  plugins: [
+    vue(),
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+      dts:'./public/auto-imports.d.ts'
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+      dts:'./public/components.d.ts'
+    }),
+  ],
 })
 ```
 
