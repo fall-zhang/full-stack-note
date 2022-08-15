@@ -272,4 +272,13 @@ $ git show [commit]:[filename] # 显示某次提交时，某个文件的内容
 $ git reflog # 显示当前分支的最近几次提交
 ```
 
+### 文件配置
+
+```bash
+# 配置全局的用户 email 和用户名
+$ git config --global user.email "example@xxx.com"
+$ git config --global user.name "example"
+```
+
+
 

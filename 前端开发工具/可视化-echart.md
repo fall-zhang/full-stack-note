@@ -1,5 +1,5 @@
 > Create by **fall** on:2022-05-30
-> Recently revised in:2022-07-13
+> Recently revised in:2022-08-01
 
 ## ECharts
 
@@ -121,7 +121,6 @@ const legend = {
 - xAxis：控制 x 坐标轴
 
 ```js
-
 const xAxis = {
   show:true, // 是否显示该轴
   position:'bottom', // 默认在 bottom 底部，可选为 top，在 grid 上方
@@ -132,14 +131,15 @@ const xAxis = {
   nameLocation:'end', // 名称在哪里显示 start, middle, center, end
   nameTextStyle:{},
   inverse:false, // 让坐标轴的数据 reverse
-  boundaryGap:true, //对于类别所在的轴来说：表示数据在坐标轴刻度线中间，false 则表示在刻度线上
-  // 对于数据所在的轴来说，就是数据展示的空间 ['0','20%'] 表示最少展示 0，最高值上侧空余 20%
+  boundaryGap:true, // 对于类别(type为category)所在的轴来说：表示数据在坐标轴刻度线中间，false 则表示在刻度线上
+  // 对于数据(type为value)所在的轴来说，就是数据展示的空间 ['0','20%'] 表示最少展示 0，最高值上侧空余 20%
   min:200, // min 表示最小刻度值，max 表示最大刻度值——只对 数据所在的轴，type='value' 生效
  	minInterval:1, // 设置最小间隔大小，设置为 1 可以让间隔为整数 type='value'|'time' 时有效
   maxInterval:200, // 设置最大的间隔大小，设置为 3600 *24*1000 可以保证最小间隔为一天
   // interval:200, // 强制设置间隔，
   // 当 type 为 'log' 时，可以设置 logBase，即对数的底数，默认为 10
   silent:false, // true 时表示静态坐标轴，无法
+  axisLine:{},
 }
 ```
 
@@ -168,6 +168,8 @@ const xAxis = {
   symbolRepeat:true, // 表示是否重复以体现宽高（以一个，或者是多个图形来代表一个数据项）
 }
 ```
+
+## 自定义
 
 
 

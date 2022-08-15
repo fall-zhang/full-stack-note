@@ -11,6 +11,9 @@
 
 ```js
 module.exports = {
+  globals:{
+    ref:true, // 设置一些自定义的全局变量，保证使用时不会出现报错
+  },
   root: true,  // 用来告诉 eslint 找当前配置文件
   env: {  // 指定你想启用的环境，下面的配置指定为 node 环境
     node: true
