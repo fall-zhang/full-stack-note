@@ -1,13 +1,13 @@
 > Create by **fall** on ——
-> Recently revised in 2022-06-05
+> Recently revised in 2022-08-16
 
-## npm 命令的使用
+## npm 的使用
 
 npm 的功能：
 
-- 允许用户从 NPM 服务器下载别人编写的**第三方包**到本地使用。
-- 允许用户从 NPM 服务器下载并安装别人编写的**命令行程序**到本地使用。
-- 允许用户将自己编写的包或命令行程序上传到 NPM 服务器供别人使用。
+- 允许用户从 NPM 服务器下载别人编写的**第三方包**到本地使用（下载包）。
+- 允许用户从 NPM 服务器下载并安装别人编写的**命令行程序**到本地使用（下载命令程序）。
+- 允许用户将自己编写的包或命令行程序上传到 NPM 服务器供别人使用（上传包和命令程序）。
 
 ### 下载
 
@@ -38,9 +38,7 @@ LTS 版本：Long Term Support（[长期支持版本](https://nodejs.org/en/abou
 - 第二个数字是次版本，当你做了向下兼容的功能性新增，升级次板本。
 - 第三个数字是补丁版本，向后兼容的缺陷修复时，升级补丁版本
 
-### npm 命令
-
-**npm 包的安装命令**
+### 安装命令
 
 - 本地的安装包：使用`npm install <package-name>` 安装，并且放置在 node_modules 文件夹中
 - 全局的安装包：`npm install <package-name> -g` 全局安装，并放在固定的位置。
@@ -60,19 +58,15 @@ gulp@3.9.1 # 表示下载 3.9.1 版本的 gulp
 npm install gulp@3.9.1 --save-dev # 的简写:npm i gulp@3.9.1 -S-D
 ```
 
-**卸载命令**
+### 卸载命令
 
 `npm uninstall <package-name>`  卸载 node.js 指定的包
 
-`npm uninstall <package-name> -g` 安装全局模块 -g 后进行全局模块的卸载
+`npm uninstall <package-name> -g` 全局模块的卸载必须带上 -g
 
-如果安装时使用 -S(即--save) ，卸载时必须添加 -S ，移除在 package.json 中的引用
+### 其它命令
 
-同理，使用-D(--save-dev)，卸载时必须添加 -D
-
-**其他命令**
-
-线上查找模块 `npm search react`
+查找命令：`npm search react`
 
 | 命令（常用命令）                   | 功能                                                         |
 | ---------------------------------- | ------------------------------------------------------------ |
@@ -88,9 +82,34 @@ npm install gulp@3.9.1 --save-dev # 的简写:npm i gulp@3.9.1 -S-D
 | `npm publish`                      | 发布模块                                                     |
 | `npm config get cache`             | 查看 缓存所在位置                                            |
 
+### 发布包
+
+首先登陆 `npm adduser`，如果没有登陆，请上官网进行注册。
+
+登陆完成后：`npm publish .` 
+
+然后你就可以通过你发布的包名去下载你上传的包 `npm install <package-name>`
+
+
+
+包权限：通常只有一个人拥有发布功能，如果想要添加，可以通过命令实现
+
+`npm owner ls <package-name>` 所有者列表
+
+`npm owner add <user-name> <package-name> ` 添加所有者
+
+`npm owner add <user-name> <package-name>` 删除所有者
+
+一个包是否是足够优秀的包，会通过一下方式进行权重排名
+
+- 具备良好的测试
+- 良好的文档（README、API）
+- 良好的测试覆盖率
+- 良好的编码规范
+
 ## NPX工具
 
-npx 是一个工具，可以自动寻找当前文件夹（node_modules）文件夹下的可执行插件，正确引用并且执行。并且如果当前文件夹下没有下载可执行插件，那就会在网络中寻找后，下载并且运行，在运行成功后删除，利用这一特性，可以实现避免全局模块的安装。
+npx 可以自动寻找当前文件夹（node_modules）文件夹下的可执行插件，正确引用并且执行。并且如果当前文件夹下没有下载可执行插件，那就会在网络中寻找后，下载并且运行，在运行成功后删除，利用这一特性，可以实现避免全局模块的安装。
 
 > 命令的使用类似于原插件的执行方法，不过不需要 npm 进行安装：
 >
@@ -175,18 +194,14 @@ nvm ls
 # 切换到淘宝镜像
 nvm use taobao
 # 全局安装 nvm 命令（使用 cnpm 安装 nvm）
-cnpm install -g nvm
+npm install -g nvm
 # 当前nvm工具的版本
 nvm -v
 # 使用 8.4.0 版本的 node
-nvm use 8.4.0 
+nvm use 8.4.0
 # 卸载该版本的 node.js
 nvm uninstall 8.4.0
 ```
-
-### 发布包
-
-
 
 ## 参考文章
 
