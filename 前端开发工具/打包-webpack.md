@@ -1,5 +1,5 @@
 > Create by **fall** on:2020-12-07
-> Recently reviced in:2022-02-17
+> Recently revised in:2022-02-17
 
 ## webpack
 

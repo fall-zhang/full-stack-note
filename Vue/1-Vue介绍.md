@@ -1,0 +1,172 @@
+> Create by fall on:2022-03-13
+> Recently revised in:2022-06-11
+
+# Vue
+
+渐进式 `javascript` 框架。
+
+> 声明式渲染-->组建系统-->客户端路由-->集中式状态管理->项目构建
+>
+> 集中式状态管理：方便管理业务数据，`vue`中有一个单独模块`VueX`专门处理此类业务
+
+## 特点
+
+客户端路由：实现局部更新，历史回退功能
+
+- 易用、熟悉后开发很快
+- 灵活 在库和一套完整框架之间自由伸缩
+- 高效：超快虚拟 DOM，20kb 运行大小
+
+**数据的响应式**
+
+- 响应式布局和数据响应式
+  - h5中的响应式布局指的是页面尺寸随着屏幕大小进行改变
+  - 数据响应式指数据的变化导致页面内容的变化
+- 数据绑定
+  - 将数据填充到标签中
+- v-once 只编译一次
+  - 显示内容之后不具有响应式的功能
+
+数据监听：从view（视图）到 model（模型）
+
+数据绑定：从model（模型）到 view（视图）
+
+## 使用
+
+实例参数
+
+- el：元素的挂载位置（CSS选择器或者DOM元素）
+- data：数据对象（值是一个对象）
+
+插值表达式
+
+- 将html填充到HTML标签之中
+- 插值表达式支持基本的计算操作
+
+编译过程
+
+- `vue`语法->原生语法
+
+```html
+<div class="app"></div>
+<script src="vue.js"></script> <!-- 此处引入 vue.js-->
+<script>
+var app = new Vue({
+  el:'.app',
+  data:{},
+  methods:{}
+})
+</script>
+```
+
+## 生命周期
+
+挂载时：
+
+父组件（`beforeCreate`）->父（`created`）->父（`beforeMount`）->子组件（`beforeCreate`）->子（`created`）->子（`beforeMount`）->子（`mounted`）->父（`mounted`）
+
+子组件更新
+
+父组件（`beforeUpdate`）->子组件（`buforeUpdate`）->子组件（`updated`）->父组件（`updated`）
+
+父组件更新
+
+父组件（`beforeUpdate`）->父组件（`updated`）
+
+销毁
+
+父 （`beforeDestroy`）->子 （`beforeDestroy`）->子 （`destroyed`）->父 （`destroyed`）
+
+## keep-alive
+
+实现组件缓存，组件切换时，不会对当前组件进行卸载。
+
+使用场景是嵌套 `router-view`
+
+```vue
+<keep-alive>
+  <router-view></router-view>
+</keep-alive>
+```
+
+`keep-alive` 标签总共可以传递三个参数，`include`、`exclude` 分别表示，匹配成功的内容会不会被缓存，`max` 表示限制缓存的最大个数，默认为 10 个。  
+
+被 `keep-alive` 包含的组件/路由中，会多出两个生命周期的钩子：`activated` 与 `deactivated`。`activated` 会在组件第一次渲染时调用，之后如果激活了，也会去调用。
+
+`$route.meta.keepAlive` 可以用来判断当前路由是否被缓存，可以利用这点添加骨架屏，以保证用户的体验。
+
+## 指令
+
+> 使用详情可见第 2 节
+
+| 指令名称    | 指令功能                                 | 简写 |
+| ----------- | ---------------------------------------- | ---- |
+| **v-cloak** | 先通过隐藏样式在内存时的值，读取后显示   | 无   |
+| **v-text**  | 填充纯文本，用该方法填充不会闪动         | 无   |
+| **v-html**  | 作用：填充HTML片段                       | 无   |
+| **v-pre**   | 填充原始信息，显示原始信息，跳过编译过程 | 无   |
+| **v-on:**   | 添加事件(点击事件，移动时间)             | @    |
+| **v-band:** | 绑定后面的属性值                         | :    |
+| **v-if**    | 判断是否渲染                             | 无   |
+| **v-show**  | 判断是否展示                             | 无   |
+| **v-for**   | 遍历属性                                 | 无   |
+
+## 计算属性
+
+**计算属性值会基于其响应式依赖被缓存**
+
+可以通过计算属性对于函数进行计算，由于有缓存机制，无论调用多少次，只会打印一次，牺牲内存，节省性能
+
+```js
+// 选项式 API
+var vm = new Vue({
+  computed:{
+    reverse:function(){
+      console.log()
+      return this.msg.split("").reverse().join('')
+    }
+  }    
+})
+```
+
+```js
+// 组合式API
+import {ref,computed} from 'vue'
+const firstName = ref('鲁尼')
+const lastName = ref('帕瓦')
+// 一般的 computed 的使用
+//const fullName = computed(()=>{
+//  return firstName.value +lastName.value
+//})
+// 可以同时设置名称和读取名称
+const fullName = computed({
+  // getter
+  get() {
+    return firstName.value + ' ' + lastName.value
+  },
+  // setter
+  set(newValue) {
+    // 注意：我们这里使用的是解构赋值语法
+    [firstName.value, lastName.value] = newValue.split(' ')
+  }
+})
+// 设置名称时，会同步更新
+const fullName.value = '小泽 玛利亚' // firstName.value 小泽 lastName.value 玛利亚
+```
+
+
+
+## 侦听器
+
+- 采用侦听器监听用户名的变化
+- 调用后台接口进行验证
+- 根据验证的结果调整提示信息
+
+```js
+watch:{
+  firstName:function(val){
+    this.fullName = val+" "+ this.lastName;
+  }
+}
+```
+

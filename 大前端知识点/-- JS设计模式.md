@@ -1,3 +1,10 @@
+---
+sidebar_position: 3
+---
+
+>Create by **fall** on 2021----
+>Recently revised in 2022----
+
 ## 设计模式
 
 在面向对象软件设计过程中针对特定问题的简洁而优雅的解决方案。

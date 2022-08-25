@@ -1,7 +1,13 @@
-> Create by **fall** on 2020-08
-> Recently revised in 2022-03-01
+> Create by **fall** on 2021-08-13
+> Recently revised in 2022-07-24
 
 ## Vite
+
+### 搭建项目
+
+`pnpm create vite` 然后选择所需的技术栈搭建项目。
+
+> 如果是 vue 项目，可以参考该文章  https://juejin.cn/post/7058201396113309703
 
 ### 预构建
 
@@ -114,7 +120,7 @@ export default {
       '@C': path.resolve(__dirname, 'src/components'),
       '@U': path.resolve(__dirname, 'src/utils'),
       '@H': path.resolve(__dirname, 'src/hooks'),
-    },
+    }
   }
 }
 ```
@@ -184,13 +190,44 @@ document.getElementById('hero-img').src = imgUrl
 
 ## 插件
 
+### Vue插件
+
+> 详情请见 vue 文件夹下的 vite 插件 ，这里面只有建议的配置
+
+```js
+// vite.config.ts
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+export default {
+  plugins: [ // ... 其他插件
+    AutoImport({
+      // 自定义的配置规则，可见 https://github.com/antfu/unplugin-auto-import#configuration
+      imports: ['vue'],  // 这里除了引入 vue 以外还可以引入pinia、vue-router、vueuse 等
+      // 第三方组件库的解析器
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      // dirs 指定组件所在位置，默认为 src/components
+      // 可以让我们使用自己定义组件的时候免去 import 的麻烦
+      dirs: ['src/components/'],
+      // 配置需要将哪些后缀类型的文件进行自动按需引入
+      extensions: ['vue', 'md'],
+      // 解析的 UI 组件库，这里以 Element Plus 和 Ant Design Vue 为例
+      resolvers: [ElementPlusResolver(), AntDesignVueResolver()],
+    }),
+  ],
+}
+```
+
 ### rollup 插件
 
 #### CDN 引入
 
 `rollup-plugin-external-globals`
 
-实现 CDN 引入包，来减少带宽，减小打包后的内容（可能有替代方案）
+改变部分包的引入方式为 CDN 引入，以此来减少带宽，减小打包后的内容（可能有替代方案）
 
 ```javascript
 // vite.config.js
@@ -240,9 +277,10 @@ export default defineConfig({
 npm install vite-plugin-compress -s
 ```
 
-vite.config.ts
+
 
 ```ts
+// vite.config.ts
 import compress from 'vite-plugin-compress'
 export default defineConfig({
   // ...
@@ -317,6 +355,8 @@ export default defineConfig({
 
 ## 默认配置
 
+### react
+
 这是我的 `vite.config.ts` 默认配置，仅供参考
 
 ```ts
@@ -368,6 +408,40 @@ export default defineConfig({
     },
   },
   plugins: [reactRefresh()],
+})
+```
+
+### vue
+
+```js
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+import {resolve as pathResolve}  from 'path'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  host:true, // 表示可以通过 ip 进行访问
+  resolve: {
+    alias: {
+      '@': pathResolve(__dirname, 'src'),
+      '@C': pathResolve(__dirname, 'src/components'),
+    },
+  },
+  plugins: [
+    vue(),
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+      dts:'./public/auto-imports.d.ts'
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+      dts:'./public/components.d.ts'
+    }),
+  ],
 })
 ```
 

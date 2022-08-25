@@ -16,7 +16,7 @@
 
 ## useState
 
- useState 总是替换变量而不是 class 组件中的 合并。
+ useState 总是替换变量而不是 class 组件中的合并。
 
 ```jsx
 import { useState } from 'react'
@@ -49,11 +49,11 @@ function Counter2(){
     },3000);
   }
   return (
-    <>
-    <p>{number}</p>
-    <button onClick={()=>setNumber(number+1)}>+</button>
-    <button onClick={()=>alertNumber()}>alertNumber</button>
-    </>
+    <div>
+      <p>{number}</p>
+      <button onClick={(number)=>setNumber(number+1)}>+</button>
+      <button onClick={()=>alertNumber()}>alertNumber</button>
+    </div>
   )
 }
 ```
@@ -72,11 +72,45 @@ function Compp(props){
     }
   }
   const [file,setFile] = useState(initState)
-  return(<>
+  return(<div>
     <h2>{file.age}</h2>
     <button onClick={()=>setFile({age:file.age+1,name:props})}>Plus</button>
     <button onClick={()=>setFile({age:file.age+1,name:props})}>Plus</button>
-    </>)
+    </div>)
+}
+```
+
+## useReduce
+
+处理全局状态
+
+```js
+const DemoUseReducer = ()=>{
+  /* number为更新后的state值,  dispatchNumbner 为当前的派发函数 */
+  const [ number , dispatchNumbner ] = useReducer((state,action)=>{
+    const { payload , name  } = action
+    switch(name){
+      case 'add':
+        return state + 1
+      case 'sub':
+        return state - 1 
+      case 'reset':
+        return payload       
+    }
+    /* return的值为新的 state */
+    return state
+  },0)
+  return (
+  <div>
+    当前值：{ number }
+  { /* 派发更新 */ }
+  <button onClick={()=>dispatchNumbner({ name:'add' })} >增加</button>
+<button onClick={()=>dispatchNumbner({ name:'sub' })} >减少</button>
+<button onClick={()=>dispatchNumbner({ name:'reset' ,payload:666 })} >赋值</button>
+{ /* 把dispatch 和 state 传递给子组件  */ }
+<MyChildren  dispatch={ dispatchNumbner } State={{ number }} />
+</div>
+)
 }
 ```
 
@@ -88,8 +122,10 @@ function Compp(props){
 >
 > `useEffect` 会让 React 在完成对 DOM 的更改后，运行你的 useEffect 函数。由于副作用函数是在组件内声明的，所以可以访问到组件内部的 `props`、`state`。
 
+执行顺序：组件更新挂载完成 -> 浏览器dom 绘制完成 -> 执行useEffect回调。
+
 - React 会在每次渲染后调用副作用函数（useEffect） —— 包括第一次渲染的时候。
-- React 保证了每次运行 effect 的同时，DOM 都已经更新完毕。
+- React 保证了每次运行 effect 的同时，DOM 都已经更新完毕，即可以获取到 DOM。
 - React 会保存你传递的函数（我们将它称之为 “effect”），并且在执行 DOM 更新之后调用它。
 - 每次执行的时候，都使用当时的副作用空间去执行。官方文档的话来说，每个 effect“属于”一次特定的渲染。（证明可以看下面的 *特定的渲染证明*）
 - effect 不会阻塞浏览器更新屏幕，让你的应用看起来响应更快。
@@ -103,7 +139,7 @@ function Content(){
 	const [count,setCount] = useState(0)
   useEffect(()=>{
     setTimeout((()=>{
-      console.log(count)
+      console.log(count) // count 输出为 0 1 2 3 4 ，因为 setTimeout 所处作用域不同
     }),5000)
   })
   return(
@@ -117,9 +153,10 @@ function Content(){
 
 ### 清除机制
 
-> 有些代码副作用无需进行清除，比如说网络请求和 DOM 绘制。
->
-> 有些代码需要进行清除，比如说监听 onMouseMove 订阅外部数据源。
+`uesEffect` 中，通过返回函数来清除副作用
+
+- 有些代码副作用无需进行清除，比如说网络请求和 DOM 绘制。
+- 有些代码需要进行清除，比如说监听 onMouseMove 订阅外部数据源。
 
 ```jsx
 import React,{useState,useEffect} from 'react'
@@ -149,7 +186,9 @@ function FriendStatus(props){
 >
 > 从而实现关注点的切换
 
-跳过 Effect 进行优化
+### 选择性监听
+
+通过只监听一部分数据实现选择性监听以及跳过 Effect 进行优化
 
 ```jsx
 import {useState,useEffect} from 'react'
@@ -159,6 +198,7 @@ function Example(){
     // 更改当前文档的标题
     document.title = '别点了，都点' + count +'次了'
   },[count])// useEffect 第二个参数表明，只有 count 发生变化，才会执行该副作用函数
+  // 如果第二个参数为 [] 表明，只在第一次渲染后执行一次
   return(
     <div>
       <p>你点了 {count} 次了</p>
@@ -166,6 +206,42 @@ function Example(){
     </div>)
 }
 ```
+
+### 异步处理
+
+如果想要在 useEffect 中使用异步是不能现实的，所以需要额外一层封装
+
+```js
+const asyncEffect = async (callback, deps)=>{
+  useEffect(()=>{
+    callback()
+  },deps)
+}
+```
+
+## useLayoutEffect
+
+执行顺序 组件更新挂载完成 ->  执行 useLayoutEffect 回调-> 浏览器 dom 绘制完成
+
+即：在浏览器绘制之前执行
+
+```jsx
+const DemoUseLayoutEffect = () => {
+  const target = useRef()
+  useLayoutEffect(() => {
+    /*我们需要在dom绘制之前，移动dom到制定位置*/
+    const { x ,y } = getPositon() /* 获取要移动的 x,y坐标 */
+    animate(target.current,{ x,y })
+  }, []);
+  return (
+    <div>
+      <span ref={ target } className="animate"></span>
+    </div>
+  )
+}
+```
+
+
 
 
 
@@ -177,11 +253,16 @@ function Example(){
 
 
 
+## useMemo
 
+一般情况下，只要父组件改变了，不管子组件是否依赖该状态，子组件也会重新渲染
 
-## 其他钩子
+- 类组件通过 `pureComponent`
+- 函数组件通过 `React.memo`，将组件传递给 memo 之后，返回一个新的组件，如果接收到的属性不变，就不会重新渲染
 
-### useRef
+## useRef
+
+获取 DOM
 
 ```jsx
 function MyComponent(){
@@ -192,13 +273,65 @@ function MyComponent(){
   const onShow= ()=>{
     alert()
   }
-  const myInput = React.useRef()
+  const myInput = React.useRef(null)
   return (
   	<div>
     	<h2>当前显卡数量为：{count}</h2>
       <input type="text" ref={myInput}></input>
       <button onClick={onAdd}>给我加卡</button>
       <button onClick={onShow}>我有多少卡？</button>
+    </div>
+  )
+}
+```
+
+useState 在设置新的值时会触发更新，如果设置了一值在函数内，下次执行时就会变为默认，useRef 是存储后，不会改变
+
+```jsx
+function MyText(){
+  const currenRef = useRef('InitialData')
+  return (
+    <div>
+      {}
+    </div>
+  )
+}
+```
+
+## useContext
+
+我们可以使用 useContext，来获取父级组件传递过来的context值，这个当前值就是最近的父级组件 Provider 设置的value 值。
+
+```jsx
+type ActionOne ={
+  name:'add'|'sub'|'reset'
+  payload?:any
+}
+type Action = ActionOne
+const DemoUseReducer = () => {
+  /* number为更新后的state值,  dispatchNumbner 为当前的派发函数 */
+  const [number, dispatchNumbner] = useReducer((state:number, action:Action) => {
+    const { name,payload } = action
+    /* return的值为新的state */
+    switch (name) {
+      case 'add':
+        return state + 1
+      case 'sub':
+        return state - 1
+      case 'reset':
+        return payload
+    }
+    return state
+  }, 0)
+  return (
+    <div>
+      当前值：{number}
+      { /* 派发更新 */}
+      <button onClick={() => dispatchNumbner({ name: 'add' })} >增加</button>
+      <button onClick={() => dispatchNumbner({ name: 'sub' })} >减少</button>
+      <button onClick={() => dispatchNumbner({ name: 'reset', payload: 666 })} >赋值</button>
+      { /* 把dispatch 和 state 传递给子组件  */}
+      <MyChildren dispatch={dispatchNumbner} State={{ number }} />
     </div>
   )
 }
@@ -256,32 +389,17 @@ function FriendListItem(props){
 }
 ```
 
-### useMemo
-
-一般情况下，只要父组件改变了，不管子组件是否依赖该状态，子组件也会重新渲染
-
-- 类组件通过 `pureComponent`
-- 函数组件通过 `React.memo`，将组件传递给 memo 之后，返回一个新的组件，如果接收到的属性不变，就不会重新渲染
+- 
 
 ## 参考文章
 
 | 作者          | 链接                                               |
 | ------------- | -------------------------------------------------- |
 | React官方文档 | https://react.docschina.org/docs/hooks-effect.html |
+| 我不是外星人  | https://juejin.cn/post/6864438643727433741         |
 |               |                                                    |
 |               |                                                    |
 |               |                                                    |
-|               |                                                    |
-
-
-
-
-
-
-
-
-
-
 
 
 

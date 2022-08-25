@@ -1,5 +1,5 @@
 > Create by **fall** on:——
-> Recently reviced in:2022-02-17
+> Recently revised in:2022-02-17
 
 ## gulp的产生
 
