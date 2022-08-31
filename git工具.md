@@ -100,28 +100,30 @@ c、规则：
 
 ### 简单的提交代码流程
 
-> 连接克隆远程仓库 git clone https://https://e.coding.net/colorfree/P-weather.git
->
-> 在项目的文件夹中打开`cmd 命令行工具`（一般为含有 ReadMe 的文件夹）
->
-> `git add . `   将代码添加到版本里面（添加到暂存区）
->
-> `git commit -m`	“放置你想添加的内容” 
->
-> 最后使用 `git push` 将本地库里面的代码提交到网络共享库里面
+连接克隆远程仓库 git clone https://https://e.coding.net/colorfree/P-weather.git
+
+在项目的文件夹中打开`cmd 命令行工具`（一般为含有 ReadMe 的文件夹）
+
+`git add . `   将代码添加到版本里面（添加到暂存区）
+
+`git commit -m`	“放置你想添加的内容” 
+
+最后使用 `git push` 将本地库里面的代码提交到网络共享库里面
 
 ### 常用功能查找
 
-> - `git diff --shortstat "@{0 day ago}"` 看看自己一天写了多少代码
-> - 查看远程仓库`git remote -v`
-> - 显示有变更的文件`git status`
-> - 退回到上一个版本：`git reset --hard head`
-> - 查看日志：`git log `或者` git reflog`
-> - 查看工作区和暂存区版本区别`git diff`
-> - 回退上一个版本`git reset --hard HEAD^` 每多一个`^`多回退一个版本
-> - 回退到指定版本`git reset --hard version` version 为版本号
+- `git diff --shortstat "@{0 day ago}"` 看看自己一天写了多少行代码
+- 只克隆最近 number 次分支 `git clone --depth=[number] [url]`
+- 只克隆某一分支 `git clone --single-branch -b [name]`
+- 查看远程仓库`git remote -v`
+- 显示有变更的文件`git status`
+- 退回到上一个版本：`git reset --hard head`
+- 查看日志：`git log `或者` git reflog`
+- 查看工作区和暂存区版本区别`git diff`
+- 回退上一个版本`git reset --hard HEAD^` 每多一个`^`多回退一个版本
+- 回退到指定版本`git reset --hard version` version 为版本号
 
-### 新建代码仓库
+### 创建代码仓库
 
 - `git init` 在本地进行初始化（建立工作区）
 - `git init [project-name]` 新建一个目录，作为代码仓库
