@@ -1,5 +1,7 @@
 > Create by fall on:2022-03-10
-> Recently revised in:2022-06-11
+> Recently revised in:2022-09-01
+
+所有示例使用的都是 Vue 的 SFC，即单文件组件，所以如果没有学习，请阅读[官方文档](https://cn.vuejs.org/api/sfc-spec.html)
 
 ## 官方指令
 
@@ -7,13 +9,15 @@
 
 > 先通过隐藏样式在内存中进行值的替换，替换好之后再替换最终的结果
 
-```js
-//1. style样式中添加
-[v-cloak]{display: none;}
-//2.
+```vue
+<template>
 <div id="pay" v-cloak>
-    {{boxer}}
-<div/>
+  {{boxer}}
+  <div/>
+</template>
+<style>
+  [v-cloak]{display: none;}
+</style>
 ```
 
 ### v-text
@@ -239,26 +243,72 @@ v-if和v-show的区别，v-if是只在符合条件时显示，其它直接隐藏
 
 ## 自定义指令
 
-> 因为内置指令不足以满足全部需求，所以出现自定义指令
+当内置指令不足以满足一些需求时，可以自定义指令。
+
+其他情况下应该尽可能地使用 `v-bind` 这样的内置指令来声明式地使用模板，这样更高效，也对服务端渲染更友好。
+
+### 组件内使用
+
+选项式 API 中使用
 
 ```vue
-<input type="text" v-focus/>
-<script>
-  Vue.directive("focus",{
-    inserted:function(el){
-      el.focus();
-    }
-  })
-</script>
-//第二个参数
 <input type="text" v-focus>
 <script>
-  Vue.directive("focus",{
-    inserted:function(el,binding){
-      console.log(binding)
-      el.style.backgroundColor = binding.value;
+  const focus = {
+    mounted: (el) => el.focus()
+  }
+  export default{
+    directives:{
+      focus
     }
-  })
+  }
 </script>
+```
+
+组合式 API
+
+```jsx
+// <script setup> 中使用
+const vFocus = {
+  mounted:(el)=>el.focus()
+}
+// 添加 v-focus 后，在挂载（mounted）后，会自动 focus
+<template>
+	<input v-focus></input> 
+</template>
+```
+
+### 全局使用
+
+```js
+import {createApp} from 'vue'
+const app = createApp({})
+app.directive('focus',{
+  mounted:(el)=>el.focus()
+})
+```
+
+指令钩子
+
+```js
+const myDirective = {
+  // 在绑定元素的 attribute 前，或事件监听器应用前调用
+  created(el, binding, vnode, prevVnode) {
+  },
+  // 在元素被插入到 DOM 前调用
+  beforeMount(el, binding, vnode, prevVnode) {},
+  // 在绑定元素的父组件
+  // 及他自己的所有子节点都挂载完成后调用
+  mounted(el, binding, vnode, prevVnode) {},
+  // 绑定元素的父组件更新前调用
+  beforeUpdate(el, binding, vnode, prevVnode) {},
+  // 在绑定元素的父组件
+  // 及他自己的所有子节点都更新后调用
+  updated(el, binding, vnode, prevVnode) {},
+  // 绑定元素的父组件卸载前调用
+  beforeUnmount(el, binding, vnode, prevVnode) {},
+  // 绑定元素的父组件卸载后调用
+  unmounted(el, binding, vnode, prevVnode) {}
+}
 ```
 
