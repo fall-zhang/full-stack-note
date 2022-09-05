@@ -3,22 +3,22 @@ sidebar_position: 16
 ---
 
 > Create by **fall** on ----
-> Recently revised in 2022-05-31
+> Recently revised in 2022-09-05
 
 ## this
 
-只要封装函数，**任何一个函数**都会内置名为 this 的变量，this 变量存储的是当前函数主人的**地址**
+只要封装函数，**任何一个函数**都会内置名为 this 的变量，this 变量存储的是当前函数主人的**地址**。
 
 ```html
 <script>
+// onClick 方法的主人是 button 对象，所以，this指向为 <button> 标签
   window.onload =function(){
     var aBtn = document.getElementsByTagName("button");
     for(var i = 0 ;i<aBtn.length;i++){
       aBtn[i].onclick = function(){
-        alert(this);
+        console.log(this);
       }  
     } 
-    alert("end cycle");
   }
 </script>
 <body>
@@ -31,9 +31,12 @@ sidebar_position: 16
 ### 常见三种指向
 
 ```javascript
-// 1.全局函数，指向window
+// 1.全局空间命名的函数，指向 window
 function show(){
-  console.log(this);//指向window
+  console.log(this);// 指向 window
+  function showChild(){
+    console.log(this) // 当前函数主人的地址，也是 window
+  }
 }
 // 2.向当前方法名或对象名，this->person
 var person = {
@@ -158,37 +161,37 @@ let person = {
 	sayHello(){}
 }
 person.sayHello.name // sayHello
+// 
+(()=>{}).name // ''
 // 情况2
 (new Function).name // anonymous
 // 情况3
 const foo = function(){}
 // const foo = function
-foo.bind({}).name
+foo.bind({}).name // bound foo
 ```
-
-
 
 ## 闭包
 
 特点：
 
->  - 函数嵌套函数
->  - 内部函数使用外部函数的形参和变量
->  - 被引用的变量不会被垃圾回收机制回收
+- 函数嵌套函数
+- 内部函数使用外部函数的形参和变量
+- 被引用的变量不会被垃圾回收机制回收
 
-垃圾回收机制：
+利用垃圾回收机制：
 
->  优点：
->
->  - 希望一个变量常驻内存
->  - 避免全局变量污染
->  - 可以声明私有变量，默认的变量
->
->  缺点：
->
->  - 内存泄漏，如果存储了很大的对象，无法释放自动内存
+优点：
 
-**立即执行函数写法**
+- 希望一个变量常驻内存
+- 避免全局变量污染
+- 可以声明私有变量，默认的变量
+
+缺点：
+
+- 内存泄漏，如果存储了很大的对象，且没有手动释放内存，无法释放自动内存
+
+### 立即执行函数
 
 ```js
 // 闭包函数写法
@@ -243,37 +246,37 @@ window.onunload = function(){
 
 ```js
 function Dog({name,sex,master}){
-    this.name = name;
-    this.sex=sex;
-    this.master =master;
+  this.name = name;
+  this.sex=sex;
+  this.master =master;
 }
 Dog.prototype.file = function(){
-    alert(`这只狗是${this.master}先生家的一条狗，是一条${this.sex}${this.name}`);
+  alert(`这只狗是${this.master}先生家的一条狗，是一条${this.sex}${this.name}`);
 };
 function TinyDog({name,sex,master,weight}){
-    Dog.call(this,{
-        name:name,
-        sex:sex,
-        master:master
-    });
-    this.weight = weight;
+  Dog.call(this,{
+    name:name,
+    sex:sex,
+    master:master
+  });
+  this.weight = weight;
 };
 // 使用for循环进行继承
 for(var attr in Dog.prototype){
-    TinyDog.prototype[attr] = Dog.prototype[attr];
+  TinyDog.prototype[attr] = Dog.prototype[attr];
 }
 var bomei = new TinyDog({
-    name:"博美犬",
-    sex:"male",
-    master:"老刘",
-    weight:0.78
+  name:"博美犬",
+  sex:"male",
+  master:"老刘",
+  weight:0.78
 });
 bomei.file();
 var alasika = new TinyDog({
-    name:"阿拉斯加",
-    sex:"female",
-    master:"老赵",
-    weight:1.8
+  name:"阿拉斯加",
+  sex:"female",
+  master:"老赵",
+  weight:1.8
 })
 // 用构造函数构造的对象，有一个__proto__,指向构造出这个对象的构造函数原型
 alert(bomei.__proto__==Dog.prototype);
@@ -388,10 +391,6 @@ function foo(x){
   }
   return  foo(x-2)+foo(x-1)
 }
-// 优化
-function foo1(){
-  
-}
 ```
 
 ```js
@@ -417,14 +416,16 @@ function Fibonacci(n) {
   return Fibonacci(n - 1) + Fibonacci(n - 2)
 }
 Fibonacci(100) // 超时
-// 尾递归优化后的斐波那契函数
 
+// 尾递归优化后的斐波那契函数
 function fib(n,fi1,fi2){
-  if(n=<1){
+  let fib1 =fi1||1 
+  let fib2 =fi2||1 
+  if(n<=1){
     return fi1
   }
-  let next = fi1 +fi2
-  return fib(n-1,fi2,next)
+  let next = fib1 +fib2
+  return fib(n-1,fib2,next)
 }
 // n = 5 时，
 // 4 1 2
