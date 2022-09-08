@@ -1,10 +1,13 @@
-## 安装及简单的介绍
+> Create by fall on:2021
+> Recently revised in:2022-09-01
 
-快速生成一个 Vue 项目结构，简化一个项目的创建流程
+## vue/cli
+
+功能：快速生成一个 Vue 项目结构，简化一个项目的创建流程
 
 ### 安装
 
-全局安装cli `npm install -g @vue/cli`
+全局安装 cli `npm install -g @vue/cli`
 
 ### 简介
 
@@ -86,7 +89,7 @@ vue-cli-service serve [options] [entry]
 #  --watch       监听文件变化
 ```
 
-## 脚手架的自定义配置
+## 配置
 
 如果想要让vue项目跑起来后自动打开，可以在 `package.json` 文件里面添加该配置
 

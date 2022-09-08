@@ -82,12 +82,12 @@ TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而
     'spaced-comment': ['error', 'always'], // 注释间隔
     'template-tag-spacing': ['error', 'always'], // 在模板标签及其文字之间需要空格
     'no-var': 'error', // 禁止使用 var
-    'prefer-destructuring': ['error', { // 优先使用数组和对象解构
-      array: true,
-      object: true
-    }, {
-      enforceForRenamedProperties: false
-    }],
+    'prefer-destructuring': ['error',{// 优先使用数组和对象解构
+        array: false,
+        object: false
+      }, {
+        enforceForRenamedProperties: false
+      }],
     // 组件名称为多个单词，忽略的组件名称
     'comma-dangle': ['error', 'never'], // 最后一个属性不允许有逗号
     'arrow-spacing': 'error', // 箭头函数空格
