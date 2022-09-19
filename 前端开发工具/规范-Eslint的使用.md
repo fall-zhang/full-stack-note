@@ -103,7 +103,7 @@ TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而
     'no-submodule-imports': ['off', '/@'],
     'no-implicit-dependencies': ['off', ['/@']],
     // typescript
-    '@typescript-eslint/no-explicit-any': 'warn' // 类型可以使用any
+    '@typescript-eslint/no-explicit-any': 'warn' // 使用 any 时是否报错
   }
 }
 ```
