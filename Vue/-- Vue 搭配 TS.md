@@ -1,7 +1,7 @@
 > Create by fall on:2022-09-19
-> Recently revised in:2022-09-19
+> Recently revised in:2022-09-20
 
-> 在 vue 中使用 typescript，建议使用 Vite，因为 webpack 的分析有缺陷，且类型检查需要占用额外的资源。
+> 在 vue 中使用 typescript，建议使用 Vite，因为 webpack 的分析有缺陷，且运行时类型检查需要占用额外的资源。
 
 ## 语言语法
 
@@ -9,7 +9,7 @@
 
 所有内容必须放在 `<script lang="ts" setup>` 中进行使用
 
-#### `defineProps`
+#### defineProps
 
 ```ts
 // 1. 使用 ts 定义 props
@@ -77,17 +77,16 @@ const count = ref(0)
 const moreCount = computed<number>(()=>count.value+5) // 通过泛型来规定返回值的类型
 ```
 
-#### 事件标注类型
+#### 事件
 
 ```vue
 <template>
-<button @click='onClick'>
-  点击
-  </button>
+  <input type="text" @change="onTextChange" />
 </template>
 <script lang="ts" setup>
-  function onClick(ev:Event){
-    
+  // 为事件标注类型
+  function onTextChange(ev:Event){
+    (event.target as HTMLInputElement).value // 需要自行推断 event.target 的类型
   }
 </script>
 ```
@@ -97,16 +96,42 @@ const moreCount = computed<number>(()=>count.value+5) // 通过泛型来规定�
 因为 provide 和 inject 会在不同的组件运行，所以 Vue 提供了 InjectionKey，继承自 `Symbol`
 
 ```ts
+import {InjectionKey} from 'vue'
 const key = Symbol() as InjectionKey<string>;
 provide(key, 'foo')
 const foo = inject(key)
+// 不使用 symbol 注入，使用 string 类型作为 inject 注入，则需要传入泛型
+const foo = inject<string>('foo') // 推断为 string | undefined
+const fuu = inject<string>('fuu','bar') // 推断为 string | undefined
 ```
 
+#### 组件
 
+子组件需要将内容暴露，父组件才能够使用
+
+```ts
+// 子组件 MyModal.vue
+import { ref } from 'vue'
+const isContentShown = ref(false)
+const open = () => (isContentShown.value = true)
+defineExpose({
+  open
+})
+```
+
+```ts
+// 父组件
+// 如果想在 ts文件中使用，需要 volar 接管默认的 ts 设置，下方有讲到该问题
+import MyModal from './MyModal.vue'
+const modal = ref<InstanceType<typeof MyModal> | null>(null)
+const openModal = () => {
+  modal.value?.open()
+}
+```
 
 ### 选项式 API
 
-
+官方文档：https://cn.vuejs.org/guide/typescript/options-api.html
 
 ## IDE 的一些问题
 
