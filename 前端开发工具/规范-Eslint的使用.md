@@ -41,7 +41,19 @@ module.exports = {
 
 ## TypeScript
 
-TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而是合并到 eslint 中
+TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而是合并到 eslint 中，添加额外插件即可使用
+
+安装：除了 `eslint`、`typescript` 之外，还需要安装 `@typescript-eslint/parser`、`@typescript-eslint/eslint-plugin`
+
+```js
+// .eslintrc.cjs || cjs:commonjs
+module.exports = {
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
+  root: true,
+};
+```
 
 ## 推荐配置
 
@@ -147,11 +159,56 @@ TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而
 }
 ```
 
+## 同 IDE 使用
 
+酌情修改 VScode 中 `setting.json` 的内容、
+
+```json
+{
+  "eslint.enable": true, //是否开启vscode的eslint
+  "eslint.autoFixOnSave": true, //是否在保存的时候自动fix eslint
+  "eslint.options": { //指定vscode的eslint所处理的文件的后缀
+    "extensions": [
+      ".js",
+      ".vue",
+      ".ts",
+      ".tsx"
+    ]
+  },
+  "eslint.validate": [ // 确定校验准则
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "html",
+      "autoFix": true
+    },
+    {
+      "language": "vue",
+      "autoFix": true
+    },
+    {
+      "language": "typescript",
+      "autoFix": true
+    },
+    {
+      "language": "typescriptreact",
+      "autoFix": true
+    }
+  ]
+}
+```
+
+
+
+
+
+
+作者：yuxiaoliang
+链接：https://juejin.cn/post/6844903880006844424
+来源：稀土掘金
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 ## Eslint 语法配置清单
-
-
 
 > P.S.我认为经常使用的会优先排列在前面
 
@@ -331,3 +388,10 @@ TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而
   "yoda": [2, "never"]// 禁止尤达条件
 }
 ```
+
+## 参考文章
+
+| 作者        | 链接                                       |
+| ----------- | ------------------------------------------ |
+| yuxiaoliang | https://juejin.cn/post/6844903880006844424 |
+
