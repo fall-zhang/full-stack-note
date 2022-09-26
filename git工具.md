@@ -1,5 +1,5 @@
 > Create by **fall** on 2020-11-18
-> Recently revised in 2022-05-14
+> Recently revised in 2022-09-26
 
 > **下载：** 从淘宝镜像上下载 git
 >
@@ -106,7 +106,7 @@ c、规则：
 
 `git add . `   将代码添加到版本里面（添加到暂存区）
 
-`git commit -m`	“放置你想添加的内容” 
+`git commit -m 'messages'`  修改并放置你想添加的 `messages` 
 
 最后使用 `git push` 将本地库里面的代码提交到网络共享库里面
 
@@ -118,9 +118,9 @@ c、规则：
 - 查看远程仓库`git remote -v`
 - 显示有变更的文件`git status`
 - 退回到上一个版本：`git reset --hard head`
-- 查看日志：`git log `或者` git reflog`
-- 查看工作区和暂存区版本区别`git diff`
-- 回退上一个版本`git reset --hard HEAD^` 每多一个`^`多回退一个版本
+- 查看日志：`git log ` 或者 `git reflog`
+- 查看工作区和暂存区版本区别 `git diff`
+- 回退上一个版本`git reset --hard HEAD^` 每多一个 `^` 多回退一个版本
 - 回退到指定版本`git reset --hard version` version 为版本号
 
 ### 创建代码仓库
