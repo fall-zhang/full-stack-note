@@ -3,11 +3,11 @@ sidebar_position: 2
 ---
 
 > Create by **fall** on 2021-12-13
-> Recently revised in 2022-08-24
+> Recently revised in 2022-09-26
 
 Window 对象上的内容
 
-## JS中的对象
+## JS 中的对象
 
 对象分为三种
 
@@ -106,7 +106,7 @@ location.replace(newURL)// 在当前窗口替换成新的url		不产生新的历
 集合
 
 ```js
-// 描点对象数组
+// 锚点对象数组
 document.anchors[]
 // 图片对象数组
 document.images[]

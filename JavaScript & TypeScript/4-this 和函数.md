@@ -3,7 +3,7 @@ sidebar_position: 16
 ---
 
 > Create by **fall** on ----
-> Recently revised in 2022-09-05
+> Recently revised in 2022-09-26
 
 ## this
 
@@ -150,24 +150,24 @@ newArr   // [10]
 
 ## 构造函数的封装
 
-> 可以查看13章面向对象编程章节
+> 可以查看 13 章面向对象编程章节
 
-### 函数的 `name` 属性
+### 函数的 `name` 
 
 ```js
 // 所有的方法上面都有 name 属性
-// 情况1 
+// 函数的名称
 let person = {
 	sayHello(){}
 }
 person.sayHello.name // sayHello
-// 
+// 没有赋值，或者定义
 (()=>{}).name // ''
-// 情况2
-(new Function).name // anonymous
-// 情况3
+// 有赋值
 const foo = function(){}
-// const foo = function
+// new 创建
+(new Function).name // anonymous
+// 绑定 bind 后生成的函数
 foo.bind({}).name // bound foo
 ```
 

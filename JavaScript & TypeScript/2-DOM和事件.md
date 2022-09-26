@@ -3,9 +3,11 @@ sidebar_position: 12
 ---
 
 > Create by **fall** on 2020-05-12
-> Recently revised in 2022-04-30
+> Recently revised in 2022-09-26
 
-## 文档对象模型DOM
+## DOM
+
+文档对象模型
 
 ### document对象
 
@@ -182,6 +184,68 @@ dom.innerHTML = `Hello World`
 const node = document.querySelector('.reactTitle')
 node.appendChild(dom)
 ```
+
+### DOM上的方法
+
+#### 获取节点
+
+**获取节点**
+
+- `document.getElementById()` 通过 `id` 获取元素
+- `document.getElementsByName()` 通过 `name` 获取元素节点
+- `document.getElementsByTagName()` 通过 元素标签 获取节点
+- `document.querySelector()` 通过元素选择器获取元素
+
+**节点的指针**
+
+- `firstChild` 元素子节点的第一个
+- `lastChild` 元素子节点的最后一个
+- `childNodes` 获取元素子节点列表
+- `previousSibling` 当前节点的前一个节点
+- `nextSibling` 当前节点的后面一个节点
+- `parentNode` 当前节点的父节点
+
+#### 节点的操作
+
+**创建节点**
+
+- `createElement` 创建元素节点
+- `createAttribute` 创建属性节点
+- `createTextNode` 创建文本节点
+
+**插入节点**
+
+- `appendChild` 向子节点的最后添加节点
+- `insertBefore` 当前节点前面插入节点
+
+**替换节点**
+
+- `replaceChild` 用前者替换后者节点
+
+**复制节点**
+
+- `cloneNode` 创建节点的副本
+
+**删除节点**
+
+- `removeChild` 删除指定节点
+
+#### 属性操作
+
+- `getAttribute` 获取元素节点指定属性的值
+- `setAttribute` 创建或者改变元素节点的属性
+- `removeAttribute` 移除属性
+
+**文本操作**
+
+- `insertData(place,string)` 从 place 位置插入 string
+- `appendData` 把 string 插入到文本末尾处
+- `deleteData(offset,count)` 从 offset 开始产出 count 个字符
+- `replaceData(offset,count,string)` 从 offset 开始，用 string 替换 count 个字符
+- `splitData(offset)` 从 offset 开始，将文本分为两个及诶点
+- `substring(offset,count)` 返回由 offset 开始的 count 个节点
+
+
 
 ## 容器宽度的获取
 
@@ -474,66 +538,3 @@ function removeEvent(node,evenType,funcName){
 
 函数节流（throttle），指的是如果同一个事件，一秒内触发100次，持续十秒，全部执行会造成很大的资源浪费，所以，如果一直在触发事件，在执行事件时，一秒执行一次。
 
-## DOM
-
-### 获取节点
-
-**获取节点**
-
-- `document.getElementById()` 通过 `id` 获取元素
-- `document.getElementsByName()` 通过 `name` 获取元素节点
-- `document.getElementsByTagName()` 通过 元素标签 获取节点
-- `document.querySelector()` 通过元素选择器获取元素
-
-**节点的指针**
-
-- `firstChild` 元素子节点的第一个
-- `lastChild` 元素子节点的最后一个
-- `childNodes` 获取元素子节点列表
-- `previousSibling` 当前节点的前一个节点
-- `nextSibling` 当前节点的后面一个节点
-- `parentNode` 当前节点的父节点
-
-### 节点的操作
-
-
-
-**创建节点**
-
-- `createElement` 创建元素节点
-- `createAttribute` 创建属性节点
-- `createTextNode` 创建文本节点
-
-
-
-**插入节点**
-
-- `appendChild` 向子节点的最后添加节点
-- `insertBefore` 当前节点前面插入节点
-
-**替换节点**
-
-- `replaceChild` 用前者替换后者节点
-
-**复制节点**
-
-- `cloneNode` 创建节点的副本
-
-**删除节点**
-
-- `removeChild` 删除指定节点
-
-### 属性操作
-
-- `getAttribute` 获取元素节点指定属性的值
-- `setAttribute` 创建或者改变元素节点的属性
-- `removeAttribute` 移除属性
-
-**文本操作**
-
-- `insertData(place,string)` 从 place 位置插入 string
-- `appendData` 把 string 插入到文本末尾处
-- `deleteData(offset,count)` 从 offset 开始产出 count 个字符
-- `replaceData(offset,count,string)` 从 offset 开始，用 string 替换 count 个字符
-- `splitData(offset)` 从 offset 开始，将文本分为两个及诶点
-- `substring(offset,count)` 返回由 offset 开始的 count 个节点

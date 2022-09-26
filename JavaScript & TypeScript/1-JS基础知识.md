@@ -7,38 +7,39 @@ sidebar_position: 10
 
 ## 发展史
 
-1995年 javascript 诞生
+1995 年 javascript 诞生。
 
-ES6其实是泛指，2015年六月发布ES6第一个版本，然后规定，每年的六月发布一次正式版本，版本号以当年年份为准ES6
+ES6 其实是泛指，2015 年六月发布 ES6 第一个版本，然后规定，每年的六月发布一次正式版本，版本号以当年年份为准 ES6。
 
-- `Stage 0` - `Strawperson`（展示阶段）
-- `Stage 1` - `Proposal`（征求意见阶段）
-- `Stage 2` - `Draft`（草案阶段）
-- `Stage 3` - `Candidate`（候选人阶段）
-- `Stage 4` - `Finished`（定案阶段）
+| 阶段      | 英文名        | 含义         |
+| --------- | ------------- | ------------ |
+| `Stage 0` | `Strawperson` | 展示阶段     |
+| `Stage 1` | `Proposal`    | 征求意见阶段 |
+| `Stage 2` | `Draft`       | 草案阶段     |
+| `Stage 3` | `Candidate`   | 候选阶段     |
+| `Stage 4` | `Finished`    | 定案阶段     |
+
+> ES6 改进了前端编程体验，带来更多方便使用的特性，并且适用范围最广，所以本笔记也以 ES6 的内容进行编写。
 
 ## 变量的类型
 
-- var 普通变量
-  - var 声明的作用域是函数作用域，在整个函数内都有效
-- let 局部变量
-  - let 声明的作用域叫做块级作用域
-  - 只要遇到大括号都会形成作用域，只在该大括号内可以使用改变量，并且限定的是同一个大括号。
-- const 声明常量
-  - 用 const 声明的变量，只能在声明的时候确定值，后续没有办法修改
-  - 常量的作用域和 let 相同
+- `var` 普通变量
+  - `var` 声明的作用域是函数作用域，在整个函数内都有效
+  - 可以被声明多次
+- `let` 局部变量，只在块级作用域内生效
+  - 只要遇到大括号都会形成作用域，只在该大括号内可以使用该变量。
+  - 只能被声明一次
+- `const` 声明常量
+  - 用 `const` 声明的变量，只能在声明的时候确定值（或者是指针），后续没有办法修改
+  - 常量的作用域和 `let` 相同，也是只能声明一次
 
-> const 声明变量后被确定，后续无发被修改
+> 块级作用域有例外，比如 `let` 在 `for` 循环的小括号中使用时，虽然在小括号内，但作用域会被提取到每个大括号中的内容。为了方便编写代码。
 >
-> 作用：获取DOM对象的赋值，或者是声明一个IP地址
-
-var 和 let 的区别
-
-> for 循环中使用 var 变量是可以进行访问的，如果再循环中声明 let ，在循环后无法使用
+> `for` 小括号中使用 `var` 变量是可以在循环之后进行访问的，如果在循环中使用的是 `let`，在循环后无法使用。
 >
-> let 不能在变量声明之前访问该变量，var 可以访问并且不会报错，但值为 undefined
+> `let` 不能在变量声明之前访问该变量，`var` 可以访问并且不会报错，但值为 `undefined`
 >
-> let 只能被声明一次，var 可以被声明多次
+> `const` 声明对象或者数组时，只是不能更改指向，可以添加，或者删除对象上的属性。
 
 ## 数据类型
 
@@ -47,15 +48,41 @@ var 和 let 的区别
 - **Structural Types** （两个构造类型）：Object、Function、
 - **Structural Root** （一个原始数据类型）：null
 
+> 没有 Array 数据类型，本质上 Array 是继承 Object，浏览器做一些优化的对象，所以，如果定义了一个 `arr` 作为数组 `typeof arr` 的值为 `'object'`。
 
-## 字符串的存储
+## Number
+
+```js
+var num = 233
+console.log(typeof num) // 'number'
+```
+
+**声明不同进制数据**
+
+二进制（binary）：前缀为 `0b`。
+
+八进制（octonary）：前面添加 `0` 或者是 `0o` （尽量不单独使用 `0` ，会在 `strict` 模式报错）
+
+十六进制（hexadecimal，简写 HEX）：前面添加 `0x` 即可
+
+```js
+// 声明一个二进制的数据
+var binary = 0b100
+// 声明一个八进制的数据
+var octal = 0o10
+// 十六进制
+var hex = 0x10
+```
+
+## 字符串
 
 **字符串拼接**
 
 ```js
 var a = '这是一个字符串'
 var b = 'this is a string'
-console.log(a + b)
+console.log(a + b) // '这是一个字符串this is a string'
+console.log(a.concat(b)) // '这是一个字符串this is a string'
 ```
 
 **字符串特性**
@@ -64,26 +91,26 @@ console.log(a + b)
 // 跨行声明字符串，需添加'\'进行转译
 var str1 = 'hellow \
 mybro';
-// ES6 中添加新的符号，无需添加转译就可直接换行
+// ES6 中添加新的字符串声明符号，无需添加转译就可直接换行
 var str2 = `hellow 
 mybro`;
 // 新的的字符串拼接方法，以及函数中传入对象
 function file({name,age,gender}){
-    console.log(`我叫${name}，今年${age}岁，性别${gender}`);
+  console.log(`我叫${name}，今年${age}岁，性别${gender}`);
 };
 file({
-    name:'小明',
-    gender:'男',
-    age:22,
+  name:'小明',
+  gender:'男',
+  age:22,
 });
 // 循环 emoji
 let str = '😀🤣😜😍🤗🤔'
-    for (const emoji of str) {
-      console.log(emoji) // 😀🤣😜😍🤗🤔
-    }
-    for (let i = 0, l = str.length; i < l; i++) {
-      console.log(str[i])  // 不能正确输出表情
-    }
+for (const emoji of str) {
+  console.log(emoji) // 依次输出😀  🤣  😜  😍  🤗  🤔
+}
+for (let i = 0, l = str.length; i < l; i++) {
+  console.log(str[i])  // 不能正确输出表情
+}
 ```
 
 ## 对象和类
@@ -148,25 +175,6 @@ bicycle.callMyName()
 
 深拷贝，拷贝完整的数据，修改对象，只有当前对象会修改。
 
-## Number
-
-### 不同进制数据
-
-二进制：前缀为 `0b`。
-
-八进制：前面添加 `0` 或者是 `0o` （尽量不单独使用 `0` ，会在 `strict` 模式报错）
-
-十六进制：前面添加 `0x` 即可
-
-```js
-// 声明一个二进制的数据
-var binary = 0b100 
-// 声明一个八进制的数据
-var octal = 0o10
-// 十六进制
-var hex = 0x10
-```
-
 ## 数组
 
 > 这里只有大概的知识点，剩余的在独立章节：`-- 扩展存储对象`，中介绍。
@@ -215,13 +223,13 @@ var newarr = arr.filter(item=>item>20)
 
 ## 集合
 
-### set集合
+> 有关集合的详细内容可查看存储扩展对象文件。
 
-set 集合的特点
+### set
 
-> - 键值对相同
->- `.add` 可以进行添加
-> - 所有值不重复
+- 键值对相同
+- 通过 `add` 方法进行添加
+- 所有值不重复
 
 ```js
 let imgs = new Set()
@@ -232,13 +240,15 @@ imgs.add(true)
 imgs.add(new String('world'))
 ```
 
-> `WeakSet`  同 Set，意思就是 `WeakSet` 中的东西垃圾回收时不考虑，使用它不用担心内存泄漏问题。
+> `WeakSet` 同 Set，但只能是对象的集合，意思就是 `WeakSet` 中的东西是弱引用，如果没有其他的对 `WeakSet` 中对象的引用，这些对象会被垃圾回收掉。
 
-### map集合
+### map
 
-> Map集合的特点
->
-> - map集合传值必须使用键值对进行添加
+Map 集合的特点
+
+- 通过键值区分不同的 Map
+- 通过 `add` 方法进行添加
+- `map` 集合传值必须使用键值对进行添加
 
 ```js
 let map = new Map();
@@ -247,7 +257,7 @@ map.set("六六","喝水的");
 map.set("六六","吃药了");
 console.log(map);
 // Map对象取值
-alert(map.get('六六'));
+console.log(map.get('六六')); // 吃药了
 ```
 
 > `WeakMap`  同 Set，意思就是 `WeakMap` 中的东西垃圾回收时不考虑，使用它不用担心内存泄漏问题
@@ -333,9 +343,9 @@ for (let item of mySet.keys()) {
 
 ## 严格模式
 
-严格模式是啥子？就是更加严格的模式！
+严格模式是啥子？就是更加严格的模式！对语法限制，写出来的代码更明确。
 
-use strict 是一种运行时自动执行更严格的 JavaScript 代码解析和错误处理的方法。如果代码错误被忽略或失败，将会产生错误或抛出异常。
+`use strict` 是一种运行时自动执行更严格的 `JavaScript` 代码解析和错误处理的方法。如果代码错误被忽略或失败，将会产生错误或抛出异常。
 
 非严格模式下
 
@@ -349,7 +359,7 @@ console.log(a) // 100
 ```js
 "use strict"
 a = 100
-console.log(a) // 我直接给你报错！Error!
+console.log(a) // 我直接给你报错！Error! 
 ```
 
 > ES6 的模块自动采用严格模式，不管你有没有在模块头部加上 "use strict"
@@ -384,7 +394,7 @@ console.log(a) // 我直接给你报错！Error!
 
 - 不允许重复的参数值。严格模式在检测到函数的重复命名参数（例如，函数foo（var1，var2，var1）{}）时会引发错误，从而捕获代码中几乎可以肯定存在的错误，否则会浪费大量的时间追踪命名上的问题。
 
-  > 注意：它曾经是（ECMAScript 5 中）strict模式将禁止重复的属性名称（例如var object = {foo：“bar”，foo：“baz”}；）但是从ECMAScript 2015 开始，就不再有这种情况了。 
+  > 注意：它曾经是（ECMAScript 5 中）strict模式将禁止重复的属性名称（例如：`var object = {foo：“bar”，foo：“baz”}`；）但是从ECMAScript 2015 开始，就不再有这种情况了。 
 
 - 使 `eval()` 更安全。eval（）在严格模式和非严格模式下的行为方式有些不同。最重要的是，在严格模式下，在eval（）语句内部声明的变量和函数不会再包含范围中创建（它们是以非严格模式在包含范围中创建的，这也可能是问的常见来源）。
 
