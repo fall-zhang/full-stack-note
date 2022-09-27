@@ -54,3 +54,8 @@
 - [Nightwatch v2](https://v2.nightwatchjs.org/) 是一个基于 [Selenium WebDriver](https://www.npmjs.com/package/selenium-webdriver) 的端到端测试解决方案。它的浏览器品类支持范围是最广的。
 
 ## 使用
+
+| 文章名称 | 连接                                                       |
+| -------- | ---------------------------------------------------------- |
+| 官方文档 | https://cn.vuejs.org/guide/scaling-up/testing.html#recipes |
+
