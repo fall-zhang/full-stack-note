@@ -214,6 +214,7 @@ watch([()=>data1,()=>data2],()=>{
 当然，如果使用 ts 那么 `defineProps` 会有些变化
 
 ```ts
+// ts 中，不能通过泛型的方式设置默认值
 defineProps<{
   title?: string
   likes?: number
@@ -429,7 +430,7 @@ function nextTick(callback?:()=>void):Promise<void>
 
 ## ref 和 defineExpose
 
-将 `ref` 挂载到组件或者标签上，可以获取被绑定元素的变量，给父组件使用，父组件才可通过 `ref` API 拿到子组件暴露的数据
+将 `ref` 挂载到组件或者标签上，可以获取被绑定元素，提供给父组件使用
 
 - 在选项式 API 里，子组件的数据都是默认隐式暴露给父组件的，但在 `script-setup` 模式下，所有数据只是默认 `return` 给 `template` 使用，不会暴露到组件外，所以父组件是无法直接通过挂载 `ref` 变量获取子组件的数据。
 - 如果要调用子组件的数据，需要先在子组件中使用 `defineExpose` 暴露出来，才能够拿到。
@@ -480,9 +481,9 @@ function nextTick(callback?:()=>void):Promise<void>
 </script>
 ```
 
-## 路由
+## Router
 
-### useRoute和useRouter
+### useRoute 和 useRouter
 
 ```vue
 <script setup>
@@ -515,8 +516,6 @@ function nextTick(callback?:()=>void):Promise<void>
 ```
 
 ## store
-
-Vue3 中的 Vuex 不再提供辅助函数写法
 
 ```vue
 <script setup>
@@ -561,7 +560,7 @@ Vue3 中的 Vuex 不再提供辅助函数写法
 
 ```vue
 <template>
-  <span>Jerry</span>  
+	<span>Jerry</span>  
 </template>
 <script setup>
   import { reactive } from 'vue'
@@ -615,9 +614,9 @@ prototype.name = 'Jerry'
 </script>
 ```
 
-### 定义组件的name
+### 组件的 name
 
-用单独的`<script>`块来定义
+使用额外单独的 `<script>` 块来定义
 
 ```vue
 <script>
