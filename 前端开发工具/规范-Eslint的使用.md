@@ -63,7 +63,7 @@ module.exports = {
 {
   rules: {
     // vue
-    'vue/max-attributes-per-line': ['error', {
+    'vue/max-attributes-per-line': ['warn', {
       singleline: {
         max: 4
       },
