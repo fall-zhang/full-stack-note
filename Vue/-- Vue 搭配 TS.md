@@ -143,3 +143,21 @@ const openModal = () => {
 
 更改 JavaScript 和 TypeScript 的语言功能，在需要被 volar 接管的工作区禁用即可。
 
+### 配置文件
+
+手动配置 `tsconfig.json` 时，请必须保证以下选项设置为对应的值：
+
+```json
+{
+  compilerOptions:{
+    isolatedModules:true, // 应设为 true，Vite 使用 esbuild 来转译 TypeScript，并受限于单文件转译的限制。
+    // 使用选项式 API 时应设为 true，或者至少设置 compilerOptions.noImplicitThis = true，它是 strict 模式的一部分，设置为 true 才可以获得对组件选项中 this 的类型检查。否则 this 会被认为是 any。
+    strict:true, 
+    // 如果在构建工具中配置了路径解析别名，需要通过 compilerOptions.paths 为 TypeScript 再配置一遍。
+    paths:[
+      "@/*": ["src/*"], 
+    ]
+  }
+}
+```
+
