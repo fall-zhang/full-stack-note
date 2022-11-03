@@ -3,7 +3,7 @@ sidebar_position: 2
 ---
 
 > Create by **fall** on 2021-12-13
-> Recently revised in 2022-09-26
+> Recently revised in 2022-11-03
 
 Window 对象上的内容
 
@@ -142,12 +142,27 @@ document.write()
 
 ## console
 
+`console` 用于在控制台打印内容
+
 ```js
 console.time('test1');
 console.timeEnd('test1');
 //通过以上的方法，进行时间的计算
 console.log('log') // 打印日志
 console.error('one Error') // 打印错误
+```
+
+打印的其它用法
+
+```js
+const obj = {nana:'fall',fun:'foo'}
+// 以两个空格为缩进，输出对象
+console.log(JSON.stringify(obj,null,2))
+var a = "background: rgb(248, 177, 173);color: rgb(63, 172, 203)";
+console.log("%c Jazz.Computer ", a)
+console.log("%c 2015 ", a)
+console.log("%c Yotam Mann ", a)
+console.log("%c Sarah Rothberg ", a)
 ```
 
 ## 窗口控制
@@ -169,38 +184,38 @@ window.scrollTo(X,Y)
 
 ## URL
 
-URL:统一资源定位符
+URL：统一资源定位符
 
-> * 定位符的内容：`协议://主机名(域名):端口号/路径/?查询字符串#锚点`
-> * `protocol://hostname:port/pathname/?search#hash`
-> * 实例：`https://juejin.cn/post/6960262593265025031#heading-26`（端口号会自动隐藏）
->
-> location.protocol包括
->
-> - file:本地磁盘访问
-> - http:
-> - https:(证书认证协议)
->
-> location.hostname 通过IP找到全球范围内该主机所在的网络地址
->
-> location.port(端口号(默认隐藏))
->
-> > 当前电脑中使用的网络软件，随机分配一个编号 0-65535
-> > hostname:port  定位到当前使用网络的程序
-> > 浏览器默认端口号：8080
-> > http:80
-> > https:443
->
-> location.search 由问号拼接的部分直接提交到查询字符串中,给服务器提交查询字符串
->
-> > https://www.xxx.com/?value1=5&value2=10
-> > alert(location.search)
->
-> location.hash  锚点，通过锚点可以实现单页面跳转
->
-> 输出网址：
-> 	alert(location)	数据类型是对象
-> 	alert(location.href) 数据类型是string
+* 定位符的内容：`协议://主机名(域名):端口号/路径/?查询字符串#锚点`
+* `protocol://hostname:port/pathname/?search#hash`
+* 实例：`https://juejin.cn/post/6960262593265025031#heading-26`（端口号会自动隐藏）
+
+location.protocol包括
+
+- file:本地磁盘访问
+- http:
+- https:(证书认证协议)
+
+location.hostname 通过IP找到全球范围内该主机所在的网络地址
+
+location.port(端口号(默认隐藏))
+
+> 当前电脑中使用的网络软件，随机分配一个编号 0-65535
+> hostname:port  定位到当前使用网络的程序
+> 浏览器默认端口号：8080
+> http:80
+> https:443
+
+location.search 由问号拼接的部分直接提交到查询字符串中,给服务器提交查询字符串
+
+> https://www.xxx.com/?value1=5&value2=10
+> alert(location.search)
+
+location.hash  锚点，通过锚点可以实现单页面跳转
+
+输出网址：
+	alert(location)	数据类型是对象
+	alert(location.href) 数据类型是string
 
 ## 焦点控制
 
