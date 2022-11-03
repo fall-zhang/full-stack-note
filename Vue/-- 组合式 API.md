@@ -1,7 +1,13 @@
 >Create by **fall** on 2021-10-26
->Recently revised in 2022-08-08
+>Recently revised in 2022-11-01
 
-注意：setup 是在 beforeCreated 前执行，如果阻塞，会导致组件渲染不出来，同 beforeCreated。不用担心某个方法会在 mounted 之后执行（异步除外）。
+# 组合式API
+
+通过更改 `<script>` 为 `<script setup>` 或者是使用 `setup()` 方法，通过 `return`向 `vue` 暴露变量的方式，统称为 **组合式 API**
+
+> 注意：setup 是在 beforeCreated 前执行，如果阻塞，会导致组件渲染不出来，同 beforeCreated。不用担心某个方法会在 mounted 之后执行（异步除外）。
+
+
 
 ## 文件结构
 
@@ -25,7 +31,7 @@
 
 ```vue
 <script setup>
-  // 在 script setup里面声明的所有数据都是可以在 template 中使用的
+  // 在 script setup里面声明的所有数据都是可以直接在 template 中使用的
   import { reactive, ref } from 'vue'
   // ref声明响应式数据，用于声明基本数据类型
   const name = ref('Jerry')
