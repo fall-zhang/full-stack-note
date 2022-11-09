@@ -81,6 +81,9 @@ npm install gulp@3.9.1 --save-dev # 的简写:npm i gulp@3.9.1 -S-D
 | `npm view <package-name> versions` | 查看该插件的所有版本                                         |
 | `npm publish`                      | 发布模块                                                     |
 | `npm config get cache`             | 查看 缓存所在位置                                            |
+| npm cache clean                    | npm cache clean                                              |
+
+
 
 ### 发布包
 
