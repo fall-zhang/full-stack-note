@@ -190,6 +190,8 @@ URL：统一资源定位符
 * `protocol://hostname:port/pathname/?search#hash`
 * 实例：`https://juejin.cn/post/6960262593265025031#heading-26`（端口号会自动隐藏）
 
+## Location
+
 location.protocol包括
 
 - file:本地磁盘访问
