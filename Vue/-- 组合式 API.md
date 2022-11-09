@@ -1,5 +1,5 @@
 >Create by **fall** on 2021-10-26
->Recently revised in 2022-11-01
+>Recently revised in 2022-11-05
 
 # 组合式API
 
@@ -631,6 +631,12 @@ prototype.name = 'Jerry'
   }
 </script>
 ```
+
+唯一一个需要额外 `<script>` 书写的属性
+
+`inheritAttrs`：是否父组件穿透进来的内容。完全控制传进来的 style、class、等内容
+
+
 
 ## 参考文章
 
