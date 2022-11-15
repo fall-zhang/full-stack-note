@@ -189,19 +189,19 @@ nvm（Windows）安装：https://github.com/coreybutler/nvm-windows
 
 ```bash
 # 安装最新版本的 node
-nvm install node 
+nvm install node
 nvm install latest
 # 当前所拥有的 node 的版本
 nvm list
 nvm ls
 # 切换到淘宝镜像
 nvm use taobao
-# 全局安装 nvm 命令（使用 cnpm 安装 nvm）
+# 全局安装 nvm 命令
 npm install -g nvm
 # 当前nvm工具的版本
 nvm -v
-# 使用 8.4.0 版本的 node
-nvm use 8.4.0
+# 使用 12.22.12 版本的 node
+nvm use 12.22.12
 # 卸载该版本的 node.js
 nvm uninstall 8.4.0
 ```
