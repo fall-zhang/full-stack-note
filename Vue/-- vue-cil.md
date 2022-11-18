@@ -116,3 +116,49 @@ module.exports ={
 }
 ```
 
+### 完整配置
+
+```js
+const { resolve } = require("path")
+const proxyURL = "http://localhost:3306/"
+module.exports = {
+  lintOnSave: false,
+  productionSourceMap: true,
+  configureWebpack: {
+    name: "oad_gepd",
+    devtool: "source-map",
+    resolve: {
+      alias: {
+        "@": resolve("src"),
+        "@C": resolve("src/components"),
+        "@U": resolve("src/utils"),
+        "@V": resolve("src/views"),
+        "@A": resolve("src/assets")
+      }
+    }
+  },
+  chainWebpack: config => {
+    config
+      .plugin("html")
+      .tap(args => {
+        args[0].title = "调度信息编辑器"
+        return args
+      })
+  },
+  devServer: {
+    open: true,
+    host: "127.0.0.1",
+    port: 5714,
+    proxy: { // 代理，将所有
+      "/api": {
+        target: proxyURL,
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api": "/"
+        }
+      }
+    }
+  }
+}
+```
+

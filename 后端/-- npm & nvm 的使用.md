@@ -9,9 +9,7 @@ npm 的功能：
 - 允许用户从 NPM 服务器下载并安装别人编写的**命令行程序**到本地使用（下载命令程序）。
 - 允许用户将自己编写的包或命令行程序上传到 NPM 服务器供别人使用（上传包和命令程序）。
 
-### 下载
-
-npm 在 Node V10 之后就自带了，不需要额外下载。
+在 Node V10 之后自带 npm，不需要额外下载。
 
 LTS 版本：Long Term Support（[长期支持版本](https://nodejs.org/en/about/releases/)）
 
@@ -29,14 +27,6 @@ LTS 版本：Long Term Support（[长期支持版本](https://nodejs.org/en/abou
 > 安装完成之后就可以通过 cnpm 代替 npm 的所有命令（有些插件使用 cnpm 安装，可能会出现问题）
 >
 > `npm -v` 用于检测 npm 是否安装成功
-
-### 版本控制
-
-**语义化版本控制**：简单来讲所有版本都有三个数字
-
-- 第一个数字是主板本，进行不兼容的 API 更改时，升级主板本。
-- 第二个数字是次版本，当你做了向下兼容的功能性新增，升级次板本。
-- 第三个数字是补丁版本，向后兼容的缺陷修复时，升级补丁版本
 
 ### 安装命令
 
@@ -64,30 +54,9 @@ npm install gulp@3.9.1 --save-dev # 的简写:npm i gulp@3.9.1 -S-D
 
 `npm uninstall <package-name> -g` 全局模块的卸载必须带上 -g
 
-### 其它命令
+### 包的发布
 
-查找命令：`npm search react`
-
-| 命令（常用命令）                   | 功能                                                         |
-| ---------------------------------- | ------------------------------------------------------------ |
-| `npm list`                         | 列出当前工作区已经安装模块                                   |
-| `npm list -g`                      | 查看全局安装的所有模块，只查找主要模块<br />`npm list -g --depth=0` |
-| `npm root -g`                      | 查看全局模块的安装路径<br />如果使用 nvm 管理工具，位置可能会不同 |
-| `npm init`                         | 创建 JSON 文件，初始化本地开发环境                           |
-| `npm update`                       | 升级当前目录下的项目的所有模块                               |
-| `npm search <key-word>`            | 按照关键字，在网络上搜索模块                                 |
-| `npm view <package-name>`          | 在网络中查看该插件的详情                                     |
-| `npm view <package-name> version`  | 查看该软件的最新版本                                         |
-| `npm view <package-name> versions` | 查看该插件的所有版本                                         |
-| `npm publish`                      | 发布模块                                                     |
-| `npm config get cache`             | 查看 缓存所在位置                                            |
-| npm cache clean                    | npm cache clean                                              |
-
-
-
-### 发布包
-
-首先登陆 `npm adduser`，如果没有登陆，请上官网进行注册。
+首先登陆 `npm adduser`，或者 `npm login`，如果没有账号，请上官网进行注册。
 
 登陆完成后：`npm publish .` 
 
@@ -103,14 +72,39 @@ npm install gulp@3.9.1 --save-dev # 的简写:npm i gulp@3.9.1 -S-D
 
 `npm owner add <user-name> <package-name>` 删除所有者
 
-一个包是否是足够优秀的包，会通过一下方式进行权重排名
+> 一个包是否是足够优秀的包，会通过以下方式计算权重
+>
+> - 具备良好的测试
+> - 良好的文档（README、API）
+> - 良好的测试覆盖率
+> - 良好的编码规范
 
-- 具备良好的测试
-- 良好的文档（README、API）
-- 良好的测试覆盖率
-- 良好的编码规范
+### 配置命令
 
-## NPX工具
+`npm config get cache` 查看 缓存所在位置
+
+`npm config get registry` 查看当前所使用的镜像
+
+`npm config set registry https://registry.npm.taobao.org`  设置当前的镜像
+
+### 其它命令
+
+查找命令：`npm search react`
+
+| 命令（常用命令）                   | 功能                                                         |
+| ---------------------------------- | ------------------------------------------------------------ |
+| `npm list`                         | 当前工作区安装的模块，查找主要模块                           |
+| `npm list -g --depth=0`            | 查看全局安装的主要模块                                       |
+| `npm root -g`                      | 查看全局模块的安装路径<br />如果使用 nvm 管理工具，位置可能会不同 |
+| `npm init`                         | 创建 JSON 文件，初始化本地开发环境                           |
+| `npm update`                       | 升级当前目录下的项目的所有模块                               |
+| `npm search <key-word>`            | 按照关键字，在网络上搜索模块                                 |
+| `npm view <package-name>`          | 在网络中查看该插件的详情                                     |
+| `npm view <package-name> version`  | 查看该软件的最新版本                                         |
+| `npm view <package-name> versions` | 查看该插件的所有版本                                         |
+| `npm cache clean`                  | npm cache clean                                              |
+
+### npx
 
 npx 可以自动寻找当前文件夹（node_modules）文件夹下的可执行插件，正确引用并且执行。并且如果当前文件夹下没有下载可执行插件，那就会在网络中寻找后，下载并且运行，在运行成功后删除，利用这一特性，可以实现避免全局模块的安装。
 
@@ -171,11 +165,9 @@ npx 可以指定直接执行 git 上面的代码，前提是远程代码必须�
 >
 > 现在 PNPM 也作为包管理工具进行使用
 
-## NVM命令的使用
+## nvm 的使用
 
-### 什么是NVM
-
-nvm 是用来对 node 进行**版本控制的工具**
+nvm 是 node 版本控制工具
 
 > 注：windows 上运行的 nvm 和 linux & MacOS 上的 nvm 工具不是一个项目，它们是两个团队做出来的东西。
 

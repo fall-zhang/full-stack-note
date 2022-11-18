@@ -128,13 +128,13 @@ oDiv.previousElemtntSibling
 >
 > 文本节点：包括元素之间的空格，或者是回车在内的内容
 
-### 节点操作
+### 节点CRUD
 
-> `createElement(nodeName)` 创建节点
->
-> - 格式：document.createElement()
-> - 参数：标签名
-> - 返回值：创建好的节点
+`createElement(nodeName)` 创建节点
+
+- 格式：`document.createElement()`
+- 参数：标签名
+- 返回值：创建好的节点
 
 > `appendChild()` 在选定的内容里插入(添加)节点
 >
@@ -157,10 +157,10 @@ oDiv.previousElemtntSibling
 > - 格式: box1.parentNode.insertBefore(box2,box1 )
 > - 将box2插入到box1的前面
 
-> `removeChild()` 删除结点
->
-> - 格式： box.parentNode.remove()
-> - 作用：将节点删除
+`removeChild()` 删除结点
+
+- 格式： box.parentNode.remove()
+- 作用：将节点删除
 
 ```javascript
 window.onload = function(){
@@ -176,7 +176,7 @@ window.onload = function(){
 >
 > 文档碎片操作时，通过一次性将文档插入到页面中的操作，进而节省计算时间
 
-### 添加一个节点
+添加一个节点
 
 ```js
 const dom = document.createElement('h1')
