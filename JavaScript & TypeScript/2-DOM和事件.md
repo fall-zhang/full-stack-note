@@ -9,8 +9,6 @@ sidebar_position: 12
 
 文档对象模型** document**
 
-### 
-
 document是从`<html>`到`</html>`结束的部分，也是文档展示的部分
 
 节点类型
@@ -355,7 +353,7 @@ oDiv.offsetLeft;
 - windows 	    按下开始菜单键, 为true
 - macos系统     按下command键，为true
 
-```
+```js
 document.onclick = function(ev){
 	if(ev.ctrlKey){
 		alert('ctrlyes ')
