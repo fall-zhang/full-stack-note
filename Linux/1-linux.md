@@ -1,21 +1,15 @@
 > Create by **fall** on 2021-06-08
-> Recently revised in 2022-05-15
+> Recently revised in 2022-12-04
 
 ## linux
 
 linux 操作系统包括
 
-### redhat
+- redhat（开源、收费）
+- ubuntu（以桌面应用为主的 linux 操作系统）
+- CentOS（使用 redhat 企业级中免费的开源代码，
 
-开源、收费
-
-### ubuntu
-
-以桌面应用为主的linux操作系统
-
-### CentOS
-
-半企业级 linux，使用红帽企业级中免费的开源代码，去掉了注册商标以及程序包中注册商标以及 binary 方面的变化。对于想白嫖红帽企业级 linux 来说，centOS 值得一试
+半企业级 linux，去掉了注册商标以及程序包中注册商标以及 binary 方面的变化。对于想白嫖红帽企业级 linux 来说，centOS 值得一试
 
 ## Linux 链接
 
