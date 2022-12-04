@@ -1,7 +1,7 @@
 > Create by **fall** on 2021-06-08
 > Recently revised in 2022-12-04
 
-## linux
+## Linux 系统
 
 linux 操作系统包括
 
@@ -11,7 +11,7 @@ linux 操作系统包括
 
 半企业级 linux，去掉了注册商标以及程序包中注册商标以及 binary 方面的变化。对于想白嫖红帽企业级 linux 来说，centOS 值得一试
 
-## Linux 链接
+## 文件系统
 
 ### 硬链接
 
