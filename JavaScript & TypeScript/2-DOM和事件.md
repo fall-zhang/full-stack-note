@@ -3,100 +3,114 @@ sidebar_position: 12
 ---
 
 > Create by **fall** on 2020-05-12
-> Recently revised in 2022-09-26
+> Recently revised in 2022-12-09
 
 ## DOM
 
-文档对象模型** document**
+文档对象模型**Document Object Model**
 
-document是从`<html>`到`</html>`结束的部分，也是文档展示的部分
+浏览器中，`document` 指的是从 `<html>` 到 `</html>` 结束的部分，也是文档展示的部分
 
-节点类型
-
-- 元素节点：`<div></div>`
-- 文本节点：`okokyes` 等文本内容
-- 属性节点： `id="box1"`
-
-```js
-var ss = document.getElementById(id)
-// 功能: 通过id获取符合条件的元素，(界面上所有 id 必须都是唯一的)
-// 返回值: 符合条件的一个节点
-alert(ss.id)//返回id
-alert(ss.title)//返回title
-alert(ss.className)//返回类名
-alert(ss.style.width)//返回样式中的高
-
-ss.id = "ssu"// 设置id
-ss.title = 'soo' // 设置标题
-ss.className = 'box4'// 设置类名
-ss.style.width = '44px'// 给CSS对象中的高重新赋值
-// style 中的类名大多数和CSS中的样式相同，部分存在"-",将"-"删除，并将"-"后的首字母大写即可
-// 注：style只能访问样式和修改行间样式，即body内，访问不到style属性中的样式
-
-node.getElementsByTagName()// 获取当前节点内部的节点
-node.getElementsByClassName()// IE8以下不兼容
-document.getElementByName()// 只能使用document进行获取,
-// getElementByName需要将它用在表单元素上，因为name属性在其他地方不生效
-
-var tag = document.getElementByTagName("li")// 查找document下所有li节点
-tag[0].style.width = "50px" // 修改第一个查找到的属性的值
-
-var after = document.getElementById('id')
-var aftertag = after.getElementByTagName('li')// 获取id子节点中的的li
-
-document.querySeletor()
-// 返回值：找到符合条件的第一个元素节点
-// 参数 : 参数的写法和style选择器的写法相同
-document.querSeletorAll()
-// 返回值：找到所有符合条件的元素节点
-// 确保兼容 IE8 的 node.getElementsByClassName()
-function elementsByClassName(node,classStr){
-    var nodes = node.getElementsByTagName("*");
-    var arry =[];
-    for (var i = 0 ;i<nodes.length;i++){
-        if(nodes[i].className === classStr){
-            arry.push(nodes[i])
-        }
-    }
-    return arry;
-}
+```html
+// getElementByName 需要将它用在表单元素上，因为 name 属性在其他地方不生效
+<div id="foo" name="bar" class="cheer">
+  it's fall
+</div>
 ```
 
+比如上方的内容中，节点类型：
 
-### 获取有效样式的方法
+- 元素节点：`<div></div>`
+- 文本节点：`it's fall` 等文本内容
+- 属性节点：`id="box1"`
+
+### 获取 DOM
+
+- 通过 id 获取对象：`document.getElementById()`
+- 通过 class，类名获取对象：`document.getElementsByClass()`
+- 通过 tag，节点类型获取对象：`document.getElementsByTagName()`
+- 通过 name，获取节点属性：`document.getElementByName()`
+- 通过选择器，获取第一个选择到的对象：`document.querySelector()`
+- 通过选择器，选择对象：`document.querySelectorAll()`
+
+通过 id 和 `querySelector` 获得的是单个对象，其它的获取方式都是获取的列表
+
+```js
+// 获取 id 为 foo 的节点
+var domFoo = document.getElementById("foo")
+// 获取 document，或者是其它节点内部的节点
+var divList = document.getElementsByTagName("div")
+// 获取 document，或者是其它节点内部的节点
+var divCherrList = document.getElementsByClassName("cheer")
+// 只能使用 document 进行获取
+var nameBar = document.getElementByName("")
+
+// 找到符合条件的第一个元素节点
+var query = document.querySeletor("#foo.bar")
+// 找到符合条件的所有元素节点
+var queryList = document.querSeletorAll(".bar")
+
+// 分别输出 id、类名、dom 设置的宽度
+console.log(domFoo.id, domFoo.className, domFoo.style.width)
+domFoo.id = "ssu"// 设置 id
+domFoo.className = 'box4'// 设置
+domFoo.style.width = '44px'// 给 CSS 对象中的高重新赋值
+```
+
+### style 样式
+
+> style 只能访问和修改行内样式，即 body 内，访问不到 style 属性中的样式。如果 css 中使用 `!important`，会导致该样式无法修改。
+
+getComputedStyle
 
 ```javascript
-alert(oDiv.style.width);// 只能获取行内(内联)样式
-alert(oDiv.currentStyle['height'])//  IE兼容
-alert(getComputedStyle(oDiv)["height"]);//火狐，谷歌浏览器
+// 获取 dom
+const oDiv = document.querySelector("#foo")
+console.log(oDiv.style)
+// style 中的名称，是 css 中，将 - 删除，并将 - 后的首字母大写即可
+// css 中的 background-color -> backgroundColor
+getComputedStyle(oDiv)["height"]
 //将两个方法通过函数封装起来就可以实现兼容所有浏览器
 function getStyle(node,cssStyle){
 	return node.currentStyle ? node.currentStyle['height'] : getComputedStyle(oDiv["height"])
 }
 ```
 
-### attribute改变值
+### attribute 属性
+
+- `getAttribute` 获取元素节点指定属性的值
+- `setAttribute` 创建或者改变元素节点的属性
+- `removeAttribute` 移除属性
 
 ```javascript
-//通过attribute可以改变许多值
-//访问自定义名字
-//空格，回车，换行，缩进，虽然看不见，但都是字符
+// 通过 attribute 可以改变许多值
+// 访问自定义名字
+// 空格，回车，换行，缩进，虽然看不见，但都是字符
 window.onload = function(){
-    var oDiv = document.getElementById("id")
-    oDiv.attributes["title"]//可以直接输入结果
-    alert(oDiv.getAttribute("id"))//输出id属性的值
-    oDiv.setAttribute("class",'box1')//设置属性名
-    oDiv.removeAttribute("title")//删除属性，以及属性名
-    
-    alert(oDiv.innerHTML())//将父标签内部添加元素，并且元素可以生效
-    alert(oDiv.innerText())//将父标签内部添加text，不会在页面生效
-    oDiv.outerHTML = "<h1>ssss</h1>"//包括父标签一起修改
-    alert(oDiv.childNodes[0].nodeValue)
-	alert(oDiv.childNOdes[0].nodeName)
+  var oDiv = document.getElementById("id")
+  oDiv.attributes["title"]//可以直接输入结果
+  alert(oDiv.getAttribute("id"))//输出id属性的值
+  oDiv.setAttribute("class",'box1')//设置属性名
+  oDiv.removeAttribute("title")//删除属性，以及属性名
+
+  alert(oDiv.innerHTML())//将父标签内部添加元素，并且元素可以生效
+  alert(oDiv.innerText())//将父标签内部添加text，不会在页面生效
+  oDiv.outerHTML = "<h1>ssss</h1>"//包括父标签一起修改
+  alert(oDiv.childNodes[0].nodeValue)
+  alert(oDiv.childNOdes[0].nodeName)
 }
 ```
 
-### 根据当前节点查找
+### 根据节点查找
+
+**节点的指针**
+
+- `firstChild` 元素子节点的第一个
+- `lastChild` 元素子节点的最后一个
+- `childNodes` 获取元素子节点列表
+- `previousSibling` 当前节点的前一个节点
+- `nextSibling` 当前节点的后面一个节点
+- `parentNode` 当前节点的父节点
 
 ```js
 oDiv.childNodes.length// 返回节点个数，包括文本节点
@@ -128,23 +142,45 @@ oDiv.previousElemtntSibling
 
 ### 节点CRUD
 
+**插入节点**
+
+- `appendChild` 向子节点的最后添加节点
+- `insertBefore` 当前节点前面插入节点
+
+**替换节点**
+
+- `replaceChild` 用前者替换后者节点
+
+**复制节点**
+
+- `cloneNode` 创建节点的副本
+
+**删除节点**
+
+- `removeChild` 删除指定节点
+
+- `createElement` 创建元素节点
+- `createAttribute` 创建属性节点
+- `createTextNode` 创建文本节点
+
 `createElement(nodeName)` 创建节点
 
 - 格式：`document.createElement()`
 - 参数：标签名
 - 返回值：创建好的节点
 
-> `appendChild()` 在选定的内容里插入(添加)节点
->
-> - 格式：document.appendChild()
-> - 格式：document.cloneNode()// 只克隆节点
-> - document.cloneeNode(true)// 克隆时包括节点和里面的内容
-> - 返回值: 克隆出来的新结点
+`appendChild()` 在选定的内容里插入(添加)节点
 
-> - `cloneNode()` 克隆添加的当前节点
->
-> - 返回值，克隆后的节点
-> - 用于复制节点
+- 格式：document.appendChild()
+- 格式：document.cloneNode()// 只克隆节点
+- document.cloneeNode(true)// 克隆时包括节点和里面的内容
+- 返回值: 克隆出来的新结点
+
+`cloneNode()` 克隆添加的当前节点
+
+返回值，克隆后的节点
+
+用于复制节点
 
 > `replaceChild()` 替换节点
 >     	格式: box1.parentNode.replaceChild(box2,box1)
@@ -172,7 +208,7 @@ window.onload = function(){
 
 > **注意事项：**
 >
-> 文档碎片操作时，通过一次性将文档插入到页面中的操作，进而节省计算时间
+> 文档碎片操作（不停地执行操作）时，通过一次性将文档插入到页面中的操作，进而节省 DOM 渲染时间。
 
 添加一个节点
 
@@ -183,58 +219,7 @@ const node = document.querySelector('.reactTitle')
 node.appendChild(dom)
 ```
 
-### DOM上的方法
-
-#### 获取节点
-
-**获取节点**
-
-- `document.getElementById()` 通过 `id` 获取元素
-- `document.getElementsByName()` 通过 `name` 获取元素节点
-- `document.getElementsByTagName()` 通过 元素标签 获取节点
-- `document.querySelector()` 通过元素选择器获取元素
-
-**节点的指针**
-
-- `firstChild` 元素子节点的第一个
-- `lastChild` 元素子节点的最后一个
-- `childNodes` 获取元素子节点列表
-- `previousSibling` 当前节点的前一个节点
-- `nextSibling` 当前节点的后面一个节点
-- `parentNode` 当前节点的父节点
-
-#### 节点的操作
-
-**创建节点**
-
-- `createElement` 创建元素节点
-- `createAttribute` 创建属性节点
-- `createTextNode` 创建文本节点
-
-**插入节点**
-
-- `appendChild` 向子节点的最后添加节点
-- `insertBefore` 当前节点前面插入节点
-
-**替换节点**
-
-- `replaceChild` 用前者替换后者节点
-
-**复制节点**
-
-- `cloneNode` 创建节点的副本
-
-**删除节点**
-
-- `removeChild` 删除指定节点
-
-#### 属性操作
-
-- `getAttribute` 获取元素节点指定属性的值
-- `setAttribute` 创建或者改变元素节点的属性
-- `removeAttribute` 移除属性
-
-**文本操作**
+### 文本操作
 
 - `insertData(place,string)` 从 place 位置插入 string
 - `appendData` 把 string 插入到文本末尾处
@@ -242,8 +227,6 @@ node.appendChild(dom)
 - `replaceData(offset,count,string)` 从 offset 开始，用 string 替换 count 个字符
 - `splitData(offset)` 从 offset 开始，将文本分为两个及诶点
 - `substring(offset,count)` 返回由 offset 开始的 count 个节点
-
-
 
 ### 容器宽度的获取
 
@@ -267,9 +250,9 @@ var width = document.documentElement.clientWidth;
 var width = document.body.clientWidth;
 ```
 
-## 绑定事件
+## 事件
 
-### 事件类型及种类
+### 鼠标事件
 
 **鼠标事件**
 
@@ -284,39 +267,6 @@ var width = document.body.clientWidth;
 | `mousedown`  | 鼠标按下                                            |
 | `mouseenter` | 鼠标移入（经过子节点不会重复触发）                  |
 | `mouseleave` | 鼠标移出（经过子节点不会重复触发）                  |
-
-**键盘事件**
-
-|||
-
-- `keypress`	 只有按字符键和方向键有效
-- `keydown`    键盘按下时触发，并且长按功能键不会连续触发
-- `keyup`    键盘抬起来时触发
-
-- **HTML事件**
-  - **window事件**
-    - `load`     当前页面加载完后触发
-    - `onload`  当前页面解构的时候   仅IE浏览器
-    - `scroll`    页面滚动的时候触发
-    - `resize`     窗口大小发生变化触发
-  - **form表单事件**
-    - `blur`    失去焦点时触发
-    - `focus`   获取焦点触发
-    - `select`  输入框内文本选中时触发
-    - `change`   当对输入框内容进行修改，并且退出编辑时时触发
-
-```js
-oDiv= document.getElementById('box')
-oDiv.onchange = function(){
-	this.style.background = 'cyan' 
-}
-```
-
-- 必须添加在form元素上
-  - submit	点击submit上的按钮才会触发
-  - reset       点击reset按钮才会触发	
-
-### 鼠标事件对象的属性
 
 - button
   - 返回值 0,1,2 ，分别为鼠标左键滚轮和右键的点击
@@ -344,9 +294,19 @@ var oDiv = document.getElementById('box');
 oDiv.offsetLeft;
 ```
 
-### 键盘事件对象属性
+### 键盘事件
 
-- `shiftKey`     按下shift键，为true
+**键盘事件**
+
+| 事件名称   | 事件效果                                   |
+| ---------- | ------------------------------------------ |
+| `keypress` | 只有按字符键和方向键有效                   |
+| `keydown`  | 键盘按下时触发，并且长按功能键不会连续触发 |
+| `keyup`    | 键盘抬起来时触发                           |
+
+
+
+- `shiftKey`：按下 shift 键，为 true
 - `altKey`
 - `ctrlKey `  
 - `metaKey`     
@@ -377,6 +337,34 @@ window.onkeydown = function(ev){
 }
 ```
 
+### window事件
+
+- `load`     当前页面加载完后触发
+- `onload`  当前页面解构的时候   仅IE浏览器
+- `scroll`    页面滚动的时候触发
+- `resize`     窗口大小发生变化触发
+
+### 表单事件
+
+**form表单事件**
+
+- `blur` 失去焦点时触发
+- `focus`   获取焦点触发
+- `select`  输入框内文本选中时触发
+- `change`   当对输入框内容进行修改，并且退出编辑时时触发
+
+```js
+oDiv= document.getElementById('box')
+oDiv.onchange = function(){
+	this.style.background = 'cyan' 
+}
+```
+
+必须添加在 form 元素上
+
+- submit	点击 submit 上的按钮才会触发
+- reset       点击 reset 按钮才会触发
+
 ### 触发对象
 
 触发对象是指 target 属性，只存在事件对象中，并且指向触发该事件的子容器
@@ -404,9 +392,9 @@ oli.onclick = function(ev){
 
 
 
-## 浏览器事件
+### 浏览器事件
 
-### 右键菜单
+**右键菜单**
 
 取消浏览器默认右键菜单
 
@@ -430,17 +418,7 @@ function preDef(ev){
 }
 ```
 
-### 浏览器拖拽行为
-
-自制七巧板？？？？ 配合 Svg
-
-三个事件的应用
-
-- mousedown      点击时计算位置
-- mousemove      记录移动距离
-- mouseup          停止移动
-
-## 事件委托
+### 事件委托
 
 **应用场景**
 
@@ -470,12 +448,12 @@ window.onload = function(){
 }
 ```
 
-## 事件监听器
+### 事件监听器
 
 `addEventListener()`
 
-- 格式 ： `node.addEventListener('click')`
-- 参数:  
+- 格式： `node.addEventListener('click')`
+- 参数：
   - 参数一：事件类型
   - 参数二：绑定函数
   - 参数三：布尔值
@@ -524,27 +502,27 @@ function removeEvent(node,evenType,funcName){
 }
 ```
 
-## JS动画
+## JS 动画
 
 动画必须包含
 
 - 有开始，有结束
-- 重复点击按钮速度加快
+- 防止重复触发事件叠加
 
 解决办法
 
 - 运动必须保证每次设置一个定时器，必须关闭上一个定时器
 - if & else 将运动和静止分隔开
 
-### 回调函数
+回调函数
 
 将一个函数作为实参传入后，使用该实参的过程称之为回调函数
 
 在 C 语言，C++、里面称之为函数指针
 
-### 函数防抖和节流
+### 防抖和节流
 
-函数防抖（debounce），指的是，如果一定时间内，触发了 20 次的事件，等待事件一定时间内都不触发，再给出最终结果会按照最终结果执行。
+函数防抖（debounce），指的是，如果事件触发的频率小于 100ms，不去触发事件，如果大于 100ms，间隔 100ms 后执行，再给出最终结果会按照最终结果执行。
 
-函数节流（throttle），指的是如果同一个事件，一秒内触发100次，持续十秒，全部执行会造成很大的资源浪费，所以，如果一直在触发事件，在执行事件时，一秒执行一次。
+函数节流（throttle），指的是如果同一个事件，一秒内触发 100 次，持续十秒，全部执行会造成很大的资源浪费，所以，如果一直在触发事件，在执行事件时，每100ms 秒执行一次。
 
