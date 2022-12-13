@@ -45,7 +45,7 @@ axios.post('/data',params).then(res=>{
 
 ```js
 axios.put('/data',{
-  id:10010
+  id:10010,
   data:"请不要回应"
 })
 ```
@@ -73,7 +73,7 @@ axios.put('/data',{
 ```js
 axios.defaults.timeout = 5000 // 响应超时时间
 axios.defaults.baseURL = 'http://localhost:3000' // 默认基准地址
-axios.defaults.headers['mytoken']= 'adacocizuzxoui322ucuzcoiu' // 设置响应头
+axios.defaults.headers['mytoken'] = 'adacocizuzxoui322ucuzcoiu' // 设置响应头
 ```
 
 ### axios拦截器
