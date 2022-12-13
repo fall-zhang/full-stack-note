@@ -99,7 +99,13 @@ import 'index.module.less'
 
 ## Tailwind
 
+## 3d
 
+经典回顾：**如何用 React Three Fiber 构建令人惊叹的 3D 场景** - 如果你想用 React 在浏览器中构建 3D 可视化，本文是一篇很好的入门介绍。(这是一年前的文章了，但是现在再看仍然很酷)。
+
+**长按识别二维码查看原文**
+
+https://varun.ca/modular-webgl/
 
 ## 参考文章
 
