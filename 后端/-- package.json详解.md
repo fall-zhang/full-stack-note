@@ -1,7 +1,7 @@
 > Create by **fall** on ——
-> Recently revised in 12/08/2022
+> Recently revised in 12/18/2022
 
-## package.json
+## 配置选项
 
 `package.json` 是一个项目清单，可以做很多互不相关的事情
 
@@ -27,7 +27,7 @@
 >
 > `npm init -y` 或者 `npm init -yes` 快速创建
 
-### 属性值含义
+### 基础属性
 
 所有属性都可以通过 npm 或者其它工具使用
 
@@ -38,7 +38,6 @@
 | name（必填           | 设置应用程序 / 软件包的名称                                  |
 | version（必填        | 表明当前的版本                                               |
 | private              | 私有，防止应用程序 / 软件包被意外发布到 npm 公共仓库         |
-| main                 | 设置应用程序需的入口点，也就是默认导入的时候，是哪个文件     |
 | scripts              | 定义了一组可以运行的 node 脚本                               |
 | description          | 应用程序 / 软件包的简短描述                                  |
 | dependencies         | 设置了作为依赖安装的 npm 安装包列表                          |
@@ -46,15 +45,12 @@
 | peerDependencies     | 于表示与另一个包的依赖与兼容性关系来警示使用者。             |
 | optionalDependencies | 可选依赖，安装失败也不会报错，比如控制台高亮的 `chalk`       |
 | type                 | type 为 module 可以表明当前使用 `import` 的方式引入包，`node>16` |
-|                      |                                                              |
-|                      |                                                              |
 
 ```json
 {
   "name": "fall-template",
   "version": "0.0.6",
   "private": true,
-  "main":"src/main.js",
   "scripts": {
     "dev": "vite",
   },
@@ -69,16 +65,7 @@
     "react-dom": ">=18.1.0"
   },
   "optionalDependencies": {
-    "react-dom": ">=18.1.0"
-  },
-  "author": {
-    "name": "Fall Zhang",
-    "email": "a90172451@gmail.com",
-    "url": "https://github.com/fall-zhang"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Fall-zhang/vite-vue3-TS-lint"
+    "chalk": "^5.2.0"
   }
 }
 ```
@@ -93,13 +80,15 @@
 // script 标签通常可以添加前缀和后缀来执行一些任务
 {
   "script":{
-    "prepublish":"npm run build", 
+    "prepublish":"npm test", 
     "postpublish":"git push"
   }
 }
 ```
 
 ### config
+
+**config**
 
 ```js
 "config": {
@@ -109,15 +98,100 @@
 console.log(process.env.npm_package_config_port)
 ```
 
+publishConfig，模块发布时生效，用于设置发布时一些配置项的集合
+
+如果只想让模块发布到特定 npm 仓库，就可以这样来配置：
+
 ```json
 {
+  "private": true,
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "tag": "1.1.0",
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
 ```
 
-### 系统环境配置
+### 文件目录
+
+**main**
+
+应用程序需的入口点，即引入的时候，默认引入的就是该文件
+
+```json
+{
+  "main":"src/main.js",
+}
+```
+
+**files**
+
+files 配置是一个数组，用来描述当把 npm 包作为依赖包安装时需要说明的文件列表。当 npm 包发布时，files 指定的文件会被推送到 npm 服务器中，如果指定的是文件夹，那么该文件夹下面所有的文件都会被提交。
+
+```json
+{
+  "files": [
+    "LICENSE",
+    "Readme.md",
+    "index.js",
+    "lib/"
+  ]
+}
+```
+
+**sideEffects**
+
+表示副作用，在 tree-shaking 优化时，css 文件只引入了，没有使用，通过 sideEffects 标明则不会被移除
+
+Ant Design 在 package.json 里设置了如下的 sideEffects，来告知 webpack，这些文件具有副作用，引入后不能被删除。
+
+```JSON
+"sideEffects": [
+  "dist/*",
+  "es/**/style/*",
+  "lib/**/style/*",
+  "*.less"
+]
+```
+
+**bin** 
+
+字段用来指定各个内部命令对应的可执行文件的位置
+
+```typescript
+"bin": {
+  "someTool": "./bin/someTool.js"
+}
+```
+
+**directories**
+
+用来规范项目的目录。node.js 模块是基于 CommonJS 模块化规范实现的，需要严格遵循 CommonJS 规范。模块目录下除了必须包含包项目描述文件 package.json 以外，还需要包含以下目录：
+
+```json
+{
+  "directories": {
+    "bin": "./bin", // 存放可执行二进制文件的目录
+    "lib": "./lib", // 存放js代码的目录
+    "doc": "./doc", // 存放文档的目录
+    "test": "./test", // 存放单元测试用例代码的目录
+    "man": "./man"
+  }
+}
+```
+
+**typings**
+
+字段用来指定 TypeScript 的入口文件：
+
+```json
+{
+  "typings": "types/index.d.ts"
+}
+```
+
+### 系统及环境配置
 
 | 值          | 作用                                            |
 | ----------- | ----------------------------------------------- |
@@ -125,9 +199,6 @@ console.log(process.env.npm_package_config_port)
 | browerslist | 告知支持哪些浏览器                              |
 | os          | 指定项目对操作系统的兼容性要求                  |
 | cpu         | 指定项目只能在特定的 CPU 体系上运行。           |
-|             |                                                 |
-|             |                                                 |
-|             |                                                 |
 
 ```json
 {
@@ -141,15 +212,14 @@ console.log(process.env.npm_package_config_port)
     "last 2 versions",
     "not ie <= 8"
   ],
-  "os": ["darwin", "linux"]
+  "os": ["darwin", "linux"],
+  "cpu":["x64", "AMD64","!arm"],   // 适用的cpu
 }
 ```
 
-
-
-
-
 ### 信息描述
+
+描述一些内容，
 
 可选值的格式和标准的 json 文件格式相同
 
@@ -157,9 +227,10 @@ console.log(process.env.npm_package_config_port)
 
 ```json
 {
-  "author":{
-    "name":'taly',
-    "email":'taly@163.com'
+  "author": {
+    "name": "Fall Zhang",
+    "email": "123456@gmail.com",
+    "url": "https://github.com/fall-zhang"
   },
   "author":"Fall"
 }
@@ -172,9 +243,9 @@ console.log(process.env.npm_package_config_port)
   "contributors":['personA','personB'],
   "contributors":[
     {
-      "name":'Person',
-      "email":"sss@199.com",
-      "url":"http://nodejs.cn"
+      "name":'Fall Zhang',
+      "email":"123456@gmail.com",
+      "url": "https://github.com/fall-zhang"
     }
   ]
 }
@@ -217,14 +288,106 @@ console.log(process.env.npm_package_config_port)
 ```json
 {
   "repository":"github:nodejscn/node-api-cn",
-  "repository":{
-    "type":"svn",
-    "url":""
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fall-zhang/vite-vue3-TS-lint"
+  },
+}
+```
+
+### 第三方库
+
+**typings**
+
+字段用来指定 TypeScript 的入口文件：
+
+```json
+{
+  "typings": "types/index.d.ts"
+}
+```
+
+**eslintConfig**
+
+用来配置 eslint 的环境配置
+
+```json
+{
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
   }
 }
 ```
 
-### 软件包版本描述
+**babel**
+
+可以放在 `babel.config.js`
+
+```json
+"babel": {
+	"presets": ["@babel/preset-env"],
+	"plugins": [...]
+}
+```
+
+**unpkg**
+
+npm 上所有的文件都开启 CND 服务，该 CND 服务由 unpkg 提供
+
+```javascript
+"unpkg": "dist/vue.js"
+```
+
+**lint-staged**
+
+`lint-staged` 可以实现在 git 暂存区运行 lint 工具，一般搭配 husky（负责 git 的 hook）进行配置
+
+```json
+{
+  "lint-staged": {
+    "*.{js,vue,jsx,tsx}": [
+      "eslint --fix"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
+  }
+}
+```
+
+**browserslist**
+
+一般，babel 以及 auto-prefixer 会用到该配置
+
+```json
+"browserslist": {
+  "production": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "development": [
+    "last 1 chrome version",
+    "last 1 firefox version",
+    "last 1 safari version"
+  ]
+}
+```
+
+
+
+## 版本控制
 
 **语义化版本控制**：简单来讲所有版本都有三个数字
 
@@ -249,6 +412,8 @@ console.log(process.env.npm_package_config_port)
 | `||`        | `< 2.1 || > 2.6` | 组合集合                                              |
 | 无符号      | `2.2.1`          | 只接受特指的版本                                      |
 
+
+
 ## package-lock.json
 
 `package-lock.json` 和 `package.json` 文件一样，只不过， `package-lock.json` 会固化当前安装的每个软件包的版本，当运行 `npm install` 时，`npm` 会使用这些确切的版本。如果不存在，就会自动生成该文件。
@@ -265,7 +430,8 @@ console.log(process.env.npm_package_config_port)
 
 ## 资料参考
 
-| 文章       | 链接                           |
-| ---------- | ------------------------------ |
-| 语义化版本 | https://semver.org/lang/zh-CN/ |
+| 文章（作者） | 链接                                       |
+| ------------ | ------------------------------------------ |
+| 语义化版本   | https://semver.org/lang/zh-CN/             |
+| CUGGZ        | https://juejin.cn/post/7023539063424548872 |
 
