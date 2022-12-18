@@ -21,6 +21,28 @@ Window 对象上的内容
 > - 内置对象，就是为了方便编程，浏览器提供的，或者说是浏览器引擎提供的对象；
 > - 宿主对象，就是浏览器的实现，需要对可视界面进行的操作。
 
+## CSS 相关
+
+**getComputedStyle**
+
+返回一个对象，对象中有计算后得到的样式的属性，这些属性是只读的
+
+```js
+const dom = document.querySelector('.box')
+dom.style.height // '100%'
+// 都可以获取到内容
+getComputedStyle(dom).height // '274.4px'
+getComputedStyle(dom)['background-color'] // 'rgba(0, 0, 0, 0)'
+getComputedStyle(dom)['backgroundColor'] // 'rgba(0, 0, 0, 0)'
+getComputedStyle(dom)['background'] 
+// rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box
+
+// 甚至可以获取伪元素上面的内容
+result = getComputedStyle(h3, '::after').content
+```
+
+
+
 ## navigator
 
 导航器对象，浏览器所处环境，和 cookie
