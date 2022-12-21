@@ -5,22 +5,6 @@ sidebar_position: 2
 > Create by **fall** on 2021-12-13
 > Recently revised in 2022-11-03
 
-Window 对象上的内容
-
-## JS 中的对象
-
-对象分为三种
-
-- 本地对象 ( native object )：Boolean、String、Number、Object、Array、Function、Error、Date、RegExp
-- 内置对象（ built-in object ）：Global、Math、JSON
-- 宿主对象：BOM、DOM
-
-> 这些分类也不知道是谁进行分类的，反正我觉得，
->
-> - 本地对象，差不多就是 ECMA 标准语法进行实现的；
-> - 内置对象，就是为了方便编程，浏览器提供的，或者说是浏览器引擎提供的对象；
-> - 宿主对象，就是浏览器的实现，需要对可视界面进行的操作。
-
 ## CSS 相关
 
 **getComputedStyle**
@@ -41,9 +25,9 @@ getComputedStyle(dom)['background']
 result = getComputedStyle(h3, '::after').content
 ```
 
+## 用户窗口
 
-
-## navigator
+### navigator
 
 导航器对象，浏览器所处环境，和 cookie
 
@@ -62,7 +46,7 @@ navigator.platform // "Win32"
 navigator.userAgent //"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:95.0) Gecko/20100101 Firefox/95.0"
 ```
 
-## screen
+### screen
 
 显示器对象，用的是什么显示器，就会展示对应的信息
 
@@ -79,7 +63,7 @@ screen.width  // 1920
 screen.colorDepth // 32
 ```
 
-## history
+### history
 
 浏览器历史对象
 
@@ -94,7 +78,7 @@ history.go(-1) // 填入0，刷新当前页面，填入正数前进页面，填�
 history.length // 输出总历史记录长度
 ```
 
-## Location
+### Location
 
 当前路由位置对象
 
@@ -123,7 +107,34 @@ location.reload(true) // 不经过浏览器缓存，强制从服务器重载
 location.replace(newURL)// 在当前窗口替换成新的url		不产生新的历史记录--不可以后退
 ```
 
-## Document
+location.protocol包括
+
+- file:本地磁盘访问
+- http:
+- https:(证书认证协议)
+
+location.hostname 通过IP找到全球范围内该主机所在的网络地址
+
+location.port(端口号(默认隐藏))
+
+> 当前电脑中使用的网络软件，随机分配一个编号 0-65535
+> hostname:port  定位到当前使用网络的程序
+> 浏览器默认端口号：8080
+> http:80
+> https:443
+
+location.search 由问号拼接的部分直接提交到查询字符串中,给服务器提交查询字符串
+
+> https://www.xxx.com/?value1=5&value2=10
+> alert(location.search)
+
+location.hash  锚点，通过锚点可以实现单页面跳转
+
+输出网址：
+	alert(location)	数据类型是对象
+	alert(location.href) 数据类型是string
+
+### Document
 
 集合
 
@@ -162,32 +173,16 @@ document.close()
 document.write()
 ```
 
-## console
-
-`console` 用于在控制台打印内容
+### 焦点控制
 
 ```js
-console.time('test1');
-console.timeEnd('test1');
-//通过以上的方法，进行时间的计算
-console.log('log') // 打印日志
-console.error('one Error') // 打印错误
+// 得到焦点
+window.focus
+// 失去焦点
+window.blur
 ```
 
-打印的其它用法
-
-```js
-const obj = {nana:'fall',fun:'foo'}
-// 以两个空格为缩进，输出对象
-console.log(JSON.stringify(obj,null,2))
-var a = "background: rgb(248, 177, 173);color: rgb(63, 172, 203)";
-console.log("%c Jazz.Computer ", a)
-console.log("%c 2015 ", a)
-console.log("%c Yotam Mann ", a)
-console.log("%c Sarah Rothberg ", a)
-```
-
-## 窗口控制
+### 窗口控制
 
 ```js
 // 按照给定像素移动指定窗口
@@ -204,58 +199,14 @@ window.scrollBy(X,Y) // 参照当前位置进行移动
 window.scrollTo(X,Y)
 ```
 
-## URL
 
-URL：统一资源定位符
 
-* 定位符的内容：`协议://主机名(域名):端口号/路径/?查询字符串#锚点`
-* `protocol://hostname:port/pathname/?search#hash`
-* 实例：`https://juejin.cn/post/6960262593265025031#heading-26`（端口号会自动隐藏）
-
-## Location
-
-location.protocol包括
-
-- file:本地磁盘访问
-- http:
-- https:(证书认证协议)
-
-location.hostname 通过IP找到全球范围内该主机所在的网络地址
-
-location.port(端口号(默认隐藏))
-
-> 当前电脑中使用的网络软件，随机分配一个编号 0-65535
-> hostname:port  定位到当前使用网络的程序
-> 浏览器默认端口号：8080
-> http:80
-> https:443
-
-location.search 由问号拼接的部分直接提交到查询字符串中,给服务器提交查询字符串
-
-> https://www.xxx.com/?value1=5&value2=10
-> alert(location.search)
-
-location.hash  锚点，通过锚点可以实现单页面跳转
-
-输出网址：
-	alert(location)	数据类型是对象
-	alert(location.href) 数据类型是string
-
-## 焦点控制
-
-```js
-// 得到焦点
-window.focus
-// 失去焦点
-window.blur
-```
-
-## 打开窗口
+### 打开窗口
 
 ```js
 window.open(URL,'WindowName','WindowStyle')
 // 或者直接 open
-open("https://www.baidu.com","name1","height=400,width=400,left=400,top400")
+open("https://www.baidu.com","name1","height=400,width=400,left=400,top=400")
 // 窗口风格
 // height:number>100 窗口高度
 // width:number>100 窗口宽度
@@ -270,30 +221,7 @@ open("https://www.baidu.com","name1","height=400,width=400,left=400,top400")
 window.close() // 关闭浏览器窗口
 ```
 
-## 定时器
-
-```js
-// 定时器
-setTimeout
-clearTimeout
-setInterval
-clearInterval
-```
-
-## 对话框
-
-```js
-// 提示
-window.alert('提示内容')
-// 确认
-const result = window.confirm('提示内容') // 会返回 true or false
-// 内容
-window.prompt('提示字符串','默认内容') // 返回内容，或者是 null
-```
-
-## 其他属性
-
-**状态栏**
+## 状态栏
 
 ```js
 // 状态栏的默认显示
@@ -302,7 +230,7 @@ window.defaultStatus
 window.status
 ```
 
-## 全局方法
+## 数据处理
 
 `parseInt(string[,radix])` 其中 radix 的范围是 `2-36`，即从 2 进制到 36 进制去解析前面的字符串。默认是十进制。
 
@@ -328,7 +256,40 @@ isNaN('12')
 isNaN('0b12')
 ```
 
+## 控制台
 
+### console
+
+`console` 用于在控制台打印内容
+
+```js
+console.time('test1');
+console.timeEnd('test1');
+//通过以上的方法，进行时间的计算
+console.log('log') // 打印日志
+console.error('one Error') // 打印错误
+```
+
+打印的其它用法
+
+```js
+const obj = {nana:'fall',fun:'foo'}
+// 以两个空格为缩进，输出对象
+console.log(JSON.stringify(obj,null,2))
+var a = "background: rgb(248, 177, 173);color: rgb(63, 172, 203)";
+console.log("%c Jazz.Computer ", a)
+console.log("%c 2015 ", a)
+console.log("%c Yotam Mann ", a)
+console.log("%c Sarah Rothberg ", a)
+```
+
+
+
+## 参考文章
+
+| 作者（文章名称） | 连接 |
+| ---------------- | ---- |
+|                  |      |
 
 
 
