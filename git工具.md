@@ -100,13 +100,13 @@ c、规则：
 
 ### 简单的提交代码流程
 
-连接克隆远程仓库 git clone https://https://e.coding.net/colorfree/P-weather.git
+连接克隆远程仓库 `git clone https://github.com/fall-zhang/vite-vue3-TS-lint.git`
 
-在项目的文件夹中打开`cmd 命令行工具`（一般为含有 ReadMe 的文件夹）
+在项目的文件夹（一般为含有 `README.md` 的文件夹）中打开命令行工具
 
-`git add . `   将代码添加到版本里面（添加到暂存区）
+`git add . ` 将代码添加到版本里面（添加到暂存区）
 
-`git commit -m 'messages'`  修改并放置你想添加的 `messages` 
+`git commit -m 'messages'` 修改并放置你想添加的 `messages` 
 
 最后使用 `git push` 将本地库里面的代码提交到网络共享库里面
 

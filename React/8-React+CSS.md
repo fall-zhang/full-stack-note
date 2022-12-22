@@ -1,3 +1,6 @@
+> Create by **fall** on 4/5/2021
+> Recently revised in 12/18/2022
+
 ## 代码隔离
 
 在文件名称的扩展名之前添加 `module.` 即可改变代码作用域，比如说在 less 中，通过`module.less` 实现代码隔离。
@@ -5,6 +8,34 @@
 > 使用 `React.lazy()` 包裹的内容中，如果引入了 `module.less` 等内容，则会自动打包生成文件。
 
 ## CSS
+
+### Emotion
+
+和 `styled-components` 一样，是社区中最流行的 CSS-in-JS 方案
+
+```jsx
+import styled from '@emotion/styled'
+function App(props) {
+  const color = "red";
+  const ErrorMessageRed = styled.div`
+      color: ${props.color || color};
+      font-weight: bold;
+    `;
+  return (
+   <div>
+    <ErrorMessageRed>
+      hello ErrorMessageRed !!
+    </ErrorMessageRed>
+   </div>
+  );
+}
+const example = <div className={css`
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+    `}>
+	...row item...
+ </div>
+```
 
 ### classnames
 
@@ -18,7 +49,6 @@ const bottomCardSty=classNames({
   [styles.noBChecked]: !checked,
   [styles.noBCheckedMq]:!checked&&dataSet.dsCodeType==3,
 })
-
 ```
 
 ```jsx
@@ -29,7 +59,7 @@ const oneDOM = <div className={style.class1, style.class2}></div>
 
 ### css-module
 
-create-react-app 中会内置该方法
+create-react-app 中会内置该包
 
 `className` 中传入的是对象，所以是双括号
 
@@ -63,6 +93,31 @@ function FallComponent(){
 }
 ```
 
+### styled-jsx
+
+组件友好，的 CSS 内书写方式
+
+scoped and component-friendly CSS 
+
+```jsx
+export default () => (
+  <div>
+    <p>only this paragraph will get the style :)</p>
+    {/* you can include <Component />s here that include
+         other <p>s that don't get unexpected styles! */}
+    <style jsx>{`
+      p {
+        color: red;
+      }
+    `}</style>
+  </div>
+)
+```
+
+
+
+
+
 ### styled-components
 
 ```jsx
@@ -79,7 +134,7 @@ function App(){
 }
 ```
 
-### 直接引入
+### css-module
 
 ```jsx
 import 'index.module.less'
@@ -97,14 +152,48 @@ import 'index.module.less'
 }
 ```
 
-## Tailwind
+### Tailwind
+
+
+
+
+
+### 3d
+
+经典回顾：**如何用 React Three Fiber 构建令人惊叹的 3D 场景** - 如果你想用 React 在浏览器中构建 3D 可视化，本文是一篇很好的入门介绍。(这是一年前的文章了，但是现在再看仍然很酷)。
+
+**长按识别二维码查看原文**
+
+https://varun.ca/modular-webgl/
+
+## CSS-in-JS
+
+优点：
+
+- 不污染其它组件，不会影响到其它组件
+- 直接在 React 组件内部书写样式，可维护性强
+- 可以使用变量控制
+
+缺点：
+
+- 随机类名让 React DevTools 变得难看
+- 额外性能（频繁的插入 CSS 样式规则会迫使浏览器做更多的工作）
+- 会有更大的概率导致项目报错
+
+## 推荐配置
+
+
+
+
 
 
 
 ## 参考文章
 
-| 文章名称 | 文章链接                                   |
-| -------- | ------------------------------------------ |
-| 官方文档 | https://reactjs.org                        |
-| ConardLi | https://juejin.cn/post/7085542534943883301 |
+| 文章（作者） | 文章链接                                   |
+| ------------ | ------------------------------------------ |
+| 官方文档     | https://reactjs.org                        |
+| ConardLi     | https://juejin.cn/post/7085542534943883301 |
+| superZidan   | https://juejin.cn/post/7158712727538499598 |
+|              |                                            |
 

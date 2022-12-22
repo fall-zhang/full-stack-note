@@ -3,11 +3,11 @@ sidebar_position: 10
 ---
 
 > Create by **fall** on ——
-> Recently revised in 2022-05-31
+> Recently revised in 2022-12-09
 
 ## 发展史
 
-1995 年 javascript 诞生。
+1995 年 `JavaScript` 诞生。
 
 ES6 其实是泛指，2015 年六月发布 ES6 第一个版本，然后规定，每年的六月发布一次正式版本，版本号以当年年份为准 ES6。
 
@@ -21,17 +21,30 @@ ES6 其实是泛指，2015 年六月发布 ES6 第一个版本，然后规定，
 
 > ES6 改进了前端编程体验，带来更多方便使用的特性，并且适用范围最广，所以本笔记也以 ES6 的内容进行编写。
 
-## 变量的类型
+## 变量
 
-- `var` 普通变量
-  - `var` 声明的作用域是函数作用域，在整个函数内都有效
-  - 可以被声明多次
-- `let` 局部变量，只在块级作用域内生效
-  - 只要遇到大括号都会形成作用域，只在该大括号内可以使用该变量。
-  - 只能被声明一次
-- `const` 声明常量
-  - 用 `const` 声明的变量，只能在声明的时候确定值（或者是指针），后续没有办法修改
-  - 常量的作用域和 `let` 相同，也是只能声明一次
+总共可以声明三种变量
+
+**普通变量**：`var` 
+
+- `var` 声明的作用域是函数作用域，在整个函数内都有效
+- 可以被声明多次
+
+**局部变量**：`let` ，只在块级作用域内生效
+
+- 只要遇到大括号都会形成作用域，只在该大括号内可以使用该变量。
+- 只能被声明一次
+
+**声明常量**：`const` 
+
+- 用 `const` 声明的变量，只能在声明的时候确定值（或者是指针），后续没有办法修改
+- 常量的作用域和 `let` 相同，也是只能声明一次
+
+```js
+var foo = ""
+let foo1 = ""
+const foo2 = ""
+```
 
 > 块级作用域有例外，比如 `let` 在 `for` 循环的小括号中使用时，虽然在小括号内，但作用域会被提取到每个大括号中的内容。为了方便编写代码。
 >
@@ -74,7 +87,7 @@ var octal = 0o10
 var hex = 0x10
 ```
 
-## 字符串
+## String
 
 **字符串拼接**
 
@@ -113,19 +126,17 @@ for (let i = 0, l = str.length; i < l; i++) {
 }
 ```
 
-## 对象和类
+## Object
 
-### 面向过程和面向对象
+**面向过程和面向对象**
 
-**面向过程**：只考虑数学逻辑
+- 面向过程：只考虑数学逻辑
+- 面向对象：将生活逻辑映射到程序中
+  - 分析有哪些实体
+  - 分析设计各个实体的功能
+  - 实体间的相互作用
 
-**面向对象**：将生活逻辑映射到程序中
-
--  分析有哪些实体
--  分析设计各个实体的功能
--  实体间的相互作用
-
-### 创建新的对象
+### 创建对象
 
 ```javascript
 // 三种不同的声明方式
@@ -133,7 +144,9 @@ var obj1 = new Object();
 var obj2 = Object();
 var obj3 = {
   username : "iron-man"
-  show:function
+  show:function(){
+    console.log(this.username)
+  }
 }
 // 添加属性和方法
 obg3.username = "white house"
@@ -145,10 +158,21 @@ alert(obg3[username])
 delete obg3.username 
 ```
 
-### 创建类
+### class
+
+**什么是类，什么是对象？**
+
+- **类**：对象特征的集合
+- **对象**：具体的某一个事物
+
+**对象的拷贝，什么是深拷贝，什么是浅拷贝？**
+
+浅拷贝，拷贝对象的地址，修改对象，会一同修改。
+
+深拷贝，拷贝完整的数据，修改对象，只有当前对象会修改。
 
 ```js
-// 类，是 ES6 中新添加的
+// class 是 ES6 中新添加的语法糖，方便定义对象
 class Hero{
   heroName
   level
@@ -161,19 +185,8 @@ class Hero{
   }
 }
 const bicycle = new Hero('单车骑士',"二级甲等")
-bicycle.callMyName() 
+bicycle.callMyName()
 ```
-
-**什么是类，什么是对象？**
-
-- **类**：对象特征的集合
-- **对象**：具体的某一个事物
-
-**对象的拷贝，什么是深拷贝，什么是浅拷贝？**
-
-浅拷贝，拷贝对象的地址，修改对象，会一同修改。
-
-深拷贝，拷贝完整的数据，修改对象，只有当前对象会修改。
 
 ## 数组
 
@@ -288,17 +301,17 @@ for(item of arr){
 
 ### 对象的遍历
 
-使用 for...of 遍历对象会报错
+对象只能使用 `for..in` 报错
 
 ```js
 // for in
 var person = {
-	username :'iron man',
-	age:28,
+  username :'iron man',
+  age:28,
   gender:"male"
 }
 for(var attr in person){
-    document.write("对象的遍历:"+attr+'分隔'+person[attr]+"<br>")
+  document.write("对象的遍历:"+attr+'分隔'+person[attr]+"<br>")
 }
 ```
 
@@ -326,24 +339,24 @@ set 的遍历
 var mySet = new Set(['闪电','flash','too'])
 console.log(mySet)
 mySet.forEach(item => {
-    console.log(item)
+  console.log(item)
 })
 mySet.forEach(function(item){
-    console.log(item)
+  console.log(item)
 })
 // 以键值对的方式进行循环
 for (let item of mySet.entries()) {
-    console.log(item)
+  console.log(item)
 } 
 // 以键的方式进行循环
 for (let item of mySet.keys()) {
-    console.log(item)
+  console.log(item)
 }
 ```
 
 ## 严格模式
 
-严格模式是啥子？就是更加严格的模式！对语法限制，写出来的代码更明确。
+严格模式是对语法进行额外限制，使代码更明确。
 
 `use strict` 是一种运行时自动执行更严格的 `JavaScript` 代码解析和错误处理的方法。如果代码错误被忽略或失败，将会产生错误或抛出异常。
 
