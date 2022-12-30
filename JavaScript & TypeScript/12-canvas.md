@@ -7,7 +7,7 @@ sidebar_position: 36
 
 ## canvas
 
-Canvas 的默认大小为 `300px * 150px`
+Canvas 的默认大小为 `300px * 150px`（宽 * 高）
 
 如何获取 DOM
 
@@ -65,5 +65,4 @@ ctx.restore()
 |              |                                                             |
 |              |                                                             |
 |              |                                                             |
-
 
