@@ -9,10 +9,10 @@
 
 <img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015120901.png" alt="img" style="zoom:80%;" />
 
-> - Workspace：工作区
-> - Index / Stage：暂存区
-> - Repository：仓库区（或本地仓库）
-> - Remote：远程仓库
+- Workspace：工作区
+- Index / Stage：暂存区
+- Repository：仓库区（或本地仓库）
+- Remote：远程仓库
 
 | 命令名称         | 作用                                       |
 | ---------------- | ------------------------------------------ |
@@ -25,7 +25,7 @@
 
 ## git 工具
 
-### git介绍
+### 介绍
 
 帮助使用 git 工具
 
@@ -96,23 +96,22 @@ c、规则：
 >
 > `ssh-keygen -t rsa -C "xxxx@gmail.com"` 必须填写自己使用的邮箱
 
-## git 的操作
+## 操作
 
-### 简单的提交代码流程
+### 流程
 
-连接克隆远程仓库 `git clone https://github.com/fall-zhang/vite-vue3-TS-lint.git`
+提交代码流程：
 
-在项目的文件夹（一般为含有 `README.md` 的文件夹）中打开命令行工具
+- 连接克隆远程仓库 `git clone https://github.com/fall-zhang/vite-vue3-TS-lint.git`
+- 在项目的文件夹（一般为含有 `README.md` 的文件夹）中打开命令行工具
+- `git add . ` 将代码添加到版本里面（添加到暂存区）
+- `git commit -m 'messages'` 修改并放置你想添加的 `messages` 
+- 最后使用 `git push` 将本地库里面的代码提交到网络共享库里面
 
-`git add . ` 将代码添加到版本里面（添加到暂存区）
-
-`git commit -m 'messages'` 修改并放置你想添加的 `messages` 
-
-最后使用 `git push` 将本地库里面的代码提交到网络共享库里面
-
-### 常用功能查找
+### 常用功能
 
 - `git diff --shortstat "@{0 day ago}"` 看看自己一天写了多少行代码
+- `git log --pretty=tformat: --numstat | awk '{loc += $1 - $2 } END { printf "total lines: %s\n", loc }'` 查看总共有多少行，
 - 只克隆最近 number 次分支 `git clone --depth=[number] [url]`
 - 只克隆某一分支 `git clone --single-branch -b [name]`
 - 查看远程仓库`git remote -v`
