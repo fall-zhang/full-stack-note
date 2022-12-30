@@ -3,11 +3,9 @@ sidebar_position: 20
 ---
 
 > Create by **fall** on 2020-09-23
-> Recently revised in 2022-02-18
+> Recently revised in 2022-12-28
 
-## 异步管理 Promise
-
-### Promise的介绍
+## Promise
 
 先承诺好解决方案，如果正确，采用正确的解决方案，如果错误，采用错误的解决方案
 
@@ -20,7 +18,7 @@ Promise 是用来管理异步编程的，**它本身不是异步的**，Promise�
 >
 > 当 promise 被调用后，它会以处理中状态开始，此时调用的函数会继续执行，而 promise 仍在处理中直到解决为止，从而为调用的函数提供所请求的任何数据。被创建的 promise 最终会以**被解决状态或被拒绝状态**结束，并在完成时调用相应的回调函数（传给 `then` 和 `catch`）。
 
-那些JS API 使用了 promise?
+那些 JS API 使用了 promise?
 
 - Battery API
 - Fetch API
