@@ -2,8 +2,8 @@
 sidebar_position: 10
 ---
 
-> Create by **fall** on ————
-> Recently revised in 2022-02-20
+> Create by **fall** on —/—/2020
+> Recently revised in 01/05/2023
 
 ## flex布局
 
@@ -119,13 +119,13 @@ sidebar_position: 10
   }
 </style>
 <div class="father">
-    <div class="child"></div>
-    <div class="child" style="height: 120px ;width: 120px;"></div>
-    <div class="child" style="height: 120px ;width: 120px;"></div>
-    <div class="child"></div>
-    <div class="child"></div>
-    <div class="child" style="height: 120px ;width: 120px;"></div>
-  </div>
+  <div class="child"></div>
+  <div class="child" style="height: 120px ;width: 120px;"></div>
+  <div class="child" style="height: 120px ;width: 120px;"></div>
+  <div class="child"></div>
+  <div class="child"></div>
+  <div class="child" style="height: 120px ;width: 120px;"></div>
+</div>
 ```
 
 ### 子元素
@@ -143,6 +143,31 @@ sidebar_position: 10
 `order `：改变某一个子项的排序位置，默认值为 `0`，值越大越靠后
 
 `align-self`：单独某一个子项的垂直对齐方式，`align-items` 的单元素控制。
+
+### gap
+
+通过 gap 属性，可以设置元素与元素之间的间距
+
+```html
+<div class="father">
+  <div class="child"></div>
+  <div class="child"></div>
+  <div class="child"></div>
+  <div class="child"></div>
+  <div class="child"></div>
+</div>
+<style>
+  .father{
+    display:flex;
+    gap:20px;
+  }
+  .child{
+    height:80px;
+    width:80px;
+    gap:20px;
+  }
+</style>
+```
 
 ## grid 布局
 
