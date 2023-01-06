@@ -1,5 +1,5 @@
-> Create by **fall** on 2021-08-13
-> Recently revised in 2022-07-24
+> Create by **fall** on 13 Aug 2021
+> Recently revised in 07 Jan 2023
 
 ## Vite
 
@@ -7,7 +7,12 @@
 
 `pnpm create vite` 然后选择所需的技术栈搭建项目。
 
-> 如果是 vue 项目，可以参考该文章  https://juejin.cn/post/7058201396113309703
+> 两个模板项目：
+>
+> - React 模板：https://github.com/fall-zhang/vite-typescript-react-template
+> - Vue 模板：https://github.com/fall-zhang/vite-vue3-TS-lint
+>
+> 如果是 vue 项目，还可以参考该文章  https://juejin.cn/post/7058201396113309703
 
 ### 预构建
 
@@ -449,10 +454,9 @@ export default defineConfig({
 
 ## 参考文章
 
-| 作者     | 链接                                       |
-| -------- | ------------------------------------------ |
-| 前端论道 | https://juejin.cn/post/7078622707104874503 |
-|          |                                            |
-|          |                                            |
-|          |                                            |
-
+| 作者             | 链接                                       |
+| ---------------- | ------------------------------------------ |
+| 前端论道         | https://juejin.cn/post/7078622707104874503 |
+| 字节跳动ADFE团队 | https://juejin.cn/post/7064853960636989454 |
+|                  |                                            |
+|                  |                                            |
