@@ -25,7 +25,7 @@ getComputedStyle(dom)['background']
 result = getComputedStyle(h3, '::after').content
 ```
 
-## 用户窗口
+## 窗口属性
 
 ### navigator
 
@@ -199,7 +199,9 @@ window.scrollBy(X,Y) // 参照当前位置进行移动
 window.scrollTo(X,Y)
 ```
 
+### 跨窗口通信
 
+postMessage
 
 ### 打开窗口
 
