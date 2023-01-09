@@ -2,14 +2,16 @@
 sidebar_position: 10
 ---
 
-> Create by **fall** on ——
-> Recently revised in 2022-12-09
+> Create by **fall** on — — 2020
+> Recently revised in 04 Jan 2022
 
 ## 发展史
 
 1995 年 `JavaScript` 诞生。
 
 ES6 其实是泛指，2015 年六月发布 ES6 第一个版本，然后规定，每年的六月发布一次正式版本，版本号以当年年份为准 ES6。
+
+一般来讲，新增的 JavaScript 的语法通常要经历以下五个阶段
 
 | 阶段      | 英文名        | 含义         |
 | --------- | ------------- | ------------ |
