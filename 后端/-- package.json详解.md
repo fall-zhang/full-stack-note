@@ -1,5 +1,5 @@
 > Create by **fall** on ——
-> Recently revised in 12/18/2022
+> Recently revised in 18 Dec 2022
 
 ## 配置选项
 

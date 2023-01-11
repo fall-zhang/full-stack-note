@@ -2,8 +2,8 @@
 sidebar_position: 10
 ---
 
-> Create by **fall** on —/—/2020
-> Recently revised in 01/05/2023
+> Create by **fall** on — — 2020
+> Recently revised in 05 Jan 2023
 
 ## flex布局
 
