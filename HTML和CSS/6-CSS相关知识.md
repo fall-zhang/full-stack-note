@@ -66,7 +66,6 @@ sidebar_position: 13
 - 难以复用，导致多条样式在同一语义环境下，没法使用
 - 重构成本高，哪怕是把所有字体大小加 `2px`，也需要相当成本
 
-- 
 
 ## Atomic/Utility-First CSS 
 
