@@ -2,8 +2,8 @@
 sidebar_position: 2
 ---
 
-> Create by **fall** on 2021-12-13
-> Recently revised in 2022-11-03
+> Create by **fall** on 13 Dec 2021
+> Recently revised in 18 Jan 2023
 
 ## CSS 相关
 
@@ -172,6 +172,11 @@ document.close()
 // 向当前文档追加写入文本
 document.write()
 ```
+
+### 相关 window
+
+- `window.parent` 获取当前 window 的父 window
+- `window.top` 获取当前 window 的最顶层 window
 
 ### 焦点控制
 
