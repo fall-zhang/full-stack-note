@@ -103,6 +103,20 @@ const fullName = computed({
 const fullName.value = '小泽 玛利亚' // firstName.value 小泽 lastName.value 玛利亚
 ```
 
+第二个参数
+
+```js
+// onTrack 将在响应属性或引用作为依赖项被跟踪时被调用。
+// onTrigger 将在侦听器回调被依赖项的变更触发时被调用。
+// 计算属性的 onTrack 和 onTrigger 选项仅会在开发模式下工作。
+import { computed, ref } from 'vue'
+const count = ref(1)
+// 通过computed获得doubleCount
+const doubleCount = computed(() => {
+  return count.value * 2
+})
+```
+
 ## watch
 
 ```javascript
