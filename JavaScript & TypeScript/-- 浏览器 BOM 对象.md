@@ -259,9 +259,25 @@ parseInt('900719925474099267n')
 `isNaN()` 用于判断是否是 `NaN`，也可以判断字符串是否是数字
 
 ```js
-isNaN('12')
-isNaN('0b12')
+isNaN('12') // false
+isNaN('0b12') // false
+isNaN('0ad') // true
 ```
+
+### 深克隆
+
+- `structuredClone`
+
+现代浏览器都支持该方法，用于实现深克隆
+
+```js
+const cloneA = {name:'asudua',age:{ddd:'不说'}}
+const b = structuredClone(cloneA)
+b.age.ddd = '爱说不说'
+a.age.ddd // 不说
+```
+
+
 
 ## 控制台
 
