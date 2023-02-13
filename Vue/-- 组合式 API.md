@@ -168,20 +168,16 @@ watch([()=>data1,()=>data2],()=>{
   const age = ref(999)
   const state = reactive({
     count: 1,
-    name:'liu'
+    name: 'liu'
   })
-  // 声明方法
-  setTimeout(()=>{
+  setTimeout(() => {
     state.count++
-  },1000)
-  setTimeout(()=>{
-    age.value++
-  },5000)
-  // 监听 count
- watchEffect(()=>{ // watchEffect 不用传递第一个参数，自动找到响应式数据，这些响应式数据更新时，立即执行 
-   console.log(state)
-   console.log(age)
- })
+  }, 3000)
+  // watchEffect 不用传递第一个参数，自动找到响应式数据，这些响应式数据更新时，立即执行
+  watchEffect(() => {
+    age.value = state.count // state.count 值改变后，都会执行一遍 watchEffect
+    console.log('当前age值为：' + age.value)
+  })
 </script>
 ```
 
