@@ -54,31 +54,6 @@ npm install gulp@3.9.1 --save-dev # 的简写:npm i gulp@3.9.1 -S-D
 
 `npm uninstall <package-name> -g` 全局模块的卸载必须带上 -g
 
-### 包的发布
-
-首先登陆 `npm adduser`，或者 `npm login`，如果没有账号，请上官网进行注册。
-
-登陆完成后：`npm publish .` 
-
-然后你就可以通过你发布的包名去下载你上传的包 `npm install <package-name>`
-
-
-
-包权限：通常只有一个人拥有发布功能，如果想要添加，可以通过命令实现
-
-`npm owner ls <package-name>` 所有者列表
-
-`npm owner add <user-name> <package-name> ` 添加所有者
-
-`npm owner add <user-name> <package-name>` 删除所有者
-
-> 一个包是否是足够优秀的包，会通过以下方式计算权重
->
-> - 具备良好的测试
-> - 良好的文档（README、API）
-> - 良好的测试覆盖率
-> - 良好的编码规范
-
 ### 配置命令
 
 `npm config get cache` 查看 缓存所在位置
@@ -165,44 +140,53 @@ npx 可以指定直接执行 git 上面的代码，前提是远程代码必须�
 >
 > 现在 PNPM 也作为包管理工具进行使用
 
-## nvm 的使用
+## npm 包的发布
 
-nvm 是 node 版本控制工具
+首先登陆 `npm adduser`，或者 `npm login`，如果没有账号，请上官网进行注册。
 
-> 注：windows 上运行的 nvm 和 linux & MacOS 上的 nvm 工具不是一个项目，它们是两个团队做出来的东西。
+登陆完成后：`npm publish .` 
 
-nvm（Linux、Unix、OS X）的安装：https://github.com/creationix/nvm
+然后你就可以通过你发布的包名去下载你上传的包 `npm install <package-name>`
 
-nvm（Windows）安装：https://github.com/coreybutler/nvm-windows
+**包的管理权限**
 
-### 常用命令
+通常只有一个人拥有发布功能，如果想要添加，可以通过命令实现
 
-基本命令
+`npm owner ls <package-name>` 所有者列表
+
+`npm owner add <user-name> <package-name> ` 添加所有者
+
+`npm owner add <user-name> <package-name>` 删除所有者
+
+### 版本控制
+
+监听的文件：
+
+- 首先忽略 `.gitignore` 中存在的文件，并且再忽略 `.npmignore` 中选择的文件
+- 通过 `package.json` 中的 files 属性来添加白名单，发布到 npm 上（不管是否被忽略）
 
 ```bash
-# 安装最新版本的 node
-nvm install node
-nvm install latest
-# 当前所拥有的 node 的版本
-nvm list
-nvm ls
-# 切换到淘宝镜像
-nvm use taobao
-# 全局安装 nvm 命令
-npm install -g nvm
-# 当前nvm工具的版本
-nvm -v
-# 使用 12.22.12 版本的 node
-nvm use 12.22.12
-# 卸载该版本的 node.js
-nvm uninstall 8.4.0
+npm version [major | minor | patch]
+# 分别修改 主版本+1 新增版本+1 补丁版本加+1
 ```
+
+查看[语义化版本规范](https://semver.org/lang/zh-CN/)
+
+
+
+> 一个包是否是足够优秀的包，会通过以下方式计算权重
+>
+> - 测试：具备良好的测试，良好的测试覆盖率
+> - 文档：良好的文档（README、API）
+> - 规范：良好的编码规范
 
 ## 参考文章
 
-| 文章            | 链接   |
-| --------------- | ------ |
-| 深入浅出 nodejs | 第二章 |
+| 作者            | 链接                                                         |
+| --------------- | ------------------------------------------------------------ |
+| 深入浅出 nodejs | 第二章                                                       |
+| levy9527        | [📦vue组件发布npm最佳实践](https://juejin.cn/post/6844903620916281358) |
+|                 |                                                              |
 
 
 
