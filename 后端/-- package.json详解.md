@@ -1,5 +1,5 @@
-> Create by **fall** on ——
-> Recently revised in 18 Dec 2022
+> Create by **fall** on — — 2020
+> Recently revised in 21 Feb 2023
 
 ## 配置选项
 
@@ -115,19 +115,23 @@ publishConfig，模块发布时生效，用于设置发布时一些配置项的�
 
 ### 文件目录
 
-**main**
+**main**、**module**
 
 应用程序需的入口点，即引入的时候，默认引入的就是该文件
+
+- main 表示 commonjs 引入的默认入口
+- module 表示 ES6 引入的默认入口
 
 ```json
 {
   "main":"src/main.js",
+  "module":"src/module.js"
 }
 ```
 
 **files**
 
-files 配置是一个数组，用来描述当把 npm 包作为依赖包安装时需要说明的文件列表。当使用 `npm publish` 包发布时，files 指定的文件会被推送到 npm 服务器中，如果指定的是文件夹，那么该文件夹下面所有的文件都会被提交。
+files 用来描述当前包的白名单列表。当使用 `npm publish` 包发布时，files 指定的文件会被推送到 npm 服务器中，如果指定的是文件夹，那么该文件夹下面所有的文件都会被提交。
 
 ```json
 {
@@ -144,7 +148,7 @@ files 配置是一个数组，用来描述当把 npm 包作为依赖包安装时
 
 表示副作用，在 tree-shaking 优化时，css 文件只引入了，没有使用，通过 sideEffects 标明则不会被移除
 
-Ant Design 在 package.json 里设置了如下的 sideEffects，来告知 webpack，这些文件具有副作用，引入后不能被删除。
+Ant Design 在 package.json 里设置了如下的 sideEffects，来告知 webpack，这些样式文件具有副作用，引入后不能被删除。
 
 ```JSON
 "sideEffects": [
@@ -159,9 +163,10 @@ Ant Design 在 package.json 里设置了如下的 sideEffects，来告知 webpac
 
 字段用来指定各个内部命令对应的可执行文件的位置
 
-```typescript
+```json
 "bin": {
-  "someTool": "./bin/someTool.js"
+  "someTool": "./bin/someTool.js",
+  "vite": "bin/vite.js"
 }
 ```
 
