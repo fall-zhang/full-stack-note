@@ -1,13 +1,15 @@
-> Create by fall on:2021
-> Recently revised in:2022-09-01
+> Create by fall on — — 2021
+> Recently revised in 22 Feb 2023
 
 ## vue/cli
 
 功能：快速生成一个 Vue 项目结构，简化一个项目的创建流程
 
+> 注：vue/cli 当前处于维护模式，只进行补丁修复，建议使用 vite 代替
+
 ### 安装
 
-全局安装 cli `npm install -g @vue/cli`
+全局安装：`npm install -g @vue/cli`
 
 ### 简介
 
@@ -122,10 +124,10 @@ module.exports ={
 const { resolve } = require("path")
 const proxyURL = "http://localhost:3306/"
 module.exports = {
-  lintOnSave: false,
-  productionSourceMap: true,
+  lintOnSave: false, // 保存时自动检查代码规范
+  productionSourceMap: true, // 生产环境产出 .map.js 文件，用于 dist 文件的 debug
   configureWebpack: {
-    name: "oad_gepd",
+    name: "fall",
     devtool: "source-map",
     resolve: {
       alias: {
@@ -141,12 +143,12 @@ module.exports = {
     config
       .plugin("html")
       .tap(args => {
-        args[0].title = "调度信息编辑器"
+        args[0].title = "编辑器"
         return args
       })
   },
   devServer: {
-    open: true,
+    open: true, // 项目启动后直接打开
     host: "127.0.0.1",
     port: 5714,
     proxy: { // 代理，将所有
