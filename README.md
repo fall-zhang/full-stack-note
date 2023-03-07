@@ -1,5 +1,5 @@
-> Create by **fall** on 2020-11-18
-> Recently revised in 2022-03-17
+> Create by **fall** on 18 Nov 2020
+> Recently revised in 07 May 2023
 
 # Fall_Zhang的笔记仓库
 
@@ -8,46 +8,50 @@
 > - Github：https://github.com/Fall-zhang/self-note
 > - Gitee：https://gitee.com/mywings/noteself
 
-## HTML 和 CSS笔记
+## 更新计划
 
-最稳定的一部分，很少进行修改，以 HTML/CSS 知识点为主，也就是说，只涉及到样式和布局，或者是最基础的 DOM 元素，都会在这里。
+| 更新部分                | 更新计划优先级                 |
+| ----------------------- | ------------------------------ |
+| HTML 和 CSS             | :star::star:                   |
+| JavaScript & TypeScript | :star::star::star::star:       |
+| 后端                    | :star::star::star::star::star: |
+| Linux                   | :star::star::star:             |
+| MongoDB                 | :star::star::star:             |
+| React                   | :star::star::star::star:       |
+| 跨平台开发              | :star::star::star:             |
+| Vue                     | :star::star:                   |
+| 前端开发工具            | :star::star::star::star::star: |
+| 大前端知识点            | :star::star::star::star:       |
+| 软件工程知识            | :star::star::star:             |
+| 面试-自检               | :star::star:                   |
 
-```
-├── CSS代码片段
-├── 1.HTML5基础语法
-├── 2.CSS语法(盒模型)
-├── 3.其它标签和BFC规范
-├── 4.浏览器兼容和动画
-├── 5.CSS样式控制
-├── 7.预处理器
-├── 8.布局
-├── 9.浏览器兼容
-└── 10.新生代CSS
-```
+## HTML 和 CSS
+
+最稳定的一部分，很少修改，以 HTML/CSS 知识点为主，只涉及到样式和布局，或者是最基础的 DOM 元素。
+
+[HTML和CSS](./HTML和CSS)
 
 ## JavaScript & TypeScript
 
-这部分主要是 JavaScript 知识点对象相关的内容，语法，操作符，工具之类的，以及对向上的静态方法和实例方法。
+JavaScript：知识点，语法，操作符，工具之类的，以及对象上的相关内容。
 
-TypeScript，最近更新的内容，所以会更新起来比较频繁。
+TypeScript：JavaScript 的超集，为 JS 添加类型注解。
 
-高级程序设计，助力成为高级程序员
+## 后端
 
-## 后端语言
-
-也是 JS，但是是 node 环境上的 JS，和 node 相关的后端内容，就会在这里面。
+node 环境上的 JS，以及 node 相关的后端内容。
 
 - 比如说 SSR 的框架，后端工具的使用
 - 但是前后端越来越趋同了，所以有关 JS 的内容都放在该文件夹和 JS 文件夹内。
 
 更新计划应该也有，只不过也是随缘更新
 
-- 后端 nest （太监了，可能用 next 代替）
+- 后端 nest 
 - 其他后端语言 Python，PHP（放弃 PHP，JS 又能做前端，又能做后端，不香吗）
 
 ## Linux
 
-放一些 Linux 相关的内容，2022年上半年没有更新计划。
+放一些 Linux 相关的内容，有 shell 命令行的使用，以及如何编写脚本。
 
 ## MongoDB 和其它数据库
 
@@ -59,31 +63,17 @@ MongoDB 可能会合并到后端语言中，2022 上半年也没有更新计划
 
 ## React
 
-由于转战移动端，vue 又没有特别靠谱的解决方案，所以，哈哈哈哈就开始了 React 的 battle
+2023 年会加强这一部分的更新吧，现在只是刚刚摸到了 React
 
-2022 年会加强这一部分的更新吧，现在只是刚刚摸到了 React
-
-## 多端开发解决方案
+## 跨平台开发
 
 因为不准备学习 flutter，所以开始学习 react-native，这个决定也不知对不对，看时间的检验吧。
-
-21 年应该会进行更新，不过第一季度没戏
-
-希望我学完 React 的时候， RN能出 1.0吧
 
 ## Vue
 
 vue 框架相关的内容，特性，官方组件，关于 vue 的知识点
 
-目前更新优先级不高
-
-```markdown
-├── nuxt服务端渲染
-├── vue2
-├── vue3 setup 的使用
-│   └── 
-├── 
-```
+目前更新优先级不高，但是平时工作中有学到新知识，就会更新
 
 ## 前端开发工具
 
@@ -108,3 +98,4 @@ vue 框架相关的内容，特性，官方组件，关于 vue 的知识点
 显然就是认清自己的技术能力，看看自己的能力到底是什么水平
 
 嗯呐，就是这样，总结写完了
+
