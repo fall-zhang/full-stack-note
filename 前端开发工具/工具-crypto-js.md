@@ -1,13 +1,44 @@
 > Create by **fall** on: 18 Jan 2023
-> Recently revised in: 18 Jan 2023
+> Recently revised in: 06 Apr 2023
 
-## crypto
+## crypto-js
+
+安装
+
+```bash
+npm i crypto-js
+```
+
+### sha256
+
+```js
+const SHA256 = require("crypto-js/sha256");
+SHA256("Message")
+```
+
+### base64
+
+```js
+const hmacDigest = Base64.stringify(hmacSHA512(path + hashDigest, privateKey))
+```
+
+浏览器也内置了 base64 加密解密算法
+
+```js
+const base64Str = btoa('come on') // binary to ASCII
+base64Str // "Y29tZSBvbg=="
+const str = atob(base64Str)
+```
+
+
+
+### 对称加密算法
+
+加密内容和加密的 key 来实现内容的交互（需要确保 key 的可靠）
 
 crypto 负责加密解密
 
 前端使用 encrypted = encrypt(password+key)，后端使用  password = decrypt(encrypted +key) 
-
-**对称加密算法**
 
 前端通过 key 和 password进行加密后，后端通过 key，解密前端内容
 
