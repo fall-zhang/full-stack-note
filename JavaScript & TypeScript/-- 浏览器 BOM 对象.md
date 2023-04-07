@@ -3,7 +3,7 @@ sidebar_position: 2
 ---
 
 > Create by **fall** on 13 Dec 2021
-> Recently revised in 18 Jan 2023
+> Recently revised in 24 Jan 2023
 
 ## CSS 相关
 
@@ -83,20 +83,22 @@ history.length // 输出总历史记录长度
 当前路由位置对象
 
 ```js
-// 对象上的属性
-// 哈希值，URL 中从 # 开始，之后的内容
-location.hash() 
-// 主机名，和当前的 URL 的端口号
-location.host( // 主机名，或者是域名
+// 以当前路由为
+// https://juejin.cn/search#heading-2?query=route&type=0
+
 // 完整的域名
-location.href() // "https://limestart.cn/"
-// 当前的网络请求路径
-location.pathname // "/"
+location.href // https://juejin.cn/search#heading-2?query=route&type=0
 // 使用协议
-location.protocol // "https:"
+location.protocol // https:
+// 主机名，和当前的 URL 的端口号
+location.host // juejin.cn
+// 当前的网络请求路径
+location.pathname // /search
+// 哈希值，URL 中从 # 开始，之后的内容
+location.hash // #heading-2
 // 查询字符串
-location.search //
-  
+location.search // ?query=route&type=0
+
 // 对象上的方法
 // 重新加载文档
 location.assign(URL) // 当前窗口跳转到该 url 产生新的历史记录--可以后退
@@ -109,9 +111,9 @@ location.replace(newURL)// 在当前窗口替换成新的url		不产生新的历
 
 location.protocol包括
 
-- file:本地磁盘访问
-- http:
-- https:(证书认证协议)
+- file：本地磁盘访问
+- http：
+- https：证书认证协议
 
 location.hostname 通过IP找到全球范围内该主机所在的网络地址
 
@@ -129,10 +131,6 @@ location.search 由问号拼接的部分直接提交到查询字符串中,给服
 > alert(location.search)
 
 location.hash  锚点，通过锚点可以实现单页面跳转
-
-输出网址：
-	alert(location)	数据类型是对象
-	alert(location.href) 数据类型是string
 
 ### Document
 
@@ -310,9 +308,9 @@ console.log("%c Sarah Rothberg ", a)
 
 ## 参考文章
 
-| 作者（文章名称） | 连接 |
-| ---------------- | ---- |
-|                  |      |
+| 作者（文章名称） | 连接                                                         |
+| ---------------- | ------------------------------------------------------------ |
+| MDN官方文档      | [Location](https://developer.mozilla.org/zh-CN/docs/Web/API/Location) |
 
 
 

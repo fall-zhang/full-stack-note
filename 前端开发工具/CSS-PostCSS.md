@@ -1,5 +1,5 @@
-> Create by **fall** on 2021-12-14
-> Recently revised in 2022-09-19
+> Create by **fall** on 14 Dec 2021
+> Recently revised in 04 Apr 2023
 
 ## PostCSS
 
@@ -125,6 +125,8 @@ module.exports = {
 
 ### postcss-pxtorem
 
+> 注意：不是 postcss-px2rem！
+
 ```bash
 npm install postcss-pxtorem --save
 ```
@@ -151,4 +153,88 @@ module.exports={
   }
 }
 ```
+
+全局监听
+
+```js
+// 基准大小
+const baseSize = 16
+// 设置 rem 函数
+function setRem () {
+  // 当前页面宽度相对于 1920 宽的缩放比例，可根据自己需要修改。
+  const scale = document.documentElement.clientWidth / 1920
+  // 设置页面根节点字体大小, 字体大小最小为12
+  let fontSize = (baseSize * Math.min(scale, 2))>12 ? (baseSize * Math.min(scale, 2)): 12
+  document.documentElement.style.fontSize = fontSize + 'px'
+}
+// 初始化
+setRem()
+//改变窗口大小时重新设置 rem,这里最好加上节流
+window.onresize = function () {
+  setRem()
+}
+```
+
+### postcss-px-to-viewport
+
+```json
+// 默认配置
+ {
+  unitToConvert: 'px',
+  viewportWidth: 320,
+  unitPrecision: 5,
+  propList: ['*'],
+  viewportUnit: 'vw',
+  fontViewportUnit: 'vw',
+  selectorBlackList: [],
+  minPixelValue: 1,
+  mediaQuery: false,
+  replace: true,
+  exclude: undefined,
+  include: undefined,
+  landscape: false,
+  landscapeUnit: 'vw',
+  landscapeWidth: 568
+}
+```
+
+`vue.config.js`
+
+```js
+const pxtoViewport =require("postcss-px-to-viewport")({
+  unitToConvert: "px", // 需要转换的单位，默认为"px"
+  viewportWidth: 1920, // 视窗的宽度，对应pc设计稿的宽度，一般是1920
+  // viewportHeight: 1080,// 视窗的高度，对应的是我们设计稿的高度
+  unitPrecision: 3, // 单位转换后保留的精度
+  propList: [
+    // 能转化为vw的属性列表
+    "*",
+  ],
+  viewportUnit: "vw", // 希望使用的视口单位
+  fontViewportUnit: "vw", // 字体使用的视口单位
+  selectorBlackList: [], // 需要忽略的CSS选择器，不会转为视口单位，使用原有的px等单位。cretae
+  minPixelValue: 1, // 设置最小的转换数值，如果为1的话，只有大于1的值会被转换
+  mediaQuery: false, // 媒体查询里的单位是否需要转换单位
+  replace: true, // 是否直接更换属性值，而不添加备用属性
+  exclude: /(\/|\\)(node_modules)(\/|\\)/, // 忽略某些文件夹下的文件或特定文件，例如 'node_modules' 下的文件
+})
+module.exports = {
+  //动态设置 extract 的值。开发环境设为 false，生产环境设为 true，以便打包出单独的 css 文件。
+  extract: IS_PROD,
+  sourceMap: false,
+  css: {
+    loaderOptions: {
+      postcss: {
+        plugins: [pxtoViewport],
+      },
+    },
+  },
+};
+```
+
+
+
+### postcss-px-to-viewport-8-plugin
+
+将px转换为 viewport
 
