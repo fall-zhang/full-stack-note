@@ -1,18 +1,12 @@
 > Create by fall on 22 Feb 2023
-> Recently revised in 22 Feb 2023
+> Recently revised in 10 Apr 2023
 
 ## 编写组件
 
-- rollup 编写组件
+### 项目目录
 
-项目目录
-
-```markdown
+```
 |- src
-    |- MyButton
-        |- index.js
-        |- index.vue
-        |- index.scss
     |- MyInput
         |- index.js
         |- index.vue
@@ -43,64 +37,57 @@ const install = (Vue)=>{
     Vue.use(component.name,component)
   })
 }
-
 export {
 	MyButton,
   MyInput
 }
-
 export default {
   version:version,
   install:install
 }
 ```
 
-然后是配置打包工具 rollup
+### rollup 配置
 
 `rollup-plugin-vue` 插件来解析 vue 文件
 
 是 5.x 版本解析 vue2，最新的 6.x 版本解析 vue3
 
 ```js
-import resolve from "rollup-plugin-node-resolve";
-import vue from "rollup-plugin-vue";
-import babel from "@rollup/plugin-babel";
-import commonjs from "@rollup/plugin-commonjs";
-import scss from "rollup-plugin-scss";
+import pkg from "./package.json" assert { type: 'json' };
+// 默认不支持导入 json 文件，使用声明可以暂时导入使用
 import json from "@rollup/plugin-json";
-
-const formatName = "MyUI";
-const config = {
-  input: "./src/main.js",
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import { babel } from '@rollup/plugin-babel'
+import vuePlugin from 'rollup-plugin-vue'
+export default {
+  input: "./src/index.js",
   output: [
     {
-      file: "./lib/bundle.cjs.js",
+      file: pkg.main,
       format: "cjs",
-      name: formatName,
-      exports: "auto",
     },
     {
-      file: "./lib/bundle.js",
-      format: "iife",
-      name: formatName,
-      exports: "auto",
+      file: pkg.module,
+      format: "esm",
     },
   ],
   plugins: [
+    vuePlugin(/* options */),
     json(),
-    resolve(),
-    vue({
-      css: true,
-      compileTemplate: true,
+    commonjs({
+      include: /node_modules/,
     }),
-    babel({
-      exclude: "**/node_modules/**",
+    resolve({
+      preferBuiltins: true,
+      jsnext: true,
+      main: true,
+      brower: true,
     }),
-    commonjs(),
-    scss(),
+    babel({ exclude: "node_modules/**" }),
   ],
 };
-export default config;
 ```
 
 ## 参考文章
