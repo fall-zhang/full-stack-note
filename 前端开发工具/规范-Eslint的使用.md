@@ -1,5 +1,5 @@
-> Create by **fall** on 2020-08
-> Recently revised in 2022-11-01
+> Create by **fall** on Aug 2020
+> Recently revised in 28 Apr 2023
 
 ## Eslint
 
@@ -39,7 +39,9 @@ module.exports = {
 - `warn` 或者 `1` 打开规则，表示警告，打印黄色字体（黄色波浪线）
 - `error` 或者 `2` 打开规则，并且作为错误，打印红色字体（红色波浪线）
 
-## TypeScript
+## 推荐配置
+
+### TypeScript
 
 TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而是合并到 eslint 中，添加额外插件即可使用
 
@@ -55,9 +57,7 @@ module.exports = {
 };
 ```
 
-## 推荐配置
-
-### vue
+### Vue
 
 保证 eslint 能够生效的同时，不会和 eslint 产生冲突
 
@@ -200,10 +200,6 @@ module.exports = {
 
 
 
-作者：yuxiaoliang
-链接：https://juejin.cn/post/6844903880006844424
-来源：稀土掘金
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 ## Eslint 语法配置清单
 
@@ -211,7 +207,7 @@ module.exports = {
 
 ```json
 {
-  "no-alert": 0,// 禁止使用alert confirm prompt
+  "no-alert": 0,// 禁止使用 alert confirm prompt（原生弹出框）
   "no-array-constructor": 2,// 禁止使用数组构造器，箭头函数
   "no-console": 2,// 禁止使用 console
   "no-const-assign": 2,// 禁止修改const声明的变量
