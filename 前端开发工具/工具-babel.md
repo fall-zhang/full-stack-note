@@ -5,7 +5,7 @@
 
 babel 的作用是语法转换，即比较新的语法无法在之前的浏览器上运行，使用 babel 转换后可以实现运行。
 
-所有转换将使用本地配置文件 `babel.config.js`，古老的版本是`babelrc.`
+所有转换将使用本地配置文件 `babel.config.js`，古老的版本是 `babelrc.`
 
 > 两个关于 JS 转译比较基础的概念：
 >
@@ -47,10 +47,10 @@ npm babel study.js --watch --out-file study-compiled.js
 # 如果更改了配置，需要再次执行上面的文件，不然babel读取不到最新的命令
 ```
 
-### @bebel/plugin* @babel/preset-env
+### plugin & preset
 
 - `@babel/plugin*` 是单个 polyfill 的内容（语法）
-- `@babel/preset-env` 是一堆 polyfill 的集合，就是 polyfill 后的环境
+- `@babel/preset-env` 是将一堆 polyfill 集合到一个包内，就是 polyfill 后的环境
 
 这两个模块是 babel 配置的主要模块，一个提供单个语法，一个觉得你一个一个语法加太慢了，所以提供给你几个预设，让你选择
 
@@ -132,13 +132,15 @@ not dead
 
 ### @babel/polyfill
 
-用于引入实现单个比较大的 API 的语法。
+@babel/polyfill 用于引入实现单个比较大的 API 的语法，目前已经废弃。
 
-> 注意：
->
-> `@babel/polyfill` 默认引入的是 `core-js2`。`core-js2` 在2018年后不维护了，在 babel7.4.0 已经**不推荐使用** `@babel/polyfill`了。
+使用 `core-js` 和 `regenerator-runtime` 进行代替。当使用 `useBuiltIns: "entry"` 时，会自动引用该包。
+
+> `@babel/polyfill` 默认引入的是 `core-js2`。`core-js2` 在2018年后不维护了，所以**不推荐使用** `@babel/polyfill`。
 >
 > 所以 `core-js` 官方现在推荐我们使用 polyfill 的时候直接引入 core-js 和 `regenerator-runtime/runtime` 这两个包完全取代 `@babel/polyfil `来为了防止重大更改。
+
+以下内容是对 @babel/polyfill 的介绍，可以跳过。
 
 babel/polyfill 是由 core-js2 和 regenerator-runtime 组成的一个集团包。
 
@@ -155,7 +157,9 @@ module.exports = {
       "@babel/preset-env", {
         "modules": false,
         "useBuiltIns": "entry", 
-        // 该属性用来按需引入 polyfill,只会把下面版本以上，不支持该api的polify引入
+        // 该属性用来按需引入 polyfill ,只会把下面版本以上，不支持该 api 的 polify 引入
+        // 指定 corejs 的版本 
+        "corejs":"3",
         'targets': {
           'browsers': ['ie >= 8', 'iOS 7'] // 支持ie8，直接使用iOS浏览器版本7
         }
@@ -170,35 +174,18 @@ module.exports = {
 
 `useBuiltIns` 
 
-选项："usage"|"entry"|false，默认为 false
+选项：`usage`、`entry`、`false`，默认为 false
 
 - `entry` 的意思是在入口，根据我们配置的浏览器进行浏览器兼容，将目标环境所有不支持的 API 都引入。
 - `usage` 配置为 usage 后，babel 会扫描你的每一个文件，然后检测都使用了那些新的 API，跟进配置兼容，只引入相应的 API 的 polyfilll。
 
-> 使用`usage`这个选项的时候，命令行可能报了一堆警告，意思是你没有指定版本，会默认使用 2.x版本
+> 使用 `usage` 这个选项的时候，命令行可能报了一堆警告，意思是你没有指定 core-js 的版本，会默认使用 2.x 版本
 >
 > > WARNING: We noticed you're using the `useBuiltIns` option  without declaring a core-js version. Currently, we assume version 2.x  when no version is passed. Since this default version will likely change in future versions of Babel, we recommend explicitly setting the  core-js version you are using via the `corejs` option.
 >
-> 由于 babel/polyfill 是集成包，core-js3已经发布了，而且很稳定。core-js2在2018年后不维护了，@babel/polyfill 默认引入的是 core-js2。在 babel7.4.0 已经**不推荐使用 @babel/polyfill**了。
+> 由于 babel/polyfill 是集成包，core-js3 已经发布了，而且很稳定。core-js2 在 2018 年后不维护了，@babel/polyfill 默认引入的是 core-js2。在 babel7.4.0 已经**不推荐使用 @babel/polyfill**了。
 >
-> 所以core-js官方现在推荐我们使用polyfill的时候直接引入 core-js 和 regenerator-runtime/runtime 这两个包完全取代 **@babel/polyfil** 来为了防止重大更改。
-
-```js
-module.export ={
-  preset:[
-    [
-      "@babel/preset-env",{
-       "modules":false,
-        "useBuiltIns":"entry", // 意思是在入口根据配置的浏览器进行兼容，将目标不支持的API都引入
-        // 指定 corejs 的版本 
-        "corejs":"3",
-        "targets":{'browers':['not ie>=8','iOS 7']}
-      }
-    ]
-  ],
-  plugins:[]
-}
-```
+> 所以core-js官方现在推荐我们使用 polyfill 的时候直接引入 core-js 和 regenerator-runtime/runtime 这两个包完全取代 **@babel/polyfil** 来为了防止重大更改。
 
 ### @babel/runtime
 
@@ -221,9 +208,28 @@ var Test = function Test() {
 
 > bebel 配置的注意事项：
 >
-> 在更改配置之后，一定要重启命令，否则不会生效。
+> 在更改配置之后，一定要重新启动，否则不会生效。
 >
 > 维护一些公共组件库，或者一些别的公共库推荐要使用 `@babel/runtime` 配合 `babel/plugin-transform-runtime` 来建立沙箱环境
+
+### core-js
+
+开源库 [core-js](https://github.com/zloirock/core-js) 提供了 es5、es6 的 polyfills，包括 Promises、[Symbols](https://link.jianshu.com?t=https://link.zhihu.com/?target=https%3A//github.com/zloirock/core-js%23ecmascript-6-symbol)、[collections](https://link.jianshu.com?t=https://link.zhihu.com/?target=https%3A//github.com/zloirock/core-js%23ecmascript-6-collections)、iterators、[typed arrays](https://link.jianshu.com?t=https://link.zhihu.com/?target=https%3A//github.com/zloirock/core-js%23ecmascript-6-typed-arrays)、[ECMAScript 7+ proposals](https://link.jianshu.com?t=https://link.zhihu.com/?target=https%3A//github.com/zloirock/core-js%23ecmascript-7-proposals)、[setImmediate](https://link.jianshu.com?t=https://link.zhihu.com/?target=https%3A//github.com/zloirock/core-js%23setimmediate) 等等。
+如果使用了 babel-runtime、babel-plugin-transform-runtime 或者 babel-polyfill，你就相当于间接的引入了 core-js 标准库。
+
+core-js v2 版本已经废弃，只建议使用 v3 版本的 core-js。
+
+### regenerator-runtime
+
+将 commonjs 转换为 ES6 的导入导出
+
+```js
+// CommonJS
+const regeneratorRuntime = require("regenerator-runtime");
+
+// ECMAScript 2015
+import regeneratorRuntime from "regenerator-runtime";
+```
 
 ### 其他工具集
 
@@ -253,11 +259,11 @@ babel 使用的 JavaScript 解析器，支持 JSX，Flow，TypeScript，支持�
 
 `@babel/helper`
 
-用于辅助代码，淡出语法转换可能无法让代码运行起来，比如低版本浏览器无法识别class关键字，这时候需要添加辅助代码，对class进行模拟。
+用于辅助代码，淡出语法转换可能无法让代码运行起来，比如低版本浏览器无法识别 class 关键字，这时候需要添加辅助代码，对class 进行模拟。
 
 ## 工作流程
 
-如何实现？
+babel 如何实现语法的转换？
 
 - 解析（Parsing）：将代码字符串经过**分词**与**语法分析**解析成抽象语法树（AST）。AST 是 babel 转译的核心数据结构，后续操作将依赖于 AST。
 - 转换（Transformation）：对抽象语法树进行转换操作，插件应用于此流程。
@@ -292,7 +298,14 @@ preset：包含了插件的所有功能
 ```js
 module.exports = {
   presets: [
-    '@vue/cli-plugin-babel/preset'
+    '@vue/cli-plugin-babel/preset',
+    "@babel/preset-env", {
+        'targets': {
+          'browsers': ['ie >= 8', 'iOS 7'] // 支持ie8，直接使用iOS浏览器版本7
+        }
+      }
+  ],
+  plugins: [
   ]
 }
 ```
@@ -308,12 +321,7 @@ module.exports = {
 | 5    | 让你通过一次安装，尽可能的使用所有想要的东西。               |
 | 6    | 就把一些包和插件都拆了出来可以去独立安装，分为核心模块和插件模块 |
 | 7    | 使用专用的命名空间 @balbel                                   |
-
-## core-js
-
-开源库 [zloirock/core-js](https://github.com/zloirock/core-js)
-提供了 es5、es6 的 polyfills，包括 Promises、[Symbols](https://link.jianshu.com?t=https://link.zhihu.com/?target=https%3A//github.com/zloirock/core-js%23ecmascript-6-symbol)、[collections](https://link.jianshu.com?t=https://link.zhihu.com/?target=https%3A//github.com/zloirock/core-js%23ecmascript-6-collections)、iterators、[typed arrays](https://link.jianshu.com?t=https://link.zhihu.com/?target=https%3A//github.com/zloirock/core-js%23ecmascript-6-typed-arrays)、[ECMAScript 7+ proposals](https://link.jianshu.com?t=https://link.zhihu.com/?target=https%3A//github.com/zloirock/core-js%23ecmascript-7-proposals)、[setImmediate](https://link.jianshu.com?t=https://link.zhihu.com/?target=https%3A//github.com/zloirock/core-js%23setimmediate) 等等。
-如果使用了 babel-runtime、babel-plugin-transform-runtime 或者 babel-polyfill，你就可以间接的引入了 core-js 标准库
+|      |                                                              |
 
 ## 参考文章
 
