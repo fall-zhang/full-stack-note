@@ -1,15 +1,15 @@
 > Create by fall on — — 2021
-> Recently revised in 22 Feb 2023
+> Recently revised in 08 May 2023
 
 ## vue/cli
 
-功能：快速生成一个 Vue 项目结构，简化一个项目的创建流程
+vue/cli 可以快速生成一个 Vue 项目结构，简化一个项目的创建流程
 
 > 注：vue/cli 当前处于维护模式，只进行补丁修复，建议使用 vite 代替
 
 ### 安装
 
-全局安装：`npm install -g @vue/cli`
+推荐全局安装：`npm install -g @vue/cli`
 
 ### 简介
 
@@ -53,7 +53,7 @@
 | layout     | 布局                                                   |
 | page       | 按照页面进行划分，                                     |
 
-## CLI服务
+## CLI 服务
 
 `@vue/cli-service` 安装了一个名为 `vue-cli-service` 的命令，可以在 `package.json` 中的 `script` 以 `vue-cli-service` 进行调用和访问，或者是`./node_module/.bin/vue-cli-service` 访问这个命令。
 
@@ -93,7 +93,7 @@ vue-cli-service serve [options] [entry]
 
 ## 配置
 
-如果想要让vue项目跑起来后自动打开，可以在 `package.json` 文件里面添加该配置
+如果想要让 vue 项目跑起来后自动打开，可以在 `package.json` 文件里面添加该配置
 
 ```json
 {
@@ -106,14 +106,26 @@ vue-cli-service serve [options] [entry]
 }
 ```
 
-当然，也可以通过单独的文件 `vue.config.js` 进行单独配置。
+当然，也可以通过单独的文件 `vue.config.js` 进行单独配置（推荐）。
+
+### devServer
 
 ```js
 // vue.config.js
 module.exports ={
-  devServer:{
-    open:true,
-    port:8899
+  devServer: {
+    open: true, // 项目启动后直接打开
+    host: "127.0.0.1", // 启动的主机名称
+    port: 5714,
+    proxy: { // 代理，将所有 /api 开头的内容进行代理
+      "/api": {
+        target: '192.168.100.16', // 代理的目标地址
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api": "/" // 请求时，将所有 /api 替换为 /
+        }
+      }
+    }
   }
 }
 ```
@@ -130,12 +142,10 @@ module.exports = {
     name: "fall",
     devtool: "source-map",
     resolve: {
+      // 目录别名，
       alias: {
         "@": resolve("src"),
         "@C": resolve("src/components"),
-        "@U": resolve("src/utils"),
-        "@V": resolve("src/views"),
-        "@A": resolve("src/assets")
       }
     }
   },
