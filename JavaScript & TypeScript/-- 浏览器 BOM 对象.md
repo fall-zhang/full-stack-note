@@ -275,6 +275,43 @@ b.age.ddd = '爱说不说'
 a.age.ddd // 不说
 ```
 
+## 定时器
+
+定时器相关方法
+
+```js
+function logMessage(){
+  console.log('给我一辆法拉利')
+}
+// 定时器
+const timber= setTimeout(logMessage,2000)
+if(Math.random()>0.5){
+  clearTimeout(timber)
+}
+```
+
+```js
+let x = 0
+function logMessage(){
+  x++
+  console.log('给我'+x+'辆法拉利')
+}
+const interval = setInterval(logMessage,500)
+// 在合适的时间清除事件
+// clearInterval(interval)
+```
+
+## 对话框
+
+```js
+// 提示
+window.alert('提示内容')
+// 确认
+const result = window.confirm('提示内容') // 会返回 true or false
+// 内容
+window.prompt('提示字符串','默认内容') // 返回内容，或者是 null
+```
+
 
 
 ## 控制台
