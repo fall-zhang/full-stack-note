@@ -1,5 +1,5 @@
 > Create by **fall** on Aug 2020
-> Recently revised in 28 Apr 2023
+> Recently revised in 28 Jun 2023
 
 ## Eslint
 
@@ -27,7 +27,7 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off"
   },
-  parserOptions: { //用来指定eslint解析器的
+  parserOptions: { // 用来指定 eslint 解析器的
     parser: "babel-eslint"
   }
 };
@@ -39,7 +39,59 @@ module.exports = {
 - `warn` 或者 `1` 打开规则，表示警告，打印黄色字体（黄色波浪线）
 - `error` 或者 `2` 打开规则，并且作为错误，打印红色字体（红色波浪线）
 
+### 插件
+
+**eslint-plugin-html**
+
+这个插件你可以让 eslint 去检测 html 文件 script 标签里的 js 代码
+
+**eslint-plugin-import**
+
+添加 import 和 export 的支持
+
+**eslint-plugin-node**
+
+添加对 node 的 eslint 支持
+
+**eslint-plugin-promise**
+
+添加对 promise 语法的解析
+
+**eslint-plugin-standard**
+
+为 Standard Linter 做的补充插件 This module is for advanced users.
+
 ## 推荐配置
+
+### node
+
+纯 node 的后端项目，只需要安装 eslint
+
+package.json 中的 type 属性为 module 时，eslint 识别会混乱，是无法格式化代码的，确保移除该内容
+
+```js
+module.exports = {
+  env: {
+    node: true,
+    es2021: true
+  },
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
+  root: true,
+  extends: ['eslint:recommended'],
+  rules: {
+    'no-console': 1,
+    quotes: [ 1,  'single',
+      {
+        avoidEscape: true,
+        allowTemplateLiterals: true
+      }
+    ]
+  }
+}
+```
 
 ### TypeScript
 
@@ -51,8 +103,8 @@ TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而
 // .eslintrc.cjs || cjs:commonjs
 module.exports = {
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  parser: '@typescript-eslint/parser', // 修改解析器
+  plugins: ['@typescript-eslint'], // 添加插件
   root: true,
 };
 ```
