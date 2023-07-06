@@ -1,7 +1,13 @@
 > Create by fall on ——
-> Recently revised in 2022-02-15
+> Recently revised in 03 Jul 2023
 
 ## 字符串处理方法
+
+### 是否是苹果设备
+
+```js
+const isAppleDevice = () => /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+```
 
 ### 检查是否是邮箱
 
@@ -149,6 +155,9 @@ function check(str){
 
 ```javascript
 // 随机码，包括大写，小写，数字
+/** 
+	num 表示输出字符串长度
+*/
 function randomString(num){
   var arr = []
   for(let i= 0;i<num;i++){

@@ -20,12 +20,6 @@ const goToTop = () => window.scrollTo(0, 0);
 goToTop()
 ```
 
-### 是否是苹果设备
-
-```js
-const isAppleDevice = () => /Mac|iPod|iPhone|iPad/.test(navigator.platform);
-```
-
 
 
 ## DOM操作实例
