@@ -1,5 +1,5 @@
 > Create by **fall** on ——
-> Recently revised in 2022-02-08
+> Recently revised in 07 Jul 2023
 
 # node.js
 
@@ -9,15 +9,15 @@
 
 ## 简介
 
-node.js是一个使用JavaScript语言，基于Chrome V8 引擎构建的开发平台
+node.js 是一个使用 JavaScript 语言，基于 Chrome V8 引擎构建的开发平台
 
-也就是说，js 能使用的语法，除必须依赖浏览器的 BOM、DOM 等操作，都能在 node.js 上进行实现
+也就是说，js 能使用除依赖浏览器的 BOM、DOM 等，大多数语法都能在 node.js 上进行实现
 
-> 其它JS引擎
+> 其它 JS 引擎
 >
-> - Firefox有`SpiderMonkey`
->- safari具有`JavaScriptCore`(又称为`Nitro`)
-> - Edge有`Chakra`
+> - Firefox 有 `SpiderMonkey`
+>- safari 具有 `JavaScriptCore`(又称为 `Nitro`)
+> - Edge 有 `Chakra`
 >
 
 所有这些引擎都实现了 ECMA ES-262（ECMAScript）标准
@@ -53,7 +53,7 @@ V8 引擎使用 C++ 编写，通常被认为是一门解释型语言，但是现
 >
 > 聊聊新技术吧：TypeScript、Next、Nest
 
-### node 开发的不同
+### 开发的不同
 
 node.js 开发 web 应用程序和 PHP、Java、ASP.Net 等传统开发 Web 应用程序的区别在于，传统模式必须有 Web 容器（比如说 apache 服务器）
 
@@ -62,12 +62,21 @@ node.js 开发 web 应用程序和 PHP、Java、ASP.Net 等传统开发 Web 应�
 - 提供好的基础和包管理工具
 - 测试相关 tdd / bdd 测试覆盖率
 - 规范化 standard、各种 lint、hint
-- 构建相关 gulp、grunt、webpack，大量插件
-- 包管理工具 npm 足够简单易用，不足之处也可以通过 yarn 进行代替（还是更推荐 yarn）
+- 构建相关 gulp、webpack、rollup、Vite，大量插件
+- 包管理工具 npm 足够简单易用，不足之处也可以通过 yarn、pnpm 进行代替（还是更推荐 yarn）
+
+### 应用场景
+
+目前的 nodejs 主要有以下的应用场景
+
+- 前端工程化 rollup，webpack 在前端的工程化方向
+- node 中间层
+- 客户端集成 node.js 如：electron
+- 不太复杂的应用选择 node.js 作为编程语言
 
 ## REPL介绍
 
-Read-Eval-Print-Loop(交互式解释器)
+`Read-Eval-Print-Loop`（交互式解释器）
 
 - Read：读取 - 读取用户输入，解析输入JavaScript的数据的数据结构并存储在内存中
 - Eval：执行 - 之行输入的数据结构
@@ -84,13 +93,13 @@ REPL就是命令行的工具，通过 node 进入
 
 ### REPL其他功能
 
-> **tab自动补全**：在输入一部分命令之后，可以使用tab键自动补全
->
-> **探索JavaScript对象**：输入完一个对象(`Number.`)之后，通过tab键可以打印可访问的所有属性和方法
->
-> **探索全局对象**：`global.` 再按下tab键。
->
-> **`_`特殊变量**：如果在某些代码之后输入`_`会打印最后一次操作结果。
+**tab自动补全**：在输入一部分命令之后，可以使用tab键自动补全
+
+**探索JavaScript对象**：输入完一个对象(`Number.`)之后，通过tab键可以打印可访问的所有属性和方法
+
+**探索全局对象**：`global.` 再按下tab键。
+
+**`_`特殊变量**：如果在某些代码之后输入`_`会打印最后一次操作结果。
 
 **点命令**
 
@@ -111,7 +120,7 @@ REPL就是命令行的工具，通过 node 进入
 - 不要用中文
 - 不要包含空格
 - 不要出现node关键字，比如不能命名为node.js。
-- 用 '-' 划分单词
+- 用 `-` 划分单词
 
 **输出到命令行**
 
@@ -136,7 +145,11 @@ REPL就是命令行的工具，通过 node 进入
 >
 > 它不会出现在控制台中，但是会出现在错误日志中。
 
-## 模块化
+## CommonJS
+
+最开始没有 ES6 的模块化概念，因此 node 使用 Commonjs 规范，进行补充模块化开发。
+
+> package.json 中可以设置 `"type":"module"` 即可启用 ES6 import 方式的导入（实验功能，node 版本 >16）
 
 node 模块分为**全局模块**和**非全局模块**
 
@@ -144,26 +157,74 @@ node 模块分为**全局模块**和**非全局模块**
 
 非全局模块，需要调用才能进行使用，由于 node 最初是使用 common.js 规范，所以引入模块的方式是
 
-`const fs = require('fs')` 可以导入并使用 fs 模块。并且每个独立的文件的对象和变量都是私有的，不会公开给外界。
+```js
+const fs = require('fs')
+// 可以导入并使用 fs 模块。并且每个独立的文件的对象和变量都是私有的，不会公开给外界。
+```
 
-ES6 中增加了新的模块导入的方法：
+### 模块化
 
-- `import './library.js'` 导入之后，立即执行导入的模块
-- `import library from './library.js'` 导入之后，可以通过 library 进行调用暴露的方法
-- `import {score} from './library.js'` 可以只导入library.js 中的一个小模块 score
+如果代码文件不能进行交互，添加功能就要在一个文件中实现，这个文件写的多厉害，多么方便查看，对于一个人来说，不断地查找上下文，耗时耗力。如果文件出错，整个项目都无法运行，所以出现CommonJS，让多个文件组成一个项目，并且让 JS 语言具有开发大型项目的能力。
 
-### CommonJS
-
-为什么要使用 CommonJS？
-
-如果代码文件不能进行交互，添加功能就要在一个文件中实现，这个文件写的多厉害，多么方便查看，对于一个人来说，不断地查找上下文，耗时耗力。如果文件出错，整个项目都无法运行，所以出现CommonJS，让多个文件组成一个项目，并且让JS语言具有开发大型项目的能力。
-
-Commonjs，作为模块化标准，node.js 作为commonJS的技术实现。
+Commonjs，作为模块化标准，node.js 作为 CommonJS 的技术实现。
 
 Node中，提供的模块分为两类，
 
 - 核心模块：Node提供的，称为核心模块。核心模块在 Node 源代码的编译过程中，编译进了二进制执行文件，所以它的加载速度是最快。http模块，fs模块，url模块。
 - 文件模块：用户编写的模块
+
+ 两个对象
+
+**默认导出**
+
+```js
+// test.js 文件，用作向外暴露接口
+module.exports = function(){
+  console.log("这就是调用的东西")
+}
+// 其他文件使用 test.js
+var ss = require("./test")
+ss()
+```
+
+**普通导出**
+
+```js
+// test.js
+exports.world = function(){
+  console.log('hello')
+}
+// 其他文件进行使用时
+const hello = require('./test.js')
+hello.world()
+```
+
+require 的查找顺序
+
+- 首先在文件模块缓存区
+- 是否是原生模块，如果是，并且在文件缓存区，直接加载，不在缓存区进行加载原生模块，然后放入缓存区。
+- 查找文件模块，根据扩展名载入，并且进行缓存
+
+
+
+- 当前 node.js（16） 仍然默认启用 CommonJS 规范，所以，不支持 `import` 导入其他的包。
+- 所有代码都运行在模块作用域，不会污染全局作用域。
+- 模块可以被多次加载，但只会运行一次，然后将结果进行缓存，之后调用会直接调用缓存的结果，如果不想再调用，必须清除缓存
+- 模块的加载顺序和代码顺序相同。
+- CommonJS 规范是服务器规范，一般先下载到本地再调用。
+- 读取速度非常，快采用同步的执行方式。
+
+> 浏览器为何不能兼容CommonJS
+>
+> 缺少四个环境变量：module/exports/require/global
+
+### 规范对比
+
+ESM 模块和 CommonJS 模块的差异：
+
+- `CommonJS` 模块输出的是一个值的拷贝（一旦输出一个值，模块内部的变化就影响不到这个值），`ES6` 模块输出的是值的引用（是动态引用且不会缓存值，模块里的变量绑定其所在的模块，等到脚本真正执行时，再根据这个只读引用到被加载的那个模块里去取值）；
+- `CommonJS` 模块是运行时加载，`ES6` 模块是编译时输出接口；
+- `CommonJS` 模块的 `require()` 是同步加载模块，`ES6` 模块的 `import` 命令是异步加载，有一个独立的模块依赖的解析阶段；
 
 ## 参考文章
 

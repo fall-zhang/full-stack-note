@@ -37,14 +37,14 @@
 | -------------------- | ------------------------------------------------------------ |
 | name（必填           | 设置应用程序 / 软件包的名称                                  |
 | version（必填        | 表明当前的版本                                               |
-| private              | 私有，防止应用程序 / 软件包被意外发布到 npm 公共仓库         |
+| private              | 私有，防止应用程序 / 软件包被意外发布到 npm 公共仓库（会禁用 npm publish 命令） |
 | scripts              | 定义了一组可以运行的 node 脚本                               |
 | description          | 应用程序 / 软件包的简短描述                                  |
 | dependencies         | 设置了作为依赖安装的 npm 安装包列表                          |
 | devDependencies      | 设置作为开发依赖安装的 `npm` 软件包的列表，不会作为依赖树被安装 |
 | peerDependencies     | 于表示与另一个包的依赖与兼容性关系来警示使用者。             |
 | optionalDependencies | 可选依赖，安装失败也不会报错，比如控制台高亮的 `chalk`       |
-| type                 | type 为 module 可以表明当前使用 `import` 的方式引入包，`node>16` |
+| type                 | type 属性设置为 module 可以表明当前使用 `import` 的方式引入包，需要 `node>16` |
 
 ```json
 {
