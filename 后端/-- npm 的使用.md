@@ -1,5 +1,5 @@
 > Create by **fall** on — — 2020
-> Recently revised in 21 Feb 2023
+> Recently revised in 24 Jul 2023
 
 ## npm 的使用
 
@@ -83,8 +83,6 @@ npm i rollup@3.9.1 -S-D
 - `npm view <package-name> version`：查看该软件的最新版本
 - `npm view <package-name> versions`  查看该插件的所有版本
 
-
-
 **本地查找**
 
 - 查找当前工作区安装的模块：`npm list`
@@ -95,7 +93,6 @@ npm i rollup@3.9.1 -S-D
 | `npm root -g`     | 查看全局模块的安装路径<br />如果使用 nvm 管理工具，位置可能会不同 |
 | `npm init`        | 创建 JSON 文件，初始化本地开发环境                           |
 | `npm cache clean` | 清除 npm 本地的缓存，可使用 `-f` 强制清除缓存                |
-|                   |                                                              |
 
 ### npx
 
@@ -197,10 +194,6 @@ disco ld as -v
 # 5
 # C:\Program Files\nodejs\node.exe
 ```
-
-
-
-
 
 ## npm 包的发布
 
