@@ -41,3 +41,13 @@ export default {
 };
 ```
 
+## 插件
+
+### rollup-plugin-visualizer
+
+用来查看打包后的包体积大小
+
+```js
+
+```
+
