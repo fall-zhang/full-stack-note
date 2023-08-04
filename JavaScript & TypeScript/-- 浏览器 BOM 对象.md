@@ -277,6 +277,8 @@ a.age.ddd // 不说
 
 ## 定时器
 
+### setTimeout
+
 定时器相关方法
 
 ```js
@@ -300,6 +302,15 @@ const interval = setInterval(logMessage,500)
 // 在合适的时间清除事件
 // clearInterval(interval)
 ```
+
+- 调用 setTimeout 后，会创建一个宏事件队列存放定时器任务
+- 则使用值 0，意味着“立即”执行，或者更准确地说，在下一个事件循环执行。
+- setTimeout 回调函数中的 this 指向全局 window。
+- 因为延时值是以 32 个 bit 存储的，延时执行时间最大值是 24.8 天
+- 根据 HTML5 的标准，`setTimeout()`最少为 4ms
+- 如果当前任务执行时间过久，会影响下一个事件任务的执行；
+- 如果 setTimeout 存在嵌套调用（5 次以上），判断该函数方法被阻塞，系统会设置最短时间间隔为 4 秒；
+- 未激活的页面，setTimeout 执行最小间隔是 1000 毫秒
 
 ## 对话框
 
