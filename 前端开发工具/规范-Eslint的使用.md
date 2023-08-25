@@ -117,10 +117,17 @@ module.exports = {
 {
   rules: {
     // vue
+    "vue/html-self-closing": 'off',
+    "vue/html-indent": ["off", 2],
     "vue/singleline-html-element-content-newline": "off",
     "vue/multiline-html-element-content-newline": "off",
     "vue/html-quotes": ["error", "double"],
     "vue/multi-word-component-names": ["off"],
+    "vue/first-attribute-linebreak": 0,
+    "vue/html-closing-bracket-newline": 0,
+    // "vue/max-attributes-per-line":[2,0],
+    "vue/max-attributes-per-line": 0, // 每行最多有多少属性
+    "vue/attribute-hyphenation": 0, // 使用 - 分割去代替标签中大写的属性
     // js
     indent: ["error", 2], // 2 行缩进
     semi: ["error", "never"], // 禁止使用分号
