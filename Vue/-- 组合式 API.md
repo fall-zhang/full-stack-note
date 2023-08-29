@@ -7,8 +7,6 @@
 
 > 注意：setup 是在 beforeCreated 前执行，如果阻塞，会导致组件渲染不出来，同 beforeCreated。不用担心某个方法会在 mounted 之后执行（异步除外）。
 
-
-
 ## 文件结构
 
 ```vue
