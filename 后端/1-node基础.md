@@ -1,5 +1,5 @@
 > Create by **fall** on ——
-> Recently revised in 07 Jul 2023
+> Recently revised in 03 Sep 2023
 
 # node.js
 
@@ -11,68 +11,66 @@
 
 node.js 是一个使用 JavaScript 语言，基于 Chrome V8 引擎构建的开发平台
 
-也就是说，js 能使用除依赖浏览器的 BOM、DOM 等，大多数语法都能在 node.js 上进行实现
+也就是说，js 能使用除依赖浏览器的 BOM、DOM 等，大多数语法都能在 node.js 上进行使用（JS 既可以做前端，又可以做后端）。
 
 > 其它 JS 引擎
 >
 > - Firefox 有 `SpiderMonkey`
->- safari 具有 `JavaScriptCore`(又称为 `Nitro`)
+> - safari 具有 `JavaScriptCore`(又称为 `Nitro`)
 > - Edge 有 `Chakra`
 >
+> 所有这些引擎都实现了 ECMA ES-262（ECMAScript）标准
 
-所有这些引擎都实现了 ECMA ES-262（ECMAScript）标准
+V8 引擎使用 C++ 编写，通常被认为是一门解释型语言，但是现代的 JavaScript 也会对其进行编译。JavaScript 是由 V8 在其内部编译的，使用了即时编译（JIT：Just In Time）以加快执行速度。
 
-V8 引擎使用 C++ 编写，通常被认为是一门解释型语言，但是现代的 JavaScript 不再是解释 JavaScript，也会对其进行编译。JavaScript 是由V8在其内部编译的，使用了即时编译（JIT：Just In Time）以加快执行速度。
+### 开发
+
+**node.js 的优势**
+
+- 事件驱动（事件出发时，执行并传递过去的回调函数）
+- 非阻塞 I/O 模型（IO 操作时不会阻塞线程）
+- 拥有世界最大的开源库生态系统 ---- `npm`
 
 通过 node 可以开发：
 
 - 控制台程序（命令行程序、CLI 程序）
 - 桌面应用程序（GUI：Graphical User Interface），借助 `node-webkit`、`electron`等框架
-- web应用程序
+- 开发 web 应用程序，处理前端请求
 
-**node.js 的特性**
+node.js 开发工具，帮助更好地进行开发
 
-- 事件驱动（事件出发时，执行并传递过去的回调函数）
-- 非阻塞I/O模型（IO操作时不会阻塞线程）
-- 单线程
-- 拥有世界最大的开源库生态系统----`npm`
+- 提供基础工具和包管理工具： yarn、pnpm
+- 规范化代码的工具、eslint、prettier
+- 测试相关 tdd / bdd 测试覆盖率
+- 构建和前端工程化相关 gulp、webpack、rollup、Vite，和他们的插件
+- node 中间层
+- 客户端应用 node.js 如：electron
 
-**Web 开发做什么**
+### 应用场景
+
+开发 web 应用程序
 
 - 请求：客户端发起请求
 - 处理：服务器处理请求
 - 响应：服务器将处理结果发送到客户端
 
+node.js 开发 web 应用程序和 PHP、Java、ASP.Net 等传统开发 Web 应用程序的区别在于，传统模式必须有 Web 容器（比如说 apache 服务器，负责对网络数据进行解析和请求）
+
 > **网站开发技术栈**
 >
-> PHP 开发技术栈（我没兴趣）：LAMP - Linux Apache MySQL PHP
+> PHP 语言：LAMP - Linux Apache MySQL PHP（全栈开发技术栈）
 >
 > node.js 全栈开发技术栈：MEAN - MongoDB Express Angular Node.js
 >
-> express 已经成为明日黄花，Angular，也是快走到了生命周期的尽头，推荐更换为 Vue，React
+> Angular 可以替换为 Vue 或者是 React，express 已经成为 node 后端开发基础
 >
-> 聊聊新技术吧：TypeScript、Next、Nest
-
-### 开发的不同
-
-node.js 开发 web 应用程序和 PHP、Java、ASP.Net 等传统开发 Web 应用程序的区别在于，传统模式必须有 Web 容器（比如说 apache 服务器）
-
-**使用 node.js 开发的优点**
-
-- 提供好的基础和包管理工具
-- 测试相关 tdd / bdd 测试覆盖率
-- 规范化 standard、各种 lint、hint
-- 构建相关 gulp、webpack、rollup、Vite，大量插件
-- 包管理工具 npm 足够简单易用，不足之处也可以通过 yarn、pnpm 进行代替（还是更推荐 yarn）
-
-### 应用场景
-
-目前的 nodejs 主要有以下的应用场景
-
-- 前端工程化 rollup，webpack 在前端的工程化方向
-- node 中间层
-- 客户端集成 node.js 如：electron
-- 不太复杂的应用选择 node.js 作为编程语言
+> 新技术：
+>
+> TypeScript：为 JS 添加类型注解，拥有强类型语言的功能
+>
+> Nuxt、Next：以 Vue、React 为基础的服务端渲染（SSR）方案
+>
+> Nest：google 推出，提供一套类似于将 Spring JS 化的框架。
 
 ## REPL介绍
 
