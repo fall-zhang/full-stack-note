@@ -115,13 +115,13 @@ c、规则：
 - `git diff --shortstat "@{0 day ago}"` 看看自己一天写了多少行代码
 - 只克隆最近 number 次分支 `git clone --depth=[number] [git_url]`
 - 只克隆某一分支 `git clone --single-branch -b [name]`
-- 查看远程仓库`git remote -v`
-- 显示有变更的文件`git status`
+- 查看远程仓库 `git remote -v`
+- 显示有变更的文件 `git status`
 - 退回到上一个版本：`git reset --hard head`
 - 查看日志：`git log ` 或者 `git reflog`
 - 查看工作区和暂存区版本区别 `git diff`
-- 回退上一个版本`git reset --hard HEAD^` 每多一个 `^` 多回退一个版本
-- 回退到指定版本`git reset --hard version` version 为版本号
+- 回退上一个版本 `git reset --hard HEAD^` 每多一个 `^` 多回退一个版本
+- 回退到指定版本 `git reset --hard version` version 为版本号
 
 ### 创建代码仓库
 
