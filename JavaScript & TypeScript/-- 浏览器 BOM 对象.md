@@ -134,17 +134,23 @@ location.hash  锚点，通过锚点可以实现单页面跳转
 
 ### Document
 
-集合
+数组
 
 ```js
 // 锚点对象数组
-document.anchors[]
+document.anchors
 // 图片对象数组
-document.images[]
+document.images
 // 连接对象数组
-document.links[]
+document.links
 // 表单对象数组
-document.forms[]
+document.forms
+// 返回页面中所有嵌入对象
+document.embeds
+// 返回当前网页的所有样式表
+document.styleSheets
+// 返回文档中的所有样式
+document.scripts
 ```
 
 属性
@@ -154,10 +160,12 @@ document.forms[]
 document.cookie
 // 当前文档的域名
 document.domain
-// 当前文档的 URL
+// 从哪个页面（URL）跳转到的当前文档
 document.referrer
 // 当前文档的标题
 document.title
+// 当前文档使用的字符集
+document.characterSet 
 ```
 
 方法
