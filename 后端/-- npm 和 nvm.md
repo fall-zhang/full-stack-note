@@ -1,5 +1,5 @@
 > Create by **fall** on — — 2020
-> Recently revised in 24 Jul 2023
+> Recently revised in 16 Sep 2023
 
 ## npm 的使用
 
@@ -195,7 +195,7 @@ disco ld as -v
 # C:\Program Files\nodejs\node.exe
 ```
 
-## npm 包的发布
+### npm 包的发布
 
 首先登陆 `npm adduser`，或者 `npm login`，如果没有账号，请上官网进行注册。
 
@@ -242,6 +242,41 @@ npm init --scope=username
 # 初始化时添加域的名称
 ```
 
+## nvm 的使用
+
+nvm 是 node 版本控制工具
+
+> 注：windows 上运行的 nvm 和 linux & MacOS 上的 nvm 工具不是一个项目，它们是两个团队做出来的东西。
+
+nvm（Linux、Unix、OS X）的安装：https://github.com/creationix/nvm
+
+nvm（Windows）安装：https://github.com/coreybutler/nvm-windows
+
+### 常用命令
+
+```bash
+# 安装最新版本的 node
+nvm install node
+nvm install latest
+# 当前所拥有的 node 的版本
+nvm list
+nvm ls
+# 切换到淘宝镜像
+nvm use taobao
+# 全局安装 nvm 命令
+npm install -g nvm
+# 当前nvm工具的版本
+nvm -v
+# 使用 12.22.12 版本的 node
+nvm use 12.22.12
+# 卸载该版本的 node.js
+nvm uninstall 8.4.0
+```
+
+
+
+
+
 ## 参考文章
 
 | 作者            | 链接                                                         |
@@ -249,6 +284,7 @@ npm init --scope=username
 | 深入浅出 nodejs | 第二章                                                       |
 | levy9527        | [📦vue组件发布npm最佳实践](https://juejin.cn/post/6844903620916281358) |
 |  谢小飞      |  [从零开始发布自己的NPM包](https://juejin.cn/post/7052307032971411463)    |
+|                 |                                                              |
 
 
 
