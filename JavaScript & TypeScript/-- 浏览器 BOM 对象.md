@@ -243,6 +243,33 @@ window.defaultStatus
 window.status
 ```
 
+## 缓存
+
+### localStorage
+
+localStorage 只能存储字符串
+
+```js
+localStorage.setItem('user_name','fall')
+localStorage.getItem('user_name')
+localStorage.clear()
+```
+
+### sessionStorage
+
+sessionStorage 只能存储字符串
+
+```js
+sessionStorage.setItem('user_name','fall')
+sessionStorage.getItem('user_name')
+sessionStorage.clear()
+```
+
+> sessionStorage 和 localStorage 区别在于
+>
+> - sessionStorage 中的数据，只能在当前页面进行使用，哪怕是同一个页面，也不会访问到，会随着浏览器关闭而清除
+> - localSotrage 可以在多个页面中进行共享
+
 ## 数据处理
 
 `parseInt(string[,radix])` 其中 radix 的范围是 `2-36`，即从 2 进制到 36 进制去解析前面的字符串。默认是十进制。
