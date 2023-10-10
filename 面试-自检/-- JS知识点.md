@@ -553,27 +553,7 @@ function flatten(obj) {
 flatten();
 ```
 
-
-
-### undefined 和 null 的区别是什么？
-
-- undefined 是此处应该有一个值，但是没定义。
-- null 是不应该有值
-
-```js
-var a;
-i // undefined
-function b(x){console.log(x)}
-b() // undefined
-var  c = new Object();
-c.p // undefined
-var d = f();
-d // undefined
-```
-
-判断一个值是否存在的话，使用的是 a === undefined 而不是，a==null，后者只能判断是否为 null
-
-### 手写-防抖节流（京东）
+### 手写-防抖节流
 
 ```js
 // 防抖
@@ -722,7 +702,9 @@ const res = maxLength('abcdeffeeduxfnaomx')
 console.log(res);
 ```
 
-### 手写-怎么在指定数据源里面生成一个长度为 n 的不重复随机数组 能有几种方法 时间复杂度多少（字节）
+### 算法
+
+怎么在指定数据源里面生成一个长度为 n 的不重复随机数组 能有几种方法 时间复杂度多少
 
 - 第一版 时间复杂度为 O(n^2)
 
@@ -772,7 +754,6 @@ function getTenNum(testArray, n) {
   const cloneArr = [...testArray];
   let result = [];
   for (let i = 0; i < n; i++) {
-    debugger;
     const ran = Math.floor(Math.random() * (cloneArr.length - i));
     result.push(cloneArr[ran]);
     cloneArr[ran] = cloneArr[cloneArr.length - i - 1];
@@ -831,7 +812,7 @@ function deepClone(content){
 const child = deepClone(obj)
 ```
 
-### 手写 promise.all 和 race（京东）
+### 手写 promise.all 和 race
 
 ```js
 //静态方法
