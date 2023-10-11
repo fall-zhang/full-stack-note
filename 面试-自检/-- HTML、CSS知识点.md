@@ -1,6 +1,9 @@
 > Create by **fall** on 18 Oct 2021
 > Recently revised in 11 Oct 2023
 
+https://github.com/haizlin/fe-interview/blob/master/category/css.md
+> 现在学习更新到 issue 107
+
 ## 初级
 
 ### 使用 `<link>` 和 `@import` 有什么区别？
@@ -49,6 +52,17 @@
 
 - 伪类：表示不能通过类去触碰的地方，或者是特殊的状态
 - 伪元素：某些内容的特殊位置，比如第一个字符 `::first-letter`
+
+### rgba()和opacity这两个的透明效果有什么区别呢？
+
+- opacity 会设置整个容器的透明度，无论是里面的字体还是背景颜色，
+- rgba 设置的是颜色，只会对设置该颜色的内容产生影响。
+
+### 如何使元素进行隐藏
+
+- opacity：设置整个 DOM 的透明度
+- visibility：设置是否可见，隐藏后不能触发事件，不可到达（比如 tab，切换表单的事件）
+- display：none 在渲染树中移除整个 DOM。
 
 ### css 的渲染层合成是什么，浏览器如何创建新的渲染层
 
@@ -229,6 +243,11 @@ function _render(vnode) {
 ```
 
 ## 中等
+
+### 如何取消 Chrome 中自动填充的黄色背景
+
+- 设置设置内阴影： `box-shadow: inset`
+- 设置文字填充颜色：`-webkit-text-fill-color`
 
 ### css 开启硬件加速
 
