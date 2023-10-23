@@ -1,7 +1,13 @@
 > Create by **fall** on 10 Oct 2023
 > Recently revised in 11 Oct 2023
 
+### json 和 xml 数据的区别
 
+1. 数据体积方面：xml是重量级的，json是轻量级的，传递的速度更快些。 
+2. 数据传输方面：xml在传输过程中比较占带宽，json占带宽少，易于压缩。 
+3. 数据交互方面：json与javascript的交互更加方便，更容易解析处理，更好的进行数据交互 
+4. 数据描述方面：json对数据的描述性比xml较差 
+5. xml和json都用在项目交互下，xml多用于做配置文件，json用于数据交互。 
 
 a.js 和 b.js 两个文件互相 require 是否会死循环? 双方是否能导出变量? 如何从设计上避免这种问题?
 

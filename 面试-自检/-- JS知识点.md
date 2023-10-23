@@ -442,7 +442,7 @@ function mySetInterval(fn, time = 1000) {
 // cancel()
 ```
 
-### 手写-查找数组公共前缀（美团）
+### 查找数组公共前缀
 
 题目描述
 
@@ -460,7 +460,6 @@ function mySetInterval(fn, time = 1000) {
 输入：strs = ["dog","racecar","car"]
 输出：""
 解释：输入不存在公共前缀。
-复制代码
 ```
 
 答案
@@ -621,6 +620,52 @@ class EventEmitter {
 // });
 // event.emit("dbClick");
 // event.emit("dbClick");
+```
+
+### 实现一个 Scheduler 类，完成对Promise的并发处理，最多同时执行2个任务
+
+```js
+class Scheduler {
+  constructor() {
+    this.tasks = [], // 待运行的任务
+      this.usingTask = [] // 正在运行的任务
+  }
+  // promiseCreator 是一个异步函数，return Promise
+  add(promiseCreator) {
+    return new Promise((resolve, reject) => {
+      promiseCreator.resolve = resolve
+      if (this.usingTask.length < 2) {
+        this.usingRun(promiseCreator)
+      } else {
+        this.tasks.push(promiseCreator)
+      }
+    })
+  }
+  usingRun(promiseCreator) {
+    this.usingTask.push(promiseCreator)
+    promiseCreator().then(() => {
+      promiseCreator.resolve()
+      this.usingMove(promiseCreator)
+      if (this.tasks.length > 0) {
+        this.usingRun(this.tasks.shift())
+      }
+    })
+  }
+  usingMove(promiseCreator) {
+    let index = this.usingTask.findIndex(promiseCreator)
+    this.usingTask.splice(index, 1)
+  }
+}
+const timeout = (time) => new Promise(resolve => {
+  setTimeout(resolve, time)
+})
+const scheduler = new Scheduler()
+const addTask = (time, order) => {
+  scheduler.add(() => timeout(time)).then(() => console.log(order))
+}
+addTask(400, 4) 
+addTask(200, 2) 
+addTask(300, 3) 
 ```
 
 ### 写-判断括号字符串是否有效
@@ -916,29 +961,9 @@ const res = maxLength('abcdeffeeduxfnaomx')
 console.log(res);
 ```
 
-### 算法
+### 生成一个长度为 n 的不重复随机数组
 
 怎么在指定数据源里面生成一个长度为 n 的不重复随机数组 能有几种方法 时间复杂度多少
-
-- 第一版 时间复杂度为 O(n^2)
-
-```js
-function getTenNum(testArray, n) {
-  let result = [];
-  for (let i = 0; i < n; ++i) {
-    const random = Math.floor(Math.random() * testArray.length);
-    const cur = testArray[random];
-    if (result.includes(cur)) {
-      i--;
-      break;
-    }
-    result.push(cur);
-  }
-  return result;
-}
-const testArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-const resArr = getTenNum(testArray, 10)
-```
 
 - 第二版 标记法 / 自定义属性法 时间复杂度为 O(n) 
 
@@ -1097,3 +1122,174 @@ result // 43
 > 注意！很多同学可能会忽略 bind 绑定的函数作为构造函数进行 new 实例化的情况
 >
 > 如果这个返回的新的函数作为构造函数创建一个新的对象，那么此时 this 不再指向传入给 bind 的第一个参数，而是指向用 new 创建的实例
+
+
+
+### 三数之和
+
+题目描述
+
+给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
+
+实际上就是找所有 C<sub>n</sub><sup>3</sup> 的组合，然后求和，注意：不能重复，要为数组去重
+
+注意：答案中不可以包含重复的三元组。
+
+```js
+//例如, 给定数组 nums = [-1, 0, 1, 2, -1, -4]，
+//满足要求的三元组集合为：
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+```
+
+这题我们才用排序 + 双指针的思路来做，遍历排序后的数组，定义指针 l 和 r，分别从当前遍历元素的下一个元素和数组的最后一个元素往中间靠拢，计算结果跟目标对比。
+
+```js
+var threeSum = function(nums) {
+  if(nums.length < 3){
+    return [];
+  }
+  let res = [];
+  // 排序
+  nums.sort((a, b) => a - b);
+  for(let i = 0; i < nums.length; i++){
+    if(i > 0 && nums[i] == nums[i-1]){
+      // 去重
+      continue;
+    }
+    if(nums[i] > 0){
+      // 若当前元素大于0，则三元素相加之后必定大于0
+      break;
+    }
+    // l为左下标，r为右下标
+    let l = i + 1; r = nums.length - 1;
+    while(l<r){
+      let sum = nums[i] + nums[l] + nums[r];
+      if(sum == 0){
+        res.push([nums[i], nums[l], nums[r]]);
+        while(l < r && nums[l] == nums[l+1]){
+          l++
+        }
+        while(l < r && nums[r] == nums[r-1]){
+          r--;
+        }
+        l++;
+        r--;
+      }
+      else if(sum < 0){
+        l++;
+      }
+      else if(sum > 0){
+        r--;
+      }
+    }
+  }
+  return res;
+};
+```
+
+## 读代码
+
+### 异步代码执行
+
+```js
+// 今日头条面试题
+async function async1() {
+  console.log('async1 start')
+  await async2()
+  console.log('async1 end')
+}
+async function async2() {
+  console.log('async2')
+}
+console.log('script start')
+setTimeout(function () {
+  console.log('settimeout')
+})
+async1()
+new Promise(function (resolve) {
+  console.log('promise1')
+  resolve()
+}).then(function () {
+  console.log('promise2')
+})
+console.log('script end')
+```
+
+```
+script start
+async1 start
+async2
+promise1
+script end
+async1 end
+promise2
+settimeout
+```
+
+### 代码解释
+
+**题目一**
+
+```js
+var min = Math.min();
+max = Math.max();
+console.log(min < max);
+// 写出执行结果，并解释原因
+```
+
+```
+Math.min 的参数是 0 个或者多个，如果多个参数很容易理解，返回参数中最小的。如果没有参数，则返回 Infinity，无穷大。
+而 Math.max 没有传递参数时返回的是-Infinity.所以输出 false
+```
+
+**题目二**
+
+```js
+var company = {
+    address: 'beijing'
+}
+var yideng = Object.create(company);
+delete yideng.address
+console.log(yideng.address);
+// 写出执行结果，并解释原因
+```
+
+```
+// beijing 
+这里的 yideng 通过 prototype 继承了 company的 address。yideng 自己并没有 address 属性。所以 delete 操作符的作用是无效的。 
+
+delete 能删除的：
+（1）可配置对象的属性（2）隐式声明的全局变量 （3）用户定义的属性 （4）在ECMAScript 6中，通过 const 或 let 声明指定的 "temporal dead zone" (TDZ) 对 delete 操作符也会起作用
+
+delete 不能删除的：
+（2）显式声明的全局变量 （2）内置对象的内置属性 （3）一个对象从原型继承而来的属性
+
+delete 删除数组元素：
+（1）当你删除一个数组元素时，数组的 length 属性并不会变小，数组元素变成 undefined
+
+delete 操作符与直接释放内存（只能通过解除引用来间接释放）没有关系。
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
