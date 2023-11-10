@@ -5,7 +5,7 @@
 
 官方网址：https://cn.eslint.org/docs/rules/
 
-作为一个语法检查工具，可以用来保证代码书写格式的绝对正确。任何错误（语法）都能被查找出来。
+作为一个语法检查工具，可以用来保证代码书写格式的正确。任何错误（语法）都能被查找出来。
 
 一般作为配置项配置在 `.eslintrc.js` 中，或者可能配置在 `package.json` 中作为配置项。
 
@@ -180,11 +180,17 @@ module.exports = {
 
 ```json
 {
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended'
+  ],
   rules: {
     // js
-    'no-else-return': 2, //如果 if 语句里面有 return ,后面不能跟 else 语句
+    'no-else-return': 2, //如果 if 语句里面有 return 后面不能跟 else 语句
     'arrow-body-style': 0,
     'jsx-a11y/label-has-for': 0,
+    'comma-dangle': 0, // 最后一个对象末尾可以加 ,（逗号）
     'max-lines-per-function': [
       2,
       { max: 320, skipComments: true, skipBlankLines: true }
@@ -209,19 +215,22 @@ module.exports = {
     ],
     'react/no-this-in-sfc': 0,
     'react/prop-types': 0,
-    'comma-dangle': ['error', 'never'], // 最后一个属性不允许有逗号
     'react/display-name': 'off'
   }
 }
 ```
 
-## 同 IDE 使用
+## IDE 配置
+
+### VScode
+
+安装 eslint 插件后
 
 酌情修改 VScode 中 `setting.json` 的内容、
 
 ```json
 {
-  "eslint.enable": true, //是否开启vscode的eslint
+  "eslint.enable": true, //是否开启 vscode 的 eslint
   "eslint.autoFixOnSave": true, //是否在保存的时候自动fix eslint
   "eslint.options": { //指定vscode的eslint所处理的文件的后缀
     "extensions": [
@@ -253,12 +262,6 @@ module.exports = {
   ]
 }
 ```
-
-
-
-
-
-
 
 ## Eslint 语法配置清单
 
