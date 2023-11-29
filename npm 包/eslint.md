@@ -1,35 +1,41 @@
-> Create by **fall** on Aug 2020
-> Recently revised in 28 Jun 2023
+> Create by **fall** on -- Aug 2020
+> Recently revised in 14 Nov 2023
 
 ## Eslint
 
 官方网址：https://cn.eslint.org/docs/rules/
 
-作为一个语法检查工具，可以用来保证代码书写格式的绝对正确。任何错误（语法）都能被查找出来。
+作为一个语法检查工具，可以用来保规范代码格式。减少语法错误，统一团队编码风格。
 
 一般作为配置项配置在 `.eslintrc.js` 中，或者可能配置在 `package.json` 中作为配置项。
 
+标准的 eslint 配置：
+
 ```js
+// .eslintrc.js
 module.exports = {
+  // 设置一些自定义的全局变量，保证引用时不会出现报错
   globals:{
-    ref:true, // 设置一些自定义的全局变量，保证使用时不会出现报错
+    ref: true,
   },
-  root: true,  // 用来告诉 eslint 找当前配置文件
+  root: true,  // 用来告诉 eslint 当前配置文件在根目录，不必再向上查找
   env: {  // 指定你想启用的环境，下面的配置指定为 node 环境
     node: true
   },
-  extends: ["plugin:vue/essential", "@vue/prettier"],  // 格式化代码插件
-  parserOptions: { // 语法分析器版本
-    ecmaVersion: 2020,
+  plugins:[], // 插件可以暴露额外的规则以供使用。为此，插件必须输出一个 rules对象
+  extends: ["plugin:vue/essential"],  // 继承共享的配置规则
+  parserOptions: { //指定 eslint 语法分析器版本
+    ecmaVersion: 2022,
+    sourceType:"script", // 使用 es 模块.
+    // ecmaFeatures: { // ecma 特性，比如支持 jsx
+    //   "jsx": true
+    // }
   },
   rules: {  // 语法规则
     //  "规则名": [错误等级值, 规则配置],
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off"
   },
-  parserOptions: { // 用来指定 eslint 解析器的
-    parser: "babel-eslint"
-  }
 };
 ```
 
@@ -38,6 +44,22 @@ module.exports = {
 - `off` 或者 `0` 表示关闭规则
 - `warn` 或者 `1` 打开规则，表示警告，打印黄色字体（黄色波浪线）
 - `error` 或者 `2` 打开规则，并且作为错误，打印红色字体（红色波浪线）
+
+### 配置
+
+**行内配置**
+
+- `/*eslint-disable*/` 和 `/*eslint-enable*/`，禁用启用规则
+- `/*global*/`，定义全局变量
+- `/*eslint*/`，配置规则
+- `/*eslint-env*/`，指定当前运行环境
+
+```js
+// 禁用下一行规则
+// eslint-disable-next-line no-unused-vars
+```
+
+> eslint 支持层叠配置，默认使用离需检测的文件最近的 .eslintrc 配置文件
 
 ### 插件
 
@@ -60,6 +82,22 @@ module.exports = {
 **eslint-plugin-standard**
 
 为 Standard Linter 做的补充插件 This module is for advanced users.
+
+**@typescript-eslint/eslint-plugin**
+
+typescript 语法检测支持。
+
+**eslint-plugin-vue**
+
+Vue 语法检查，使用时需替换解析器为 vue-eslint-parser
+
+**eslint-plugin-prettier**
+
+将 prettier 作为 ESLint 的规则来使用，代码不符合 Prettier 的标准时，会报一个 ESLint 错误
+
+**eslint-config-prettier**
+
+关闭所有与 prettier 有冲突的规则。
 
 ## 推荐配置
 
@@ -106,7 +144,13 @@ module.exports = {
   parser: '@typescript-eslint/parser', // 修改解析器
   plugins: ['@typescript-eslint'], // 添加插件
   root: true,
-};
+  rules:{
+    "@typescript-eslint/await-thenable":2, // 禁止 await 非异步方法
+    "@typescript-eslint/no-floating-promises":2, // 必须捕获 Promise 错误
+    "@typescript-eslint/no-misused-promises":2, // 禁止将异步方法直接作为判断条件
+    "@typescript-eslint/promise-function-async":2, // 异步方法返回有 async
+  }
+}
 ```
 
 ### Vue
@@ -171,7 +215,13 @@ module.exports = {
     "newline-per-chained-call": ["error", { ignoreChainWithDepth: 2 }], // 要求方法链中每个调用都有一个换行符
     // 路径别名设置
     "no-submodule-imports": ["off", "/@"],
-    "no-implicit-dependencies": ["off", ["/@"]]
+    "no-implicit-dependencies": ["off", ["/@"]],
+     // 异步处理
+    "no-promise-executor-return":2, // 禁止 promise 中使用 return
+    "no-await-in-loop":2, // 禁止循环中使用 await
+    "max-nested-callbacks": ["error", 3], // 异步最大回调数
+    "no-return-await":2,
+    "prefer-promise-reject-errors":2, // 使用 new Error 追踪错误
   }
 }
 ```
@@ -180,11 +230,17 @@ module.exports = {
 
 ```json
 {
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended'
+  ],
   rules: {
     // js
-    'no-else-return': 2, //如果 if 语句里面有 return ,后面不能跟 else 语句
+    'no-else-return': 2, //如果 if 语句里面有 return 后面不能跟 else 语句
     'arrow-body-style': 0,
     'jsx-a11y/label-has-for': 0,
+    'comma-dangle': 0, // 最后一个对象末尾可以加 ,（逗号）
     'max-lines-per-function': [
       2,
       { max: 320, skipComments: true, skipBlankLines: true }
@@ -209,21 +265,30 @@ module.exports = {
     ],
     'react/no-this-in-sfc': 0,
     'react/prop-types': 0,
-    'comma-dangle': ['error', 'never'], // 最后一个属性不允许有逗号
-    'react/display-name': 'off'
+    'react/display-name': 'off',
+    // 异步处理
+    "no-promise-executor-return":2, // 禁止 promise 中使用 return
+    "no-await-in-loop":2, // 禁止循环中使用 await
+    "max-nested-callbacks": ["error", 3], // 异步最大回调数
+    "no-return-await":2,
+    "prefer-promise-reject-errors":2, // 使用 new Error 追踪错误
   }
 }
 ```
 
-## 同 IDE 使用
+## IDE 配置
+
+### VScode
+
+安装 eslint 插件后
 
 酌情修改 VScode 中 `setting.json` 的内容、
 
 ```json
 {
-  "eslint.enable": true, //是否开启vscode的eslint
-  "eslint.autoFixOnSave": true, //是否在保存的时候自动fix eslint
-  "eslint.options": { //指定vscode的eslint所处理的文件的后缀
+  "eslint.enable": true, // 是否开启 vscode 的 eslint
+  "eslint.autoFixOnSave": true, // 是否在保存的时候自动fix eslint
+  "eslint.options": { // 指定vscode的eslint所处理的文件的后缀
     "extensions": [
       ".js",
       ".vue",
@@ -253,12 +318,6 @@ module.exports = {
   ]
 }
 ```
-
-
-
-
-
-
 
 ## Eslint 语法配置清单
 
@@ -443,7 +502,9 @@ module.exports = {
 
 ## 参考文章
 
-| 作者        | 链接                                       |
-| ----------- | ------------------------------------------ |
-| yuxiaoliang | https://juejin.cn/post/6844903880006844424 |
+| 作者        | 文章名称                                                     |
+| ----------- | ------------------------------------------------------------ |
+| yuxiaoliang | [在Typescript项目中，如何优雅的使用ESLint和Prettier](https://juejin.cn/post/6844903880006844424) |
+| 爱心发电丶  | [Eslint该如何配置？Eslint使用以及相关配置说明](https://zhuanlan.zhihu.com/p/548306020) |
+|             | [14 Linting Rules To Help You Write Asynchronous Code in JavaScript](https://maximorlov.com/linting-rules-for-asynchronous-code-in-javascript/) |
 
