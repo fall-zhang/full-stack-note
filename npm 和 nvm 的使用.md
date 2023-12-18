@@ -24,6 +24,8 @@ LTS 版本：Long Term Support（[长期支持版本](https://nodejs.org/en/abou
 >
 > 可以使用 `npm config set registry https://registry.npm.taobao.org` 更改使用的镜像地址，当然也可以使用这个方法改回原来的地址。
 >
+> - 最新镜像地址为：`https://registry.npmmirror.com`
+>
 > 安装 cnpm：`npm install -g cnpm --registry=https://registry.npm.taobao.org`
 >
 > 安装完成之后就可以通过 cnpm 代替 npm 的所有命令（有些插件使用 cnpm 安装，可能会出现问题）
