@@ -91,10 +91,9 @@ c、规则：
 **用 Git Bash 创建文件夹**
 
 - 根目录下右键选择“Git Bash Here”进入bash命令窗口；
-- 输入`vim .gitignore`或`touch .gitignore`命令，打开文件（没有文件会自动创建）；
-- 按i键切换到编辑状态，输入规则，例如node_modules/，然后按Esc键退出编辑，输入:wq保存退出。
+- 输入 `vim .gitignore` 或 `touch .gitignore` 命令，打开文件（没有文件会自动创建）；
+- 按 i 键切换到编辑状态，输入规则，例如 node_modules/，然后按Esc键退出编辑，输入 `:wq` 保存退出。
 
-- 
 
 > **生成密钥**
 >
