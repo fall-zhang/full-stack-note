@@ -1,5 +1,5 @@
 > Create by **fall** on — — 2020
-> Recently revised in 11 Oct 2023
+> Recently revised in 08 Jan 2024
 
 > 注：npm 会随着 node 的安装进行安装，安装 node 后，就可以使用 npm 命令。
 
@@ -18,25 +18,32 @@ LTS 版本：Long Term Support（[长期支持版本](https://nodejs.org/en/abou
 - 官方网址：https://nodejs.org
 - 安装 npm 组件：https://www.npmjs.com
 
-> 注：因为某些大家知道的原因，需要更换为国内的镜像，或者安装 yarn，代替 npm
->
-> 当然，你可以通过该命令 `npm config get registry` 查看当前使用的镜像。默认：`https://registry.npmjs.org/`
->
-> 可以使用 `npm config set registry https://registry.npm.taobao.org` 更改使用的镜像地址，当然也可以使用这个方法改回原来的地址。
->
-> - 最新镜像地址为：`https://registry.npmmirror.com`
->
+### 更换源（可选）
+
+> 因为某些大家知道的原因，需要更换为国内的镜像，或者安装 yarn，代替 npm
+
+查看当前使用的镜像：`npm config get registry` 。默认是：`https://registry.npmjs.org/`
+
+可以使用下面的命令更改镜像地址，当然也可以使用这个方法改回原来的地址：
+
+`npm config set registry https://registry.npmmirror.com` 
+
+- 最新镜像地址：`https://registry.npmmirror.com` 
+- 淘宝原镜像：`https://registry.npm.taobao.org`
+
 > 安装 cnpm：`npm install -g cnpm --registry=https://registry.npm.taobao.org`
 >
 > 安装完成之后就可以通过 cnpm 代替 npm 的所有命令（有些插件使用 cnpm 安装，可能会出现问题）
->
-> `npm -v` 用于检测 npm 是否安装成功
 
-### 包管理命令
+### 命令
+
+`npm -v` 用于检测 npm 是否安装成功
+
+#### 包管理
 
 **安装包**
 
-- 本地的安装包：使用`npm install <package-name>` 安装，并且放置在 node_modules 文件夹中
+- 本地的安装包：使用 `npm install <package-name>` 安装，并且放置在 node_modules 文件夹中
 - 全局的安装包：`npm install <package-name> -g` 全局安装，并放在固定的位置。
 
 > **通常所有软件包都应该本地安装而非全局安装**，比如计算机中有数十个项目，就该有十个对应的软件包（node_modules），用来保证每个应用都可以运行不同的版本。如果全局安装，所有的项目都使用同一个版本，可能导致维护上的噩梦，破坏原来的依赖项和兼容性等。
@@ -70,15 +77,7 @@ npm i rollup@3.9.1 -S-D
 
 `npm update <package-name>` 升级特定名称的包
 
-### 配置命令
-
-`npm config get cache` 查看 缓存所在位置
-
-`npm config get registry` 查看当前所使用的镜像
-
-`npm config set registry https://registry.npm.taobao.org`  设置当前的镜像
-
-### 其它命令
+#### 常用命令
 
 **远程查找**
 
@@ -92,11 +91,12 @@ npm i rollup@3.9.1 -S-D
 - 查找当前工作区安装的模块：`npm list`
 - 查看全局安装的主要模块：`npm list -g --depth=0`
 
-| 命令（常用命令）  | 功能                                                         |
-| ----------------- | ------------------------------------------------------------ |
-| `npm root -g`     | 查看全局模块的安装路径<br />如果使用 nvm 管理工具，位置可能会不同 |
-| `npm init`        | 创建 JSON 文件，初始化本地开发环境                           |
-| `npm cache clean` | 清除 npm 本地的缓存，可使用 `-f` 强制清除缓存                |
+| 命令（常用命令）       | 功能                                                         |
+| ---------------------- | ------------------------------------------------------------ |
+| `npm root -g`          | 查看全局模块的安装路径<br />如果使用 nvm 管理工具，位置可能会不同 |
+| `npm init`             | 创建 JSON 文件，初始化本地开发环境                           |
+| `npm cache clean`      | 清除 npm 本地的缓存，可使用 `-f` 强制清除缓存                |
+| `npm config get cache` | 查看 缓存所在位置                                            |
 
 ### npx
 
@@ -145,7 +145,7 @@ npm run env | grep npm_ // 可以用该命令查看提供当前项目的一些�
 npx -c 'echo "$npm_package_name"' // 该代码会输出当前项目的项目名
 ```
 
-### 执行远程代码
+#### 执行远程代码
 
 npx 可以指定直接执行 git 上面的代码，前提是远程代码必须是一个模块，必须包含 package.json 和入口脚本。
 
@@ -155,11 +155,11 @@ npx 可以指定直接执行 git 上面的代码，前提是远程代码必须�
 
 > yarn & pnpm
 >
-> yarn 和 pnpm 都是为了解决 npm 上出现的一些固有的错误，而进行开发的。pmpm 的[官方文档](https://pnpm.io/zh/pnpm-cli)
+> yarn 和 pnpm 都是为了解决 npm 上出现的一些固有的错误以及性能问题等而开发的。pnpm 的[官方文档](https://pnpm.io/zh/pnpm-cli)
 >
 > 现在 PNPM 也作为包管理工具进行使用
 
-### 编写脚本
+### 编写 npm 脚本
 
 分三步走：
 
@@ -276,10 +276,6 @@ nvm use 12.22.12
 # 卸载该版本的 node.js
 nvm uninstall 8.4.0
 ```
-
-
-
-
 
 ## 参考文章
 

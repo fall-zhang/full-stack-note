@@ -1,5 +1,5 @@
-> Create by **fall** on 2020-11-18
-> Recently revised in 2022-09-26
+> Create by **fall** on 18 Nov 2020
+> Recently revised in 08 Jan 2024
 
 > **下载：** 从淘宝镜像上下载 git
 >
@@ -13,7 +13,7 @@
 
 **Git工作流程图**（最左侧为远程，中间和右侧为本地）
 
-<img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015120901.png" alt="img" style={{zoom:"80%"}} />
+<img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015120901.png" alt="img"  />
 
 一些术语
 
