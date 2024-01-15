@@ -17,8 +17,8 @@
 - 地理位置 Geolocation 
 - 多任务 webworker 
 - 全双工通信协议 websocket 
-- 历史管理 history 
-- 跨域资源共享(CORS) Access-Control-Allow-Origin 
+- 历史管理 history
+- 跨域资源共享（CORS）Access-Control-Allow-Origin 
 - 页面可见性改变事件 visibilitychange 
 - 跨窗口通信 PostMessage 
 - Form Data 对象 
@@ -57,7 +57,7 @@
 
 优点：
 
-- iframe 能够原封不动的把嵌入的网页展现出来。 
+- iframe 能够原封不动的把嵌入的网页展现出来。
 - 如果有多个网页引用 iframe，那么你只需要修改 iframe 的内容，就可以实现调用的每一个页面内容的更改，方便快捷。 
 - 网页如果为了统一风格，头部和版本都是一样的，就可以写成一个页面，用 iframe 来嵌套，可以增加代码的可重用。 
 

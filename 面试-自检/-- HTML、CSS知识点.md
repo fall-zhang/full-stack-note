@@ -10,7 +10,7 @@ https://github.com/haizlin/fe-interview/blob/master/category/css.md
 
 - head 头部元素的容器，大多数标签不会展示给用户，一般含有 meta，link 等
 - body 是主体内容，
-- !DOCTYPE 指示浏览器关于页面使用哪个 HTML 版本进行编写的指令。
+- `!DOCTYPE` 指示浏览器关于页面使用哪个 HTML 版本进行编写的指令。
 
 ### html5 语义化标签
 
@@ -75,7 +75,7 @@ audio 属性
 - 如果用 link 引用 CSS，则与页面同步加载，`@import`引用 CSS，则等页面完全载入后加载 CSS 文件，即异步加载
 - link 是 XHTML 标签，`@import` 是在 CSS2.1 引入的
 - 通过 js 操作 DOM，可以插入 link 标签来改变样式；由于 DOM 方法是基于文档的，无法使用 `@import` 方式插入样式
-- 在文档中添加link标签，浏览器会识别该文档为css文件，就会并行下载资源并且**不会**停止对当前文档的处理。这也是为什么建议使用link方式来加载css，而不是使用@import方式
+- 在文档中添加 link 标签，浏览器会识别该文档为 css 文件，就会并行下载资源并且**不会**停止对当前文档的处理。这也是为什么建议使用link方式来加载css，而不是使用@import方式
 
 ### CSS3 有哪些新特性？
 
@@ -124,7 +124,7 @@ audio 属性
 ### 如何使元素进行隐藏
 
 - opacity：设置整个 DOM 的透明度
-- visibility：设置是否可见，隐藏后不能触发事件，不可到达（比如 tab，切换表单的事件）
+- visibility：设置是否可见，隐藏后不能触发事件，且不可到达（比如 tab，切换表单的事件）
 - display：none 在渲染树中移除整个 DOM。
 
 ### css 的渲染层合成是什么，浏览器如何创建新的渲染层
