@@ -3,6 +3,8 @@
 
 ## Rollup
 
+使用 Rollup@4 要将 node 升级到 V18 以上
+
 Rollup 是一款基于 ESmodule 的打包软件（webpack 基于 commonjs）
 
 ```js
@@ -42,6 +44,8 @@ export default {
     }),
     babel({ exclude: "node_modules/**" }),
   ],
+  // 警告处理
+  // onwarn(warning, warn) {}
 };
 ```
 
@@ -49,17 +53,17 @@ export default {
 
 Rollup 必须保守地删除代码，以确保最终结果将正确运行。无论是对你正在使用的模块中的某些部分还是对全局环境，Rollup 都会使这些副作用。
 
+
+
+```shell
+# 大型项目可能会达到 Node 的内存限制，使用以下方式运行即可。
+node --max-old-space-size=8192 node_modules/rollup/dist/bin/rollup -c
+# 请注意，这个数字可以安全地超过你的可用物理内存。在这种情况下，Node 会根据需要将内存分页到磁盘上。
+```
+
 ## 插件
 
 插件分为官方插件（以 @rollup/plugin 开头）和社区插件（rollup-plugin 开头）
-
-### rollup-plugin-visualizer
-
-用来查看打包后的包体积大小
-
-```js
-
-```
 
 ### @rollup/plugin-json
 
@@ -102,6 +106,76 @@ Rollup 必须保守地删除代码，以确保最终结果将正确运行。无�
   ]
 }
 ```
+
+### rollup-plugin-polyfill-node
+
+如果想要在项目中使用 node 的
+
+
+
+### rollup-plugin-visualizer
+
+用来查看打包后的包体积大小
+
+```js
+
+```
+
+### @rollup/browser
+
+面向浏览器的构建（NPM 上的 `@rollup/browser`）现在依赖于一个需要提供的 WASM 文件。如果你正在使用 Vite 的浏览器构建，你需要将 `"@rollup/browser"` 添加到 `optimizeDeps.exclude` 中，否则 `npm run dev` 将因为 `.wasm` 文件的无效路径而失败（请参阅 [vitejs #14609](https://github.com/vitejs/vite/issues/14609)）。
+
+### @rollup/plugin-sucrase
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
