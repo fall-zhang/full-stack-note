@@ -141,7 +141,7 @@ export function nextTick(cb) {
 
 nextTick 原理详解 [传送门](https://juejin.cn/post/6939704519668432910#heading-4)
 
-#### 17 Vue diff 原理
+#### Vue diff 原理
 
 ![diff算法.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9e3c68d1b0884d9ca0f8ffc5ee64a28e~tplv-k3u1fbpfcp-watermark.image)
 
