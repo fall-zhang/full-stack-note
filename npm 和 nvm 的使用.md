@@ -7,9 +7,9 @@
 
 npm 的功能：
 
-- 允许用户从 NPM 服务器下载别人编写的**第三方包**到本地使用（下载包）。
-- 允许用户从 NPM 服务器下载并安装别人编写的**命令行程序**到本地使用（下载命令程序）。
-- 允许用户将自己编写的包或命令行程序上传到 NPM 服务器供别人使用（上传包和命令程序）。
+- 下载包（脚本）：从 NPM 服务器下载别人编写的**第三方包**到本地使用。
+- 下载命令程序（命令行）：允许用户从 NPM 服务器下载并安装别人编写的**命令行程序**到本地使用。
+- 上传包和命令程序：允许用户将自己编写的包或命令行程序上传到 NPM 服务器供别人使用。
 
 在 Node V10 之后自带 npm，不需要额外下载。
 
@@ -29,7 +29,7 @@ LTS 版本：Long Term Support（[长期支持版本](https://nodejs.org/en/abou
 `npm config set registry https://registry.npmmirror.com` 
 
 - 最新镜像地址：`https://registry.npmmirror.com` 
-- 淘宝原镜像：`https://registry.npm.taobao.org`
+- 淘宝原镜像（已过期）：`https://registry.npm.taobao.org`
 
 > 安装 cnpm：`npm install -g cnpm --registry=https://registry.npm.taobao.org`
 >
@@ -216,6 +216,12 @@ disco ld as -v
 `npm owner add <user-name> <package-name> ` 添加所有者
 
 `npm owner add <user-name> <package-name>` 删除所有者
+
+取消发布
+
+```bash
+npm unpublish vue-fantable@0.1.4
+```
 
 ### 版本控制
 
