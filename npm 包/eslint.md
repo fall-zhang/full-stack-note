@@ -1,5 +1,5 @@
 > Create by **fall** on -- Aug 2020
-> Recently revised in 14 Nov 2023
+> Recently revised in 04 Feb 2024
 
 ## Eslint
 
@@ -23,7 +23,7 @@ module.exports = {
     node: true
   },
   plugins:[], // 插件可以暴露额外的规则以供使用。为此，插件必须输出一个 rules对象
-  extends: ["plugin:vue/essential"],  // 继承共享的配置规则
+  extends: ['eslint:recommended','eslint-config-standard'],  // 继承共享的配置规则
   parserOptions: { //指定 eslint 语法分析器版本
     ecmaVersion: 2022,
     sourceType:"script", // 使用 es 模块.
@@ -105,28 +105,45 @@ Vue 语法检查，使用时需替换解析器为 vue-eslint-parser
 
 纯 node 的后端项目，只需要安装 eslint
 
-package.json 中的 type 属性为 module 时，eslint 识别会混乱，是无法格式化代码的，确保移除该内容
+package.json 中的 type 属性为 module 时，eslint 识别会混乱无法格式化代码，确保使用 `.cjs` 做为后缀
 
 ```js
+// .eslintrc.cjs
 module.exports = {
   env: {
-    node: true,
+    browser: true,
     es2021: true
   },
+  // 后面的配置会覆盖前者
+  extends: ['eslint:recommended', 'eslint-config-standard'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  root: true,
-  extends: ['eslint:recommended'],
   rules: {
-    'no-console': 1,
-    quotes: [ 1,  'single',
+    // js 处理
+    'no-undef': 0, // 未命名变量不报错：当未命名变量的检查交给 ts 类型检查器时使用
+    'no-unused-vars': 1, // 未使用的变量
+    'comma-dangle': 0,
+    'space-before-function-paren': 0, // function 前面的空格
+    quotes: [
+      2,
+      'single',
       {
         avoidEscape: true,
         allowTemplateLiterals: true
       }
-    ]
+    ],
+    semi: [2, 'never'],
+    'no-irregular-whitespace': 2, // 不能有不规则的空格
+    'eol-last': 0, // 所有文件结尾必须包括换行
+    // 异步处理
+    'no-promise-executor-return': 2, // 禁止 promise 中使用 return
+    'no-await-in-loop': 2, // 禁止循环中使用 await
+    'max-nested-callbacks': ['error', 3], // 异步最大回调数
+    'no-return-await': 2,
+    'prefer-promise-reject-errors': 2, // 使用 new Error 追踪错误
+    'func-call-spacing': 0,
   }
 }
 ```
@@ -144,7 +161,12 @@ module.exports = {
   parser: '@typescript-eslint/parser', // 修改解析器
   plugins: ['@typescript-eslint'], // 添加插件
   root: true,
+  // ts 会使用类型检查，检查未使用的变量，如果不想使用 ts 的类型检查，可以启用 globals，选择忽略一些全局定义的变量
+  // globals: {
+  //   defineProps: true,
+  // },
   rules:{
+    "no-undef": 0, // 未命名变量不报错：当未命名变量的检查交给 ts 类型检查器时使用
     "@typescript-eslint/await-thenable":2, // 禁止 await 非异步方法
     "@typescript-eslint/no-floating-promises":2, // 必须捕获 Promise 错误
     "@typescript-eslint/no-misused-promises":2, // 禁止将异步方法直接作为判断条件
@@ -184,6 +206,7 @@ module.exports = {
     'no-undef': 0, // 未命名变量不报错：当未命名变量的检查交给 ts 类型检查器时使用
     'no-unused-vars': 1, // 未使用的变量
     'comma-dangle': 0,
+    'func-call-spacing': 0,
     'space-before-function-paren': 0, // function 前面的空格
     quotes: [
       2,
