@@ -1,5 +1,5 @@
 > Create by **fall** on 18 Nov 2020
-> Recently revised in 08 Jan 2024
+> Recently revised in 14 Mar 2024
 
 > **下载：** 从淘宝镜像上下载 git
 >
@@ -192,6 +192,7 @@ $ git branch -dr [remote/branch]
 ```bash
 $ git fetch [remote] # 下载远程仓库的所有变动
 $ git pull [remote] [branch] # 取回远程仓库的变化，并与本地分支合并
+# git pull 等价于 git fetch + git merge
 $ git remote -v # 显示所有远程仓库
 $ git remote show [remote] # 显示某个远程仓库的信息
 $ git remote add [shortname] [url] # 增加一个新的远程仓库，并命名
