@@ -99,6 +99,14 @@ Vue 语法检查，使用时需替换解析器为 vue-eslint-parser
 
 关闭所有与 prettier 有冲突的规则。
 
+## 命令行
+
+```bash
+"scripts":{
+	"lint": "eslint --fix --ext .js,.ts,.vue ./src"
+}
+```
+
 ## 推荐配置
 
 ### node
