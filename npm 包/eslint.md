@@ -256,7 +256,7 @@ module.exports = {
 
 ### React
 
-```json
+```js
 module.exports = {
   env: {
     browser: true,
@@ -312,6 +312,8 @@ module.exports = {
     'react/no-this-in-sfc': 0,
     'react/prop-types': 0,
     'react/display-name': 'off',
+    'react/jsx-uses-react': 'off', // React ^16.14.0 以及 V17 以后将支持新的语法转换器
+    'react/react-in-jsx-scope': 'off', // 新的语法转换器不必引入 React
     // typescript
     '@typescript-eslint/no-this-alias': 0, // 是否禁止 this 的别名
   }
