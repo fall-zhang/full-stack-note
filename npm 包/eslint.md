@@ -99,6 +99,14 @@ Vue 语法检查，使用时需替换解析器为 vue-eslint-parser
 
 关闭所有与 prettier 有冲突的规则。
 
+## 命令行
+
+```bash
+"scripts":{
+	"lint": "eslint --fix --ext .js,.ts,.vue ./src"
+}
+```
+
 ## 推荐配置
 
 ### node
@@ -248,7 +256,7 @@ module.exports = {
 
 ### React
 
-```json
+```js
 module.exports = {
   env: {
     browser: true,
@@ -304,6 +312,8 @@ module.exports = {
     'react/no-this-in-sfc': 0,
     'react/prop-types': 0,
     'react/display-name': 'off',
+    'react/jsx-uses-react': 'off', // React ^16.14.0 以及 V17 以后将支持新的语法转换器
+    'react/react-in-jsx-scope': 'off', // 新的语法转换器不必引入 React
     // typescript
     '@typescript-eslint/no-this-alias': 0, // 是否禁止 this 的别名
   }
