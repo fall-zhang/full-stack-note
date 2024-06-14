@@ -1,4 +1,8 @@
+## 快捷方式指南
 
+文章补充到
+
+https://github.blog/2024-04-19-a-short-guide-to-mastering-keyboard-shortcuts-on-github/
 
 github 快捷方式：
 
@@ -17,3 +21,10 @@ github 快捷方式：
 ## workflow
 
 workflow，工作流
+
+## 参考文章
+
+| 作者       | 链接                                                         |
+| ---------- | ------------------------------------------------------------ |
+| Sara Verdi | [A short guide to mastering keyboard shortcuts on GitHub](https://github.blog/2024-04-19-a-short-guide-to-mastering-keyboard-shortcuts-on-github/) |
+
