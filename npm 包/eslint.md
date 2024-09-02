@@ -109,6 +109,10 @@ Vue 语法检查，使用时需替换解析器为 vue-eslint-parser
 
 ## 推荐配置
 
+这套配置只适用于 eslint v7、v8
+
+v9 需要使用其它配置
+
 ### node
 
 纯 node 的后端项目，只需要安装 eslint
@@ -163,22 +167,54 @@ TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而
 安装：除了 `eslint`、`typescript` 之外，还需要安装 `@typescript-eslint/parser`、`@typescript-eslint/eslint-plugin`
 
 ```js
-// .eslintrc.cjs || cjs:commonjs
 module.exports = {
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
-  parser: '@typescript-eslint/parser', // 修改解析器
-  plugins: ['@typescript-eslint'], // 添加插件
-  root: true,
-  // ts 会使用类型检查，检查未使用的变量，如果不想使用 ts 的类型检查，可以启用 globals，选择忽略一些全局定义的变量
-  // globals: {
-  //   defineProps: true,
-  // },
-  rules:{
-    "no-undef": 0, // 未命名变量不报错：当未命名变量的检查交给 ts 类型检查器时使用
-    "@typescript-eslint/await-thenable":2, // 禁止 await 非异步方法
-    "@typescript-eslint/no-floating-promises":2, // 必须捕获 Promise 错误
-    "@typescript-eslint/no-misused-promises":2, // 禁止将异步方法直接作为判断条件
-    "@typescript-eslint/promise-function-async":2, // 异步方法返回有 async
+  env: {
+    es2022: true,
+    node: true
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended'
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module'
+  },
+  plugins: ['@typescript-eslint'],
+  rules: {
+    // js
+    'no-else-return': 2, //如果 if 语句里面有 return 后面不能跟 else 语句
+    'max-lines-per-function': [
+      2,
+      { max: 300, skipComments: true, skipBlankLines: true }
+    ],
+    'no-unused-vars': 1,
+    'comma-dangle': 0,
+    semi: [2, 'never'], // 语句不使用分号结尾
+    'no-confusing-arrow': 2,
+    'no-nested-ternary': 2,
+    'no-console': 1,
+    'no-debugger': 1, // 使用 debugger 会警告
+    'no-multiple-empty-lines': [2, { max: 2 }], // 空行最多不能超过2行
+    'no-multi-spaces': 2, // 不能用多余的空格
+    'no-trailing-spaces': 2, // 一行结束后面不要有空格
+    eqeqeq: 1, // 必须使用全等
+    'no-proto': 1, // 禁止使用__proto__属性
+    'no-sparse-arrays': 2, // 禁止稀疏数组， [1,,2]
+    quotes: [1, 'single'], // 引号类型 `` "" ''
+    'no-param-reassign': [
+      2,
+      { props: true, ignorePropertyModificationsFor: ['draft'] }
+    ],
+    // 异步处理
+    'no-promise-executor-return': 2, // 禁止 promise 中使用 return
+    'no-await-in-loop': 2, // 禁止循环中使用 await
+    'max-nested-callbacks': ['error', 3], // 异步最大回调数
+    'no-return-await': 2,
+    'prefer-promise-reject-errors': 2, // 使用 new Error 追踪错误
+    // typescript
+    '@typescript-eslint/no-this-alias': 0, // 是否禁止 this 的别名
   }
 }
 ```
