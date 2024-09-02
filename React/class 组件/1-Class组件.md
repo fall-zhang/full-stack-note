@@ -1,6 +1,8 @@
 > Create by **fall** on：2021-11-14
 > Recently revised in：2022-01-19
 
+> 现在已经不推荐使用 class 组件了
+
 ## input 表单
 
 ```jsx
@@ -180,3 +182,4 @@ class ManyList extends React.Component {
 ## 非受控组件
 
 在一个受控组件中，表单数据是由 React 组件来管理的。表单数据此时将会交给 DOM 进行处理。
+

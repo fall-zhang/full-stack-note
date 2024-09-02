@@ -1,5 +1,5 @@
-> Create by **fall** on 2021-12-26
-> Recently revised in 2022-01-27
+> Create by **fall** on 26 Dec 2021
+> Recently revised in 07 Aug 2024
 
 使用 Hooks 的原因
 
@@ -10,13 +10,15 @@
 注意事项
 
 - 只能在函数内部的最外层调用 Hook，不要在循环、条件判断或者子函数中调用
-- 只能在 React 的函数组件中调用 Hook，不要在其他 JavaScript 函数中调用（例外：自定义 Hook）
+- 除自定义 Hook 外，只能在 React 的函数组件中调用 Hook
 
 三神柱：`useState` `useEffect` `useCallback`，这么一看，必须掌握的只有三个。还蛮简单的.jpg
 
 ## useState
 
- useState 总是替换变量而不是 class 组件中的合并。
+useState 总是替换变量而不是 class 组件中的合并。
+
+**设置 state 只会为下一次渲染变更 state 的值**
 
 ```jsx
 import { useState } from 'react'
@@ -113,8 +115,6 @@ const DemoUseReducer = ()=>{
 )
 }
 ```
-
-
 
 ## useEffect
 
@@ -265,15 +265,16 @@ const DemoUseLayoutEffect = () => {
 获取 DOM
 
 ```jsx
+import {useState,useRef} from 'react'
 function MyComponent(){
-  const [count,setCount]= React.useState(0)
+  const [count,setCount]= useState(0)
   const onAdd = ()=>{
     setCount(count+1)
   }
   const onShow= ()=>{
     alert()
   }
-  const myInput = React.useRef(null)
+  const myInput = useRef(null)
   return (
   	<div>
     	<h2>当前显卡数量为：{count}</h2>
@@ -337,59 +338,7 @@ const DemoUseReducer = () => {
 }
 ```
 
-## 自定义 Hooks
 
-定义
-
-```jsx
-// useFriendStatus.js
-import React,{useState,useEffect} from 'react'
-function useFriendStatus(friendId){
-  const [isOnline,setIsOnline] = useState(null)
-  function handleStatusChange(status){
-    setIsOnline(status.isOnline)
-  }
-  useEffect(()=>{
-    ChatAPI.subscribeToFriendStatus(friendId,handleStatusChange)
-    return()=>{
-      ChatAPI.unsubscribeToFriendStatus(friendId,handleStatusChange)
-    }
-  })
-  return isOnline
-}
-export default useFriendStatus
-```
-
-使用
-
-```jsx
-// FriendStatus.jsx
-import React,{useState,useEffect} from 'react'
-import useFriendStatus from 'useFriendStatus.js'
-function FriendStatus(props){
-  const isOnline = useFriendStatus(props.friend.id)
-  if(isOnline === null){
-    return 'loading...'
-  }
-  return isOnline ? 'online' : 'offline'
-}
-// FriendListItem.jsx
-import React,{useState,useEffect} from 'react'
-import useFriendStatus from 'useFriendStatus.js'
-function FriendListItem(props){
-  const isOnline = useFriendStatus(props.friend.id)
-  if(isOnline === null){
-    return 'loading...'
-  }
-  return (
-  <div style={isOnline?{color:green}:{color:red}}>
-   	{props.friend.name}
-  </div>
-  )
-}
-```
-
-- 
 
 ## 参考文章
 
