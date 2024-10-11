@@ -82,6 +82,50 @@ function Compp(props){
 }
 ```
 
+## useRef
+
+生成一个和 react 响应式无关的值，有两种用法
+
+- 获取 DOM
+- 在不同渲染中缓存的值
+
+获取 DOM
+
+```jsx
+import {useState,useRef} from 'react'
+function MyComponent(){
+  const [count,setCount]= useState(0)
+  const onAdd = ()=>{
+    setCount(count+1)
+  }
+  const onShow= ()=>{
+    alert()
+  }
+  const myInput = useRef(null)
+  return (
+  	<div>
+    	<h2>当前显卡数量为：{count}</h2>
+      <input type="text" ref={myInput}></input>
+      <button onClick={onAdd}>给我加卡</button>
+      <button onClick={onShow}>我有多少卡？</button>
+    </div>
+  )
+}
+```
+
+useState 在设置新的值时会触发更新，如果设置了一值在函数内，下次执行时就会变为默认，useRef 是存储后，不会改变
+
+```jsx
+function MyText(){
+  const currenRef = useRef('InitialData')
+  return (
+    <div>
+      {}
+    </div>
+  )
+}
+```
+
 ## useReduce
 
 处理全局状态
@@ -243,15 +287,35 @@ const DemoUseLayoutEffect = () => {
 
 
 
-
-
 ## useCallback
 
+一般用于优化，传入一个函数以及该函数的依赖
 
+每次重新渲染一个组件时，如果不使用 useCallback 包裹，函数每次都会重新声明一次（该函数和之前的函数不同）
 
+```jsx
+export default function ProductPage({ productId, referrer, theme }) {
+  const handleSubmit = useCallback((orderDetails) => {
+    post('/product/' + productId + '/buy', {
+      referrer,
+      orderDetails,
+    });
+  }, [productId, referrer]);
 
+  return (
+    <div className={theme}>
+      <ShippingForm onSubmit={handleSubmit} />
+    </div>
+  );
+}
+```
 
+tips：
 
+- 自定义 hooks 时，需要对返回的函数添加 `useCallback`
+- 一般同 memo 一起使用，用于让保证 props 中的函数相同
+- 作为 useEffect 的依赖时，用来保证每次都触发 useEffect
+- 不要在除性能优化之外的情况下使用 useEffect
 
 ## useMemo
 
@@ -260,48 +324,9 @@ const DemoUseLayoutEffect = () => {
 - 类组件通过 `pureComponent`
 - 函数组件通过 `React.memo`，将组件传递给 memo 之后，返回一个新的组件，如果接收到的属性不变，就不会重新渲染
 
-## useRef
-
-获取 DOM
-
-```jsx
-import {useState,useRef} from 'react'
-function MyComponent(){
-  const [count,setCount]= useState(0)
-  const onAdd = ()=>{
-    setCount(count+1)
-  }
-  const onShow= ()=>{
-    alert()
-  }
-  const myInput = useRef(null)
-  return (
-  	<div>
-    	<h2>当前显卡数量为：{count}</h2>
-      <input type="text" ref={myInput}></input>
-      <button onClick={onAdd}>给我加卡</button>
-      <button onClick={onShow}>我有多少卡？</button>
-    </div>
-  )
-}
-```
-
-useState 在设置新的值时会触发更新，如果设置了一值在函数内，下次执行时就会变为默认，useRef 是存储后，不会改变
-
-```jsx
-function MyText(){
-  const currenRef = useRef('InitialData')
-  return (
-    <div>
-      {}
-    </div>
-  )
-}
-```
-
 ## useContext
 
-我们可以使用 useContext，来获取父级组件传递过来的context值，这个当前值就是最近的父级组件 Provider 设置的value 值。
+我们可以使用 useContext，来获取父级组件传递过来的 context 值，这个当前值就是最近的父级组件 Provider 设置的 value 值。
 
 ```jsx
 type ActionOne ={
@@ -335,6 +360,77 @@ const DemoUseReducer = () => {
       <MyChildren dispatch={dispatchNumbner} State={{ number }} />
     </div>
   )
+}
+```
+
+只有在找不到 provider 的时候，才会使用 createContext 的默认值
+
+### createContext
+
+- 创建一个 Context
+
+```tsx
+const ThemeContext = createContext('dark');
+```
+
+## useSyncExternalStore
+
+对于外部内容的订阅，一般用于
+
+- 订阅原有的系统（如果你的应用完全由 React 构建，我们推荐使用 React state 替代）
+- 订阅浏览器 API
+
+```jsx
+// App.jsx
+// 订阅原有系统
+import { useSyncExternalStore } from 'react';
+import { todosStore } from './todoStore.js';
+
+export default function TodosApp() {
+  const todos = useSyncExternalStore(todosStore.subscribe, todosStore.getSnapshot);
+  return (
+    <>
+      <button onClick={() => todosStore.addTodo()}>Add todo</button>
+      <hr />
+      <ul>
+        {todos.map(todo => (
+          <li key={todo.id}>{todo.text}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+```
+
+```js
+// todoStore.js
+// 这是一个第三方 store 的例子，
+// 你可能需要把它与 React 集成。
+
+let nextId = 0;
+let todos = [{ id: nextId++, text: 'Todo #1' }];
+let listeners = [];
+
+export const todosStore = {
+  addTodo() {
+    todos = [...todos, { id: nextId++, text: 'Todo #' + nextId }]
+    emitChange();
+  },
+  subscribe(listener) {
+    listeners = [...listeners, listener];
+    return () => {
+      listeners = listeners.filter(l => l !== listener);
+    };
+  },
+  getSnapshot() {
+    return todos;
+  }
+};
+
+function emitChange() {
+  for (let listener of listeners) {
+    listener();
+  }
 }
 ```
 
