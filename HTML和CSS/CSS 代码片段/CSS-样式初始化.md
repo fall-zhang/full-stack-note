@@ -85,3 +85,13 @@ pre,code,kbd,samp {
 }
 ```
 
+
+
+### box-shadow
+
+```css
+.default-shadow{
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, .07), 0 1px 4px rgba(0, 0, 0, .07), 0 1px 4px rgba(0, 0, 0, .1), 0 2px 6px rgba(0, 0, 0, .08);
+}
+```
+
