@@ -1,5 +1,5 @@
 > Create by **fall** on 12 Apr 2023
-> Recently revised in 14 Apr 2023
+> Recently revised in 26 Dec 2024
 
 ## Nginx
 
@@ -263,13 +263,15 @@ nginx 的模块根据其功能基本上可以分为以下几种类型：
 - **upstream**：upstream 模块实现反向代理的功能，将真正的请求转发到后端服务器上，并从后端服务器上读取响应，发回客户端。 upstream 模块是一种特殊的 handler，只不过响应内容不是真正由自己产生的，而是从后端服务器上读取的。
 - **load-balancer**：负载均衡模块，实现特定的算法，在众多的后端服务器中，选择一个服务器出来作为某个请求的转发服务器。
 
-### 反向代理
 
-> 如果遇到后盾集群的情况，再来查找反向代理相关资料，对笔记内容进行补充
 
 正向代理：用户进行请求的时候，将请求内容发送给代理（Proxy），然后代理（Proxy）负责进行请求。客户端进行服务的，客户端可以根据正向代理访问到它本身无法访问到的服务器资源。
 
 我们**知道请求的是代理**，但是服务端不知道接收到的内容来自代理还是真实客户端。
+
+### 反向代理
+
+> 如果遇到后端集群的情况，再来查找反向代理相关资料，对笔记内容进行补充
 
 反向代理（Reverse Porxy）指通过一个服务器接受客户端（Client）上面的请求，然后转发到内部网络的服务器（多个），并且将服务器上得到的结果返回给客户端（Client）。
 
@@ -545,21 +547,21 @@ http {
 ```nginx
 # HTTPS 服务器
 server {
-  #监听 443 端口。443 为知名端口号，主要用于HTTPS 协议
+  # 监听 443 端口。443 为知名端口号，主要用于 HTTPS 协议
   listen       443 ssl;
 
-  #定义使用www.xx.com访问
+  # 定义使用 www.xx.com 访问
   server_name  www.helloworld.com;
 
-  #ssl证书文件位置(常见证书文件格式为：crt/pem)
+  # ssl证书文件位置(常见证书文件格式为：cert/pem)
   ssl_certificate      cert.pem;
-  #ssl证书key位置
+  # ssl 证书 key 位置
   ssl_certificate_key  cert.key;
 
   #ssl配置参数（选择性配置）
   ssl_session_cache    shared:SSL:1m;
   ssl_session_timeout  5m;
-  #数字签名，此处使用MD5
+  # 数字签名，此处使用 MD5
   ssl_ciphers  HIGH:!aNULL:!MD5;
   ssl_prefer_server_ciphers  on;
 
