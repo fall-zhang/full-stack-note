@@ -434,6 +434,51 @@ function emitChange() {
 }
 ```
 
+## useDeferredValue
+
+它将“滞后”于实际值，并自动触发非阻塞的重新渲染以“追赶”新值。
+
+使用场景
+
+- 新的内容还在加载期间，代替旧内容进行展示
+- 数据渲染很慢，无法简单优化，避免阻塞 UI 时
+
+```tsx
+const App = ()=>{
+  const [state,setState] = useState()
+  const deferedState = useDeferredValue(state)
+	if(deferedState !== state){
+    return <div> Loading </div>
+  }
+  return <>
+  <input onChange={(e)=>setState(e.target.value)}></input>
+  {new Array(999).fill('').map(item=>{
+    return <>{deferedState}</>
+  })}
+  </>
+} 
+```
+
+
+
+## useTransition
+
+用于设置新的状态，直到新状态加载完成后，更新页面渲染。在期间可以更改为其他新的状态。
+
+使用场景
+
+- 点击一个导航菜单，在加载时点击进入另一个菜单
+- 实现一个可中断的路由导航，在进入新的页面前，用户可以点击进入其它页面
+- 启用 [Suspense](https://react.docschina.org/reference/react/Suspense) 的路由默认情况下会将页面导航更新包装为 transition。
+
+> 注意事项，不能用于 input 等内容的绑定，输入事件的更新应该是同步的
+
+```jsx
+
+```
+
+
+
 
 
 ## 参考文章
