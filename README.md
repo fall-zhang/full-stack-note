@@ -5,11 +5,11 @@ sidebar_position: 1
 > Create by **fall** on 18 Nov 2020
 > Recently revised in 07 May 2023
 
-# Fall_Zhang的笔记仓库
+# Fall_Zhang 的笔记仓库
 
 > 在 github 和 gitee 上都有我的仓库，但是后者经常更新，前者只是同步后者。
 >
-> - Github：https://github.com/Fall-zhang/self-note
+> - Github：https://github.com/fall-zhang/self-note
 > - Gitee：https://gitee.com/mywings/noteself
 
 ## 更新计划
