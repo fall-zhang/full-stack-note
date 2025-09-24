@@ -1,42 +1,38 @@
-> Create by **fall** on -- Aug 2020
-> Recently revised in 13 Feb 2025
+> Create by **fall** on -- Aug 2020<br/>
+> Recently revised in 07 May 2025
 
 ## Eslint
+
+> 只介绍 8.40 之后以及 9 以上的版本，更早的版本请看 [eslint](./legacy/eslint-v8.md)
 
 官方网址：https://cn.eslint.org/docs/rules/
 
 作为一个语法检查工具，可以用来保规范代码格式。减少语法错误，统一团队编码风格。
 
-一般作为配置项配置在 `.eslintrc.js` 中，或者可能配置在 `package.json` 中作为配置项。
+一般作为配置项配置在 `eslint.config.js` 中，或者可能配置在 `package.json` 中作为配置项。
 
 标准的 eslint 配置：
 
 ```js
-// .eslintrc.js
-module.exports = {
-  // 设置一些自定义的全局变量，保证引用时不会出现报错
-  globals:{
-    ref: true,
+// eslint.config.js
+import jslint from '@eslint/js'
+export default [
+  {
+    name: 'app/files-to-lint',
+    files: ['**/*.{js,mjs,jsx}']
   },
-  root: true,  // 用来告诉 eslint 当前配置文件在根目录，不必再向上查找
-  env: {  // 指定你想启用的环境，下面的配置指定为 node 环境
-    node: true
+  {
+    name: 'app/files-to-ignore',
+    ignores: ['**/build/**', '**/.docusaurus/**', '**/coverage/**', '**/temp.js', '**/release/**']
   },
-  plugins:[], // 插件可以暴露额外的规则以供使用。为此，插件必须输出一个 rules对象
-  extends: ['eslint:recommended','eslint-config-standard'],  // 继承共享的配置规则
-  parserOptions: { //指定 eslint 语法分析器版本
-    ecmaVersion: 2022,
-    sourceType:"script", // 使用 es 模块.
-    // ecmaFeatures: { // ecma 特性，比如支持 jsx
-    //   "jsx": true
-    // }
-  },
-  rules: {  // 语法规则
-    //  "规则名": [错误等级值, 规则配置],
-    "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off"
-  },
-};
+  jslint.configs.recommended,
+  {
+    // 自定义的其它配置
+    rules:{
+      'no-var': 'warn',
+    }
+  }
+]
 ```
 
 错误等级分为三种
@@ -49,69 +45,50 @@ module.exports = {
 
 **行内配置**
 
-- `/*eslint-disable*/` 和 `/*eslint-enable*/`，禁用启用规则
-- `/*global*/`，定义全局变量
-- `/*eslint*/`，配置规则
-- `/*eslint-env*/`，指定当前运行环境
-
 ```js
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// ↑↑↑↑ 禁用整个文件的 typescript 规则
 // 禁用下一行规则
 // eslint-disable-next-line no-unused-vars
 ```
 
-> eslint 支持层叠配置，默认使用离需检测的文件最近的 `.eslintrc`、`eslint.config.js` 配置文件
+> eslint 支持层叠配置，默认使用离需检测的文件最近的 `eslint.config.js` 配置文件
 
 ### 插件
 
-**eslint-plugin-html**
+- eslint-plugin-html：这个插件你可以让 eslint 去检测 html 文件 script 标签里的 js 代码
+- eslint-plugin-import：添加 import 和 export 的支持
+- eslint-plugin-node：添加对 node 的 eslint 支持
+- eslint-plugin-promise：添加对 promise 语法的解析
+- eslint-plugin-standard：标准 js 和 eslint 的语法
 
-这个插件你可以让 eslint 去检测 html 文件 script 标签里的 js 代码
+typescript：
 
-**eslint-plugin-import**
+- @typescript-eslint/eslint-plugin：typescript 语法检测支持。
 
-添加 import 和 export 的支持
+Vue：
 
-**eslint-plugin-node**
+- eslint-plugin-vue：Vue 语法检查
 
-添加对 node 的 eslint 支持
+Prettier：
 
-**eslint-plugin-promise**
-
-添加对 promise 语法的解析
-
-**eslint-plugin-standard**
-
-为 Standard Linter 做的补充插件 This module is for advanced users.
-
-**@typescript-eslint/eslint-plugin**
-
-typescript 语法检测支持。
-
-**eslint-plugin-vue**
-
-Vue 语法检查，使用时需替换解析器为 vue-eslint-parser
-
-**eslint-plugin-prettier**
-
-将 prettier 作为 ESLint 的规则来使用，代码不符合 Prettier 的标准时，会报一个 ESLint 错误
-
-**eslint-config-prettier**
-
-关闭所有与 prettier 有冲突的规则。
+- eslint-config-prettier：关闭所有与 prettier 有冲突的规则。
+- eslint-plugin-prettier：将 prettier 作为 ESLint 的规则来使用，代码不符合 Prettier 的标准时，会报一个 ESLint 错误
 
 ## 命令行
 
-```bash
+在 package.json 中配置 `lint` 脚本
+
+```json
 "scripts":{
-	"lint": "eslint --fix --ext .js,.ts,.vue ./src"
+	"lint": "eslint --fix --ext .js,.ts,.vue ./src",
+  "lint:quiet": "eslint --fix --ext .js,.ts,.vue ./src --quiet", // 不输出 warn，只输出 error
 }
 ```
 
 ## 推荐配置
 
 v7、v8 配置文件和 v9 不同，但 rules 可以复用，因此单独把 rules 提取出来，然后区分不同版本的配置文件
-
-package.json 中的 type 属性为 module 时，eslint 识别会混乱无法格式化代码，确保使用 `.cjs` 做为后缀，即 `.eslintrc.cjs`
 
 如果不确定配置是否正确，可以使用命令行运行 `eslint`
 
@@ -162,11 +139,6 @@ const rules = {
   'prefer-promise-reject-errors': 2, // 使用 new Error 追踪错误
   'func-call-spacing': 0,
 
-  // typescript
-  'no-undef': 0, // 未命名变量不报错：当未命名变量的检查交给 ts 类型检查器时使用
-  '@typescript-eslint/no-explicit-any': 1, // 使用 any 时警告
-  '@typescript-eslint/no-this-alias': 0, // 是否禁止 this 的别名
-
   // vue 错误
   'vue/no-unused-vars': 1,
   'vue/multiline-html-element-content-newline': 0,
@@ -191,31 +163,30 @@ const rules = {
 }
 ```
 
-
-
-
-
 ### node
 
-纯 node 的后端项目，只需要安装 eslint
+纯 node 的后端项目，或者是纯 js 项目，只需要安装 eslint，`@eslint/js`
 
 ```js
-// .eslintrc.cjs
-module.exports = {
-  env: {
-    browser: true,
-    es2021: true
+// eslint.config.js
+import jslint from '@eslint/js'
+export default [
+  {
+    name: 'app/files-to-lint',
+    files: ['**/*.js,mjs,jsx}']
   },
-  // 后面的配置会覆盖前者
-  extends: ['eslint:recommended', 'eslint-config-standard'],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module'
+  {
+    name: 'app/files-to-ignore',
+    ignores: ['**/build/**', '**/.docusaurus/**', '**/coverage/**', '**/temp.js', '**/release/**']
   },
-  rules: {
-    // 选择你需要的规则
+  jslint.configs.recommended,
+  {
+    // 自定义的其它配置
+    rules:{
+      'no-var': 'warn',
+    }
   }
-}
+]
 ```
 
 ### TypeScript
@@ -223,28 +194,6 @@ module.exports = {
 TypeScript 也是使用 eslint 进行格式化，tslint 已经不再维护，而是合并到 eslint 中，添加额外插件即可使用
 
 安装：除了 `eslint`、`typescript` 之外，还需要安装 `@typescript-eslint/parser`、`@typescript-eslint/eslint-plugin`
-
-```js
-module.exports = {
-  env: {
-    es2022: true,
-    node: true
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended'
-  ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 12,
-    sourceType: 'module'
-  },
-  plugins: ['@typescript-eslint'],
-  rules: {
-   // 选择你需要的规则
-  }
-}
-```
 
 ```ts
 import js from '@eslint/js'
@@ -263,75 +212,111 @@ export default tseslint.config(
     plugins: {
     },
     rules: {
-    
+      'no-undef': 0, // 未命名变量不报错：当未命名变量的检查交给 ts 类型检查器时使用
+      '@typescript-eslint/no-explicit-any': 1, // 使用 any 时警告
+      '@typescript-eslint/no-this-alias': 0, // 是否禁止 this 的别名
     },
   },
 )
 
 ```
 
-
-
 ### Vue
 
 保证 eslint 能够生效的同时，不会和 eslint 产生冲突
 
 ```json
- module.exports = {
-  env: {
-    browser: true,
-    es2021: true
+import js from '@eslint/js'
+import pluginVue from 'eslint-plugin-vue'
+import { FlatCompat } from "@eslint/eslintrc";
+import { __dirname } from 'node:path'
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
+export default [
+  {
+    name: 'app/files-to-lint',
+    files: ['**/*.{js,mjs,jsx,vue}'],
   },
-  // ts 会使用类型检查，检查未使用的变量，如果不想使用 ts 的类型检查，可以启用 globals，选择忽略一些全局定义的变量
-  // 定义 vue 自动引入的全局变量，防止 eslint 报错
-  // globals: {
-  //   defineProps: true,
-  //   defineEmits: true,
-  //   ref: true,
-  //   watch: true,
-  //   reactive: true
-  // },
-  // 后面的配置会覆盖前者
-  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended'],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    parser: '@typescript-eslint/parser',
-    sourceType: 'module'
+  {
+    name: 'app/files-to-ignore',
+    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
   },
-  plugins: ['vue', '@typescript-eslint'],
-  rules: {
-   // 选择你需要的规则
+  js.configs.recommended,
+  ...pluginVue.configs['flat/recommended'],
+  ...compat.config({
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+  }),
+  {
+    rules:{
+      'indent':[1,2, { SwitchCase: 1 }],
+      'no-undef':1,
+      'no-unused-vars':1,
+      'vue/no-unused-vars':1,
+      'vue/html-indent':0,
+      'vue/html-self-closing':0,
+      'vue/max-attributes-per-line':0,
+      'vue/first-attribute-linebreak':0,
+      'vue/attribute-hyphenation':0,
+      'vue/html-closing-bracket-newline':0,
+      'vue/singleline-html-element-content-newline':0,
+    }
   }
-}
+]
 ```
 
 ### React
 
+Typescript + React
+
 ```js
-module.exports = {
-  env: {
-    browser: true,
-    es2022: true,
-    node: true
+import lintReact from 'eslint-plugin-react'
+import jslint from '@eslint/js'
+import lintReactHooks from 'eslint-plugin-react-hooks'
+import tslint from 'typescript-eslint'
+const defaultConfig = {
+  plugins: {
+    react: lintReact,
+    'react-hooks': lintReactHooks
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended'
-  ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true
-    },
-    ecmaVersion: 12,
-    sourceType: 'module'
-  },
-  plugins: ['react', '@typescript-eslint'],
+  settings: { react: { version: '18.3' } },
   rules: {
-   // 选择你需要的规则
+    // react
+    'react/no-this-in-sfc': 1,
+    'react/prop-types': 0,
+    'react/display-name': 'off',
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    // typescript
+    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-this-alias': 'warn',
+    '@typescript-eslint/no-unused-expressions': 'off'
   }
 }
+export default [
+  {
+    name: 'app/files-to-lint',
+    files: ['**/*.{tsx,ts,js,mjs,jsx}']
+  },
+  {
+    name: 'app/files-to-ignore',
+    ignores: ['**/build/**', '**/.docusaurus/**', '**/coverage/**', '**/temp.js', '**/release/**']
+  },
+  jslint.configs.recommended,
+  lintReact.configs.flat.recommended,
+  lintReact.configs.flat['jsx-runtime'],
+  ...tslint.configs.recommended,
+  defaultConfig
+]
+
 ```
 
 ## IDE 配置
@@ -565,4 +550,5 @@ module.exports = {
 | yuxiaoliang | [在 Typescript 项目中，如何优雅的使用 ESLint 和 Prettier](https://juejin.cn/post/6844903880006844424) |
 | 爱心发电丶  | [Eslint该如何配置？Eslint使用以及相关配置说明](https://zhuanlan.zhihu.com/p/548306020) |
 |             | [14 Linting Rules To Help You Write Asynchronous Code in JavaScript](https://maximorlov.com/linting-rules-for-asynchronous-code-in-javascript/) |
+|             | [The best eslint rules for react projects](https://timjames.dev/blog/the-best-eslint-rules-for-react-projects-30i8) |
 

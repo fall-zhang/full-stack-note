@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-> Create by **fall** on 06 Feb 2021
+> Create by **fall** on 06 Feb 2021<br/>
 > Recently revised in 12 Apr 2024
 
 ## TS 配置
@@ -56,6 +56,32 @@ tsc -p tsconfig.build.json
     "node_modules"
   ]
 }
+```
+
+## 常用配置
+
+### exactOptionalPropertyTypes
+
+只允许初始化时不赋值，不允许再设置为空，
+
+> 因为，未赋值和手动设置为 `undefined` 会导致 `in` 操作结果的不一致。
+
+```ts
+// 设置 exactOptionalPropertyTypes:true
+
+interface UserDefaults {
+  // The absence of a value represents 'system'
+  colorThemeOverride?: 'dark' | 'light';
+}
+
+const settings:UserDefaults = {
+  colorThemeOverride: undefined
+}
+settings.colorThemeOverride = 'dark'
+settings.colorThemeOverride = 'light'
+
+// But not:
+settings.colorThemeOverride = undefined
 ```
 
 ### 字段配置详情

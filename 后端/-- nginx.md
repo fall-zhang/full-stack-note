@@ -2,7 +2,7 @@
 sidebar_position: 9
 ---
 
-> Create by **fall** on 12 Apr 2023
+> Create by **fall** on 12 Apr 2023<br/>
 > Recently revised in 26 Dec 2024
 
 ## Nginx
@@ -12,6 +12,8 @@ sidebar_position: 9
 高性能：其占用内存少、并发能力强、能支持高达 5w 个并发连接数。
 
 支持协议：Nginx 仅支持 http、https 和 Email 协议
+
+> 对比 apache，nginx 的事件处理代替了 apache 的线程处理请求，支持更高的并发
 
 ### 应用场景
 

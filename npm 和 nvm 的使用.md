@@ -1,4 +1,4 @@
-> Create by **fall** on — — 2020
+> Create by **fall** on — — 2020<br/>
 > Recently revised in 10 Apr 2024
 
 > 注：npm 会随着 node 的安装进行安装，安装 node 后，就可以使用 npm 命令。
@@ -28,9 +28,12 @@ LTS 版本：Long Term Support（[长期支持版本](https://nodejs.org/en/abou
 
 `npm config set registry https://registry.npmmirror.com` 
 
+- 默认地址：`https://registry.npmjs.org/`
 - 最新镜像地址：`https://registry.npmmirror.com` 
 - 淘宝原镜像（已过期）：`https://registry.npm.taobao.org`
 
+> 可选（不建议）
+>
 > 安装 cnpm：`npm install -g cnpm --registry=https://registry.npm.taobao.org`
 >
 > 安装完成之后就可以通过 cnpm 代替 npm 的所有命令（有些插件使用 cnpm 安装，可能会出现问题）
@@ -41,7 +44,7 @@ LTS 版本：Long Term Support（[长期支持版本](https://nodejs.org/en/abou
 
 #### 包管理
 
-**安装包**
+**安装方式**
 
 - 本地的安装包：使用 `npm install <package-name>` 安装，并且放置在 `node_modules` 文件夹中
 - 全局的安装包：`npm install <package-name> -g` 全局安装，并放在固定的位置。
