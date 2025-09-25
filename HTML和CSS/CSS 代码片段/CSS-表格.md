@@ -218,5 +218,5 @@
 
 | 作者（文章名称）  | 链接                                             |
 | --------- | ---------------------------------------------- |
-| 一些 CSS 怪癖 | <https://blog-purocean.vercel.app/css-quirks/> |
+| 一些 CSS 怪癖 | https://blog-purocean.vercel.app/css-quirks/ |
 
