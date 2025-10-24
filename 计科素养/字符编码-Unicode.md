@@ -3,7 +3,7 @@
 
 > grapheme：用户所认为的一个字符
 >
-> extended grapheme cluster：多个字节拼合成一个字符（
+> extended grapheme cluster：多个字节拼合成一个字符
 
 ## Unicode 知识
 
