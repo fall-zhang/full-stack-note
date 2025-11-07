@@ -1,5 +1,5 @@
 > Create by **fall** on 16 May 2024<br/>
-> Recently revised in  16 May 2024
+> Recently revised in  05 Nov 2025
 
 > grapheme：用户所认为的一个字符
 >
@@ -122,7 +122,7 @@ ASCII 码是最早出现的字符集，其全称为 American Standard Code for I
 
 ### 同样的字符不相等
 
- "Å" !== "Å" !== "Å"
+` "Å" !== "Å" !== "Å"`
 
 ```js
 "Å" === "Å" // false
