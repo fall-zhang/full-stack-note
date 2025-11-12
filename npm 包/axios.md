@@ -165,15 +165,20 @@ function getDefaultAdapter() {
 
 ### 配置
 
-```js
-
-```
-
 解决跨域问题
 
 如果 `server` 端是自己开发的，那么修改相关代码支持跨域即可。如果不是自己开发的，那么可以自己写个后端转发该请求，用代理的方式实现。
 
 跨域这个行为是**浏览器禁止**（浏览器不允许当前页面的所在的源去请求另一个源的数据）的，但是服务端并不禁止。
+
+### 请求撤回
+
+```js
+AbortController
+
+```
+
+
 
 ## 插件
 
@@ -240,6 +245,8 @@ httpFetch.interreceptors.response.use(res=>{
 | 阿宝哥           | https://juejin.cn/post/6885471967714115597 |
 |                  |                                            |
 |                  |                                            |
+
+### 最佳实践
 
 ```js
 export const handleRequestHeader = (config) => {

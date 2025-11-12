@@ -1,7 +1,11 @@
-> Create by **fall** on 2022-05-16<br/>
-> Recently revised in 2022-05-17
+> Create by **fall** on 16 May 2022<br/>
+> Recently revised in 06 Nov 2025
+
+> 之前准备学习 lerna，但当时 lerna 已经不再维护，从而使用 pnpm workspace
 
 ## Lerna
+
+monorepo 管理工具，在一个仓库内有多个 package。
 
 安装：`npm install lerna -g`
 
@@ -46,5 +50,4 @@ lerna add <pkgName1> --scope = <pkgName2> // 给pkgName2中添加pkgName1，包�
 | 作者        | 链接                                       |
 | ----------- | ------------------------------------------ |
 | 努力的Jerry | https://juejin.cn/post/6844903954329894920 |
-
 

@@ -1,5 +1,5 @@
 > Create by **fall** on ----<br/>
-> Recently revised in 2021-12-14
+> Recently revised in 14 Dec 2021
 
 # jQuery
 
