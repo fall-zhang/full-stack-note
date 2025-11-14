@@ -1,6 +1,6 @@
 ## DevOps
 
-DevOps：意思就是新的开发的方式，团队效率更高，devops工程师年薪 40-50w，需要详细了解一下
+DevOps：意思就是新的开发的方式，团队效率更高，devops 工程师年薪 40-50w，了解一下
 
 ![img](https://pic1.zhimg.com/80/v2-e17fc763c5db7ec686d8f4f8ae2d5aeb_720w.jpg?source=1940ef5c)
 
