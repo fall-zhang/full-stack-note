@@ -1,5 +1,5 @@
 > Create by **fall** on — — 2020<br/>
-> Recently revised in 10 Apr 2024
+> Recently revised in 21 Nov 2025
 
 > 注：npm 会随着 node 的安装进行安装，安装 node 后，就可以使用 npm 命令。
 
@@ -29,14 +29,9 @@ LTS 版本：Long Term Support（[长期支持版本](https://nodejs.org/en/abou
 `npm config set registry https://registry.npmmirror.com` 
 
 - 默认地址：`https://registry.npmjs.org/`
-- 最新镜像地址：`https://registry.npmmirror.com` 
+- 最新镜像地址：`https://registry.npmmirror.com`
 - 淘宝原镜像（已过期）：`https://registry.npm.taobao.org`
 
-> 可选（不建议）
->
-> 安装 cnpm：`npm install -g cnpm --registry=https://registry.npm.taobao.org`
->
-> 安装完成之后就可以通过 cnpm 代替 npm 的所有命令（有些插件使用 cnpm 安装，可能会出现问题）
 
 ### 命令
 
@@ -100,6 +95,44 @@ npm i rollup@3.9.1 -S-D
 | `npm init`             | 创建 JSON 文件，初始化本地开发环境                           |
 | `npm cache clean`      | 清除 npm 本地的缓存，可使用 `-f` 强制清除缓存                |
 | `npm config get cache` | 查看 缓存所在位置                                            |
+
+**本地链接**
+
+`npm link`
+
+如果本地正在开发一些工具，需要进行环境下的测试，可以使用 `npm link`
+
+```bash
+# 链接方式一，全局链接
+# 对应的包内，使用以下命令
+npm link
+# 之后再使用 npm link
+npm link <package-name>
+# 如果想解除链接
+npm unlink <package-name>
+
+# 链接方式二，该方式指定包所在的目录即可
+npm link <package-dir>
+```
+
+### file 协议
+
+它直接在你的项目依赖中引用本地文件路径。比起 `npm link` 该命令可提交到版本库，
+
+```json
+{
+  "dependencies": {
+    "my-local-package": "file:../path/to/your-package"
+  }
+}
+```
+
+```bash
+# npm
+npm install file:../path/to/your-package
+```
+
+
 
 ### npx
 
