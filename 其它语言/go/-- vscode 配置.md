@@ -1,9 +1,9 @@
-> Create by **fall** on 03 Nov 2025<br/>
+> Create by **fall** on 03 Nov 2025
 > Recently revised in 03 Nov 2025
 
 官方文档
 
-https://github.com/golang/vscode-go/wiki/settings#settings-for-gopls
+<https://github.com/golang/vscode-go/wiki/settings#settings-for-gopls>
 
 项目过大的时候，gopls 项目占用动辄 90%，占用内存，动辄 4G。使用以下 vscode 配置，可以优化这种情况：
 

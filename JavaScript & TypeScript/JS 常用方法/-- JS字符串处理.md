@@ -1,7 +1,34 @@
 > Create by fall on ——<br/>
-> Recently revised in 03 Jul 2023
+> Recently revised in 01 Dec 2025
 
-## 字符串处理方法
+## 字符串信息
+
+### 获取对应的码点
+
+UTF-16 [code units](https://developer.mozilla.org/en-US/docs/Glossary/Code_unit)
+
+```js
+Array.from({ length: "🌝".length }, (_, i) => "🌝"[i])
+// [ '\ud83c', '\udf1d' ]
+```
+
+### 获取字符串长度
+
+```js
+function realLength(text) {
+	return Array.from(
+		new Intl.Segmenter(
+			"en",
+			{ granularity: "grapheme" }
+		).segment(text)
+	).length;
+}
+realLength("🌝")    // 1
+```
+
+
+
+## 指定字符串判断
 
 ### 是否是苹果设备
 
