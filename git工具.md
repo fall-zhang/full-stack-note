@@ -11,17 +11,15 @@
 
 **Git工作流程图**（最左侧为远程，中间和右侧为本地）
 
-<img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015120901.png" alt="img"  />
+![img](http://www.ruanyifeng.com/blogimg/asset/2015/bg2015120901.png)
 
 一些术语
 
-* Workspace：工作区（本地，代码保存后的内容）
+- Workspace：工作区（本地，代码保存后的内容）
+- Index / Stage：暂存区（暂存）
+- Repository：仓库区（或本地仓库）
+- Remote：远程仓库（远程）
 
-* Index / Stage：暂存区（暂存）
-
-* Repository：仓库区（或本地仓库）
-
-* Remote：远程仓库（远程）
 
 | 命令名称         | 作用                       |
 | ------------ | ------------------------ |
@@ -34,19 +32,16 @@
 | reset（版本回退）  | 将代码回退到选定的版本              |
 | tag（标签）      | tag 就是给版本打个标记，方便识别       |
 
+
 ### 流程
 
 一般使用流程：
 
-* 克隆远程仓库到本地 `git clone https://github.com/fall-zhang/vite-vue3-TS-lint.git`
-
-* 在项目的文件夹（一般为含有 `README.md` 的文件夹）中打开命令行工具
-
-* `git add . `  将代码添加到版本里面（添加到暂存区）
-
-* `git commit -m [messages]` 修改并放置你想添加的 `messages`
-
-* 最后使用 `git push` 将本地库里面的代码提交到网络共享库里面
+- 克隆远程仓库到本地 `git clone https://github.com/fall-zhang/vite-vue3-TS-lint.git`
+- 在项目的文件夹（一般为含有 `README.md` 的文件夹）中打开命令行工具
+- `git add . `  将代码添加到版本里面（添加到暂存区）
+- `git commit -m [messages]` 修改并放置你想添加的 `messages`
+- 最后使用 `git push` 将本地库里面的代码提交到网络共享库里面
 
 ### 配置文件
 
@@ -95,11 +90,9 @@ c、规则：
 
 **用 Git Bash 创建文件夹**
 
-* 根目录下右键选择“Git Bash Here”进入bash命令窗口；
-
-* 输入 `vim .gitignore` 或 `touch .gitignore` 命令，打开文件（没有文件会自动创建）；
-
-* 按 i 键切换到编辑状态，输入规则，例如 node\_modules/，然后按 Esc 键退出编辑，输入 `:wq` 保存退出。
+- 根目录下右键选择“Git Bash Here”进入bash命令窗口；
+- 输入 `vim .gitignore` 或 `touch .gitignore` 命令，打开文件（没有文件会自动创建）；
+- 按 i 键切换到编辑状态，输入规则，例如 nodemodules/，然后按 Esc 键退出编辑，输入 `:wq` 保存退出。
 
 ### 生成密钥
 
@@ -115,33 +108,22 @@ c、规则：
 
 ### 常用功能
 
-* `git diff --shortstat "@{0 day ago}"` 看看自己一天写了多少行代码
-
-* 只克隆最近 number 次分支 `git clone --depth=[number] [git_url]`
-
-* 只克隆某一分支 `git clone --single-branch -b [name]`
-
-* 查看远程仓库 `git remote -v`
-
-* 显示有变更的文件 `git status`
-
-* 退回到上一个版本：`git reset --hard head`
-
-* 查看日志：`git log `  或者 `git reflog`
-
-* 查看工作区和暂存区版本区别 `git diff`
-
-* 回退上一个版本 `git reset --hard HEAD^` 每多一个 `^` 多回退一个版本
-
-* 回退到指定版本 `git reset --hard version` version 为版本号
+- `git diff --shortstat "@{0 day ago}"` 看看自己一天写了多少行代码
+- 只克隆最近 number 次分支 `git clone --depth=[number] [git_url]`
+- 只克隆某一分支 `git clone --single-branch -b [name]`
+- 查看远程仓库 `git remote -v`
+- 显示有变更的文件 `git status`
+- 退回到上一个版本：`git reset --hard head`
+- 查看日志：`git log `  或者 `git reflog`
+- 查看工作区和暂存区版本区别 `git diff`
+- 回退上一个版本 `git reset --hard HEAD^` 每多一个 `^` 多回退一个版本
+- 回退到指定版本 `git reset --hard version` version 为版本号
 
 ### 创建代码仓库
 
-* `git init` 在本地进行初始化（建立工作区）
-
-* `git init [project-name]` 新建一个目录，作为代码仓库
-
-* `git clone [url]`
+- `git init` 在本地进行初始化（建立工作区）
+- `git init [project-name]` 新建一个目录，作为代码仓库
+- `git clone [url]`
 
 `.git` 文件夹存储当前项目的所有版本信息，这个文件夹通常会隐藏
 
@@ -314,11 +296,7 @@ git submodule add <子项目仓库URL> <本地路径>
 git submodule init
 # 更新子模块到指定提交
 git submodule update
-
-
 ```
-
-
 
 ### 子树
 
