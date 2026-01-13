@@ -2,7 +2,7 @@
 sidebar_position: 12
 ---
 
-> Create by **fall** on 16 Nov 2024<br/>
+> Create by **fall** on 16 Nov 2024
 > Recently revised in 16 Nov 2024
 
 

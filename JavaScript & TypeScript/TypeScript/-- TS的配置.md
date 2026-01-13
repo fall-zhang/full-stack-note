@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-> Create by **fall** on 06 Feb 2021<br/>
+> Create by **fall** on 06 Feb 2021
 > Recently revised in 26 Sep 2025
 
 ## TS 配置
