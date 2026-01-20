@@ -1,4 +1,4 @@
-> Create by **fall** on 18 Nov 2020
+> Create by **fall** on 18 Nov 2020  
 > Recently revised in 24 Sep 2025
 
 ## git
@@ -186,7 +186,7 @@ $ git branch -dr [remote/branch]
 
 ### 远程功能
 
-```bash
+```powershell
 $ git fetch [remote] # 下载远程仓库的所有变动
 $ git pull [remote] [branch] # 取回远程仓库的变化，并与本地分支合并
 # git pull 等价于 git fetch + git merge
