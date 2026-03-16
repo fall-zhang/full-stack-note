@@ -1,4 +1,4 @@
-> Create by **fall** on 26 Jun 2025<br/>
+> Create by **fall** on 26 Jun 2025  
 > Recently revised in 26 Jun 2025
 
 ```js
@@ -18,8 +18,6 @@ objservable.subscribe({
   }
 })
 ```
-
-
 
 ```js
 import {interval,take} from 'rxjs'
