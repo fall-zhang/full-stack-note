@@ -1,4 +1,4 @@
-## uv 
+## uv
 
 用途
 
@@ -40,11 +40,10 @@ wget -qO- https://astral.sh/uv/install.sh | sh
 - `uv sync` 使用 environment 同步项目依赖
 - `uv lock` 为依赖创建一个 lock file
 
+&nbsp;
 
+&nbsp;
 
+&nbsp;
 
-
-
-
-
-
+&nbsp;
