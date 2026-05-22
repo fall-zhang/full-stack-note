@@ -39,7 +39,7 @@
 
 - 克隆远程仓库到本地 `git clone https://github.com/fall-zhang/vite-vue3-TS-lint.git`
 - 在项目的文件夹（一般为含有 `README.md` 的文件夹）中打开命令行工具
-- `git add . `  将代码添加到版本里面（添加到暂存区）
+- `git add .`   将代码添加到版本里面（添加到暂存区）
 - `git commit -m [messages]` 修改并放置你想添加的 `messages`
 - 最后使用 `git push` 将本地库里面的代码提交到网络共享库里面
 
@@ -114,7 +114,7 @@ c、规则：
 - 查看远程仓库 `git remote -v`
 - 显示有变更的文件 `git status`
 - 退回到上一个版本：`git reset --hard head`
-- 查看日志：`git log `  或者 `git reflog`
+- 查看日志：`git log`   或者 `git reflog`
 - 查看工作区和暂存区版本区别 `git diff`
 - 回退上一个版本 `git reset --hard HEAD^` 每多一个 `^` 多回退一个版本
 - 回退到指定版本 `git reset --hard version` version 为版本号
@@ -130,6 +130,9 @@ c、规则：
 ### 暂存区控制
 
 ```bash
+git restore . # 工作区修改（未 add），放弃修改，恢复文件原样
+git checkout -- . # 旧版可用该命令撤销修改
+
 $ git add [file1] [file2] ...  # 添加指定文件到暂存区
 $ git add [dir] # 添加指定目录到暂存区，包括子目录
 $ git add . # 添加当前目录的所有文件到暂存区
