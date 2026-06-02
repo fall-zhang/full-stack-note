@@ -1,4 +1,4 @@
-> Create by **fall** on 11 Apr 2023<br/>
+> Create by **fall** on 11 Apr 2023  
 > Recently revised in 11 Apr 2023
 
 ## IDEA
@@ -21,7 +21,6 @@ project structor 中进行配置 jdk 的版本。
 - 查找并且替换内容：`Ctrl + R`
 - 跳转到该行：`Ctrl + G`
 - 快速打开类：`Ctrl + N`
-
 - 快速对文件内容进行嵌套：`Ctrl + Alt + T`
 
 `
