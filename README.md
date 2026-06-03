@@ -1,40 +1,42 @@
 ---
-sidebar_position: 1
+  sidebar_position: 1
 ---
-
-> Create by **fall** on 18 Nov 2020<br/>
+> Create by **fall** on 18 Nov 2020  
+>
 > Recently revised in 05 Nov 2025
 
 # Fall 的笔记仓库
 
 > 在 github 和 gitee 上都有我的仓库，github 经常更新，gitee 只是同步。
 >
-> - Github：https://github.com/fall-zhang/full-stack-note
-> - Gitee：https://gitee.com/mywings/noteself
+> - Github：[https://github.com/fall-zhang/full-stack-note](https://github.com/fall-zhang/full-stack-note)
+> - Gitee：[https://gitee.com/mywings/noteself](https://gitee.com/mywings/noteself)
 
 ## 更新计划
 
-| 更新部分                | 更新计划优先级                 | 备注 |
-| ----------------------- | ------------------------------ | ----------------------- |
-| [后端](#后端)             | ⭐⭐⭐⭐⭐⭐ | nestjs + node 实践进行中 |
-| [数据库](#数据库)           | ⭐⭐⭐⭐⭐⭐       | postgres 进行中 |
-| [多平台开发](#多平台开发) | ⭐⭐⭐⭐⭐        | tauri 实践进行中 |
-| [npm 包](#npm 包)       | ⭐⭐⭐⭐        | 前端生态等工具 |
-| [其它语言](#其它语言) | ⭐⭐⭐⭐ | go 语言实践 |
-| [Linux & 命令行](#Linux & 命令行) | ⭐⭐⭐⭐    | 基本完成 linux 命令行 |
-| [大前端知识点](#大前端知识点) | ⭐⭐⭐⭐   | 基本完成✅ |
-| [计科素养](#计科素养) | ⭐⭐⭐⭐         | 杂且多，遇到会更新 |
-| [React](#React)         | ⭐⭐⭐    | 官方文档更好 |
-| [JavaScript & TypeScript](#JavaScript & TypeScript) | ⭐⭐⭐          | 已完成✅ |
-| [面试-自检](#面试-自检)     | ⭐⭐⭐                | 求职前获取，避免初见杀 |
-| [HTML 和 CSS](#HTML 和 CSS) | ⭐⭐          | 已完成✅ |
-| [Vue](#Vue)             | ⭐⭐                 | V3 官方文档更好 |
+
+| 更新部分                                                        | 更新计划优先级 | 备注                  |
+| ----------------------------------------------------------- | ------- | ------------------- |
+| [后端](#后端)                                                   | ⭐⭐⭐⭐⭐⭐  | nestjs + node 实践进行中 |
+| [数据库](#数据库)                                                 | ⭐⭐⭐⭐⭐⭐  | postgres 进行中        |
+| [多平台开发](#多平台开发)                                             | ⭐⭐⭐⭐⭐   | tauri 实践进行中         |
+| [npm 包](#npm包)                                              | ⭐⭐⭐⭐    | 前端生态等工具             |
+| [其它语言](#其它语言)                                               | ⭐⭐⭐⭐⭐   | go 语言实践             |
+| [Linux &amp; 命令行](#Linux &amp; 命令行)                         | ⭐⭐⭐⭐    | 基本完成 linux 命令行      |
+| [大前端知识点](#大前端知识点)                                           | ⭐⭐⭐⭐    | 基本完成✅               |
+| [计科素养](#计科素养)                                               | ⭐⭐⭐⭐    | 杂且多，遇到会更新           |
+| [React](#React)                                             | ⭐⭐⭐     | 官方文档更好              |
+| [JavaScript &amp; TypeScript](#JavaScript &amp; TypeScript) | ⭐⭐⭐     | 已完成✅                |
+| [面试-自检](#面试-自检)                                             | ⭐⭐⭐     | 求职前获取，避免初见杀         |
+| [HTML 和 CSS](#HTML 和 CSS)                                   | ⭐⭐      | 已完成✅                |
+| [Vue](#Vue)                                                 | ⭐⭐      | V3 官方文档更好           |
+
 
 ## HTML 和 CSS
 
 最稳定的一部分，很少修改，以 HTML/CSS 知识点为主，只涉及到样式和布局，或者是最基础的 DOM 元素。
 
-## JavaScript & TypeScript
+## JavaScript &amp; TypeScript
 
 JavaScript：知识点，语法，操作符，工具之类的，以及对象上的相关内容。
 
@@ -52,7 +54,7 @@ node 环境上的 JS，以及 node 相关的后端内容。
 - 后端 nest
 - 其他后端语言 Python，PHP（放弃 PHP，JS 又能做前端，又能做后端，不香吗）
 
-## Linux & 命令行
+## Linux &amp; 命令行
 
 - Linux 相关的内容
 - 有 shell 命令行的使用，脚本的编写。
@@ -65,11 +67,11 @@ node 环境上的 JS，以及 node 相关的后端内容。
 
 ## React
 
-2025 年会加强这一部分的更新吧，更新内容主要和 React 的生态有关
+更新内容主要和 React 的生态有关
 
 ## 多平台开发
 
-本来决定 2025 做移动端实践，但像同时兼容安卓和苹果，需要苹果笔记本。
+本来决定 2025 做移动端实践，但需要同时兼容安卓和苹果，需要苹果笔记本。
 
 ## 其他语言
 
