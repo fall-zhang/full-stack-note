@@ -2,7 +2,9 @@
 sidebar_position: 9
 ---
 
-> Create by **fall** on 12 Apr 2023<br/>
+
+> Create by **fall** on 12 Apr 2023  
+>
 > Recently revised in 26 Dec 2024
 
 ## Nginx
@@ -158,27 +160,29 @@ http {
 
 这些内置变量可以在配置的上下文中进行使用
 
-| 内置变量                 | 变量功能                                              |
-| ------------------------ | ----------------------------------------------------- |
-| remote_addr、server_addr | 客户端、服务端 IP 地址                                |
-| remote_port、server_port | 客户端、服务端端口                                    |
-| server_protocol          | 服务端协议，协议版本                                  |
-| scheme                   | 协议名， http 或 https                                |
-| https                    | 否开启了 https ，是则返回 on ，否则返回空             |
-| connection               | TCP 连接的序号，递增                                  |
-| connection_request       | TCP 连接当前的请求数量                                |
-| request_length           | 全部请求的长度，包含请求行、请求头、请求体            |
-| request_method           | 请求方法                                              |
-| request_time             | 处理请求已消耗的时间                                  |
-| request_uri              | 请求的 URL，包含参数                                  |
-| uri                      | 请求的 URL，不包含参数                                |
-| args、query_string       | 全部参数字符串                                        |
-| arg_[name]               | 获取特定参数值                                        |
-| is_args                  | URL 中是否有查询字符串（Query String），有的话返回 ？ |
-| host                     | 请求信息中的 Host                                     |
-| http_cookie              | 获取用户 cookie                                       |
-| http_user_agent          | 用户浏览器（浏览器代理）                              |
-| document_root            | 由 URI 和 root/alias 规则生成的文件夹路径             |
+
+| 内置变量                    | 变量功能                                |
+| ----------------------- | ----------------------------------- |
+| remote_addr、server_addr | 客户端、服务端 IP 地址                       |
+| remote_port、server_port | 客户端、服务端端口                           |
+| server_protocol         | 服务端协议，协议版本                          |
+| scheme                  | 协议名， http 或 https                   |
+| https                   | 否开启了 https ，是则返回 on ，否则返回空          |
+| connection              | TCP 连接的序号，递增                        |
+| connection_request      | TCP 连接当前的请求数量                       |
+| request_length          | 全部请求的长度，包含请求行、请求头、请求体               |
+| request_method          | 请求方法                                |
+| request_time            | 处理请求已消耗的时间                          |
+| request_uri             | 请求的 URL，包含参数                        |
+| uri                     | 请求的 URL，不包含参数                       |
+| args、query_string       | 全部参数字符串                             |
+| arg_[name]              | 获取特定参数值                             |
+| is_args                 | URL 中是否有查询字符串（Query String），有的话返回 ？ |
+| host                    | 请求信息中的 Host                         |
+| http_cookie             | 获取用户 cookie                         |
+| http_user_agent         | 用户浏览器（浏览器代理）                        |
+| document_root           | 由 URI 和 root/alias 规则生成的文件夹路径       |
+
 
 > 其他参数：
 >
@@ -677,10 +681,12 @@ server {
 
 ## 参考文章
 
-| 作者                              | 文章名称                                                     |
-| --------------------------------- | ------------------------------------------------------------ |
-| 民工哥                            | [2W 字总结 ！体系化带你全面认识 Nginx](https://segmentfault.com/a/1190000039873208) |
-| ningg                             | [Nginx 系列：Nginx 原理](http://ningg.top/nginx-series-principle/) |
-| yuezk 、几点人 、溪边九节         | [Nginx vs Apache（译）](https://www.oschina.net/translate/nginx-vs-apache) |
-| [dunwu](https://github.com/dunwu) | **[nginx-tutorial](https://github.com/dunwu/nginx-tutorial)** |
+
+| 作者                                | 文章名称                                                                    |
+| --------------------------------- | ----------------------------------------------------------------------- |
+| 民工哥                               | [2W 字总结 ！体系化带你全面认识 Nginx](https://segmentfault.com/a/1190000039873208)  |
+| ningg                             | [Nginx 系列：Nginx 原理](http://ningg.top/nginx-series-principle/)           |
+| yuezk 、几点人 、溪边九节                  | [Nginx vs Apache（译）](https://www.oschina.net/translate/nginx-vs-apache) |
+| [dunwu](https://github.com/dunwu) | [**nginx-tutorial**](https://github.com/dunwu/nginx-tutorial)           |
+
 
