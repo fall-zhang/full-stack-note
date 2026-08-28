@@ -1,6 +1,8 @@
 > Create by **fall** on 16 Nov 2020<br/>
 > Recently revised in 12 Oct 2023
 
+> 已经放弃使用 mongoDB 了，该数据库并不通用
+
 ## MongoDB
 
 由 C++ 编写的基于分布式文件存储的开源数据库系统
