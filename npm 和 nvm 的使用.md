@@ -248,7 +248,7 @@ disco ld as -v
 
 `npm owner ls <package-name>` 所有者列表
 
-`npm owner add <user-name> <package-name> ` 添加所有者
+`npm owner add <user-name> <package-name>`  添加所有者
 
 `npm owner add <user-name> <package-name>` 删除所有者
 
